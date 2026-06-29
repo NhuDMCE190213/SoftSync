@@ -1,0 +1,65 @@
+@page "/progress"
+@page "/progress/{UserId:int}"
+@using SoftSync.BLL.Interfaces
+@using SoftSync.Common.Dtos
+@inject IProgressService ProgressService
+
+<div class="max-800 mx-auto">
+    <div class="mb-5">
+        <h2 class="fw-bold mb-1">Learning <span class="ss-gradient-text">Progress</span></h2>
+        <p class="text-muted">Track your growth across all soft skills.</p>
+    </div>
+
+    @if (progressLogs == null)
+    {
+        <div class="text-center py-5">Loading your statistics...</div>
+    }
+    else if (!progressLogs.Any())
+    {
+        <div class="ss-card p-5 text-center">
+            <i class="bi bi-lightning-charge fs-1 text-muted mb-3"></i>
+            <h4>No data yet</h4>
+            <p class="text-muted">Start learning and completing your roadmap to see progress here!</p>
+            <a href="/" class="btn btn-primary mt-3">Start Now</a>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var p in progressLogs)
+            {
+                <div class="col-md-12">
+                    <div class="ss-card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold mb-0">@p.SkillName</h5>
+                            <span class="fw-bold ss-gradient-text fs-4">@p.PercentComplete%</span>
+                        </div>
+                        <div class="progress" style="height: 20px; border-radius: 10px;">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                 style="width: @p.PercentComplete%; background: var(--gradient);"></div>
+                        </div>
+                        <div class="mt-3 small text-muted">
+                            Last active: @p.UpdatedAt.ToString("MMM dd, yyyy")
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int UserId { get; set; } = 1;
+    private IEnumerable<ProgressDto>? progressLogs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // For MVP, if no data, we yield some mock data in the service normally
+        // but here we just fetch.
+        progressLogs = await ProgressService.GetUserProgressAsync(UserId);
+    }
+}
+
+<style>
+    .max-800 { max-width: 800px; }
+</style>

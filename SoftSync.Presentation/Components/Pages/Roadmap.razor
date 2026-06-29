@@ -1,0 +1,71 @@
+@page "/roadmap/{UserId:int}"
+@using SoftSync.BLL.Interfaces
+@using SoftSync.Common.Dtos
+@inject IRoadmapService RoadmapService
+
+<div class="max-800 mx-auto">
+    <StepIndicator CurrentStep="5" />
+
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Weekly <span class="ss-gradient-text">Learning Roadmap</span></h2>
+            <p class="text-muted mb-0">Follow this path to master your target skills.</p>
+        </div>
+        <div class="text-end">
+            <span class="badge bg-primary fs-6">Demo Mode</span>
+        </div>
+    </div>
+
+    @if (roadmap == null)
+    {
+        <div class="text-center py-5">Loading your personalized roadmap...</div>
+    }
+    else
+    {
+        <div class="ss-roadmap-line mt-5">
+            @foreach (var item in roadmap.Items)
+            {
+                <div class="mb-5 position-relative">
+                    <div class="ss-roadmap-dot @(item.IsCompleted ? "active" : "")" style="top: 0.5rem; @(item.IsCompleted ? "" : "background: #cbd5e1;")"></div>
+                    <div class="ss-card p-4 ms-2">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <span class="text-primary fw-bold small text-uppercase">Week @item.WeekNumber</span>
+                                <h5 class="fw-bold mt-1">@item.Title</h5>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input fs-4 cursor-pointer" type="checkbox" checked="@item.IsCompleted" 
+                                       @onchange="() => ToggleComplete(item)" />
+                            </div>
+                        </div>
+                        <p class="text-muted mb-0">@item.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int UserId { get; set; }
+    private RoadmapDto? roadmap;
+
+    protected override async Task OnInitializedAsync()
+    {
+        roadmap = await RoadmapService.GetUserRoadmapAsync(UserId);
+    }
+
+    private async Task ToggleComplete(RoadmapItemDto item)
+    {
+        if (!item.IsCompleted)
+        {
+            await RoadmapService.MarkCompleteAsync(item.Id);
+            item.IsCompleted = true;
+        }
+    }
+}
+
+<style>
+    .max-800 { max-width: 800px; }
+    .cursor-pointer { cursor: pointer; }
+</style>

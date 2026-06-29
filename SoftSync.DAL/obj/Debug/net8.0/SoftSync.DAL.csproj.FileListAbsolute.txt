@@ -1,0 +1,17 @@
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\obj\Debug\net8.0\SoftSync.DAL.csproj.AssemblyReference.cache
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\obj\Debug\net8.0\SoftSync.DAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\obj\Debug\net8.0\SoftSync.DAL.AssemblyInfoInputs.cache
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\obj\Debug\net8.0\SoftSync.DAL.AssemblyInfo.cs
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\obj\Debug\net8.0\SoftSync.DAL.csproj.CoreCompileInputs.cache
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\bin\Debug\net8.0\SoftSync.DAL.deps.json
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\bin\Debug\net8.0\SoftSync.DAL.runtimeconfig.json
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\bin\Debug\net8.0\SoftSync.DAL.dll
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\bin\Debug\net8.0\SoftSync.DAL.pdb
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\bin\Debug\net8.0\SoftSync.Common.dll
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\bin\Debug\net8.0\SoftSync.Common.pdb
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\obj\Debug\net8.0\SoftSync.10BD43C1.Up2Date
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\obj\Debug\net8.0\SoftSync.DAL.dll
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\obj\Debug\net8.0\refint\SoftSync.DAL.dll
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\obj\Debug\net8.0\SoftSync.DAL.pdb
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\obj\Debug\net8.0\SoftSync.DAL.genruntimeconfig.cache
+D:\CacLopFPT\Ki7_SE1902.02\EXE\SoftSync\SoftSync.DAL\obj\Debug\net8.0\ref\SoftSync.DAL.dll

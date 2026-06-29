@@ -1,0 +1,39 @@
+@inherits LayoutComponentBase
+
+<div class="page">
+    <nav class="ss-nav py-3 px-4 d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-2 cursor-pointer" onclick="window.location.href='/'">
+            <div style="width: 40px; height: 40px; background: var(--gradient); border-radius: 10px; overflow: hidden;" class="d-flex align-items-center justify-content-center">
+                <img src="images/logo.png" alt="S" class="w-100 h-100 object-fit-cover" />
+            </div>
+            <span class="fs-4 fw-bold ss-gradient-text">SoftSync</span>
+        </div>
+        <div class="d-flex gap-4">
+            <a href="/" class="text-decoration-none text-dark fw-medium nav-link-hover">Home</a>
+            <a href="/assistant" class="text-decoration-none text-dark fw-medium nav-link-hover">AI Assistant</a>
+            <a href="/case-studies" class="text-decoration-none text-dark fw-medium nav-link-hover">Case Studies</a>
+            <a href="/progress" class="text-decoration-none text-dark fw-medium nav-link-hover">Progress</a>
+            <a href="/community" class="text-decoration-none text-dark fw-medium nav-link-hover">Community</a>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        @Body
+    </main>
+</div>
+
+<style>
+    .nav-link-hover {
+        transition: color 0.2s;
+    }
+    .nav-link-hover:hover {
+        color: var(--primary) !important;
+    }
+    .cursor-pointer { cursor: pointer; }
+</style>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>

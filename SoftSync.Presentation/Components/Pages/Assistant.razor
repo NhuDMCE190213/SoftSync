@@ -1,0 +1,74 @@
+@page "/assistant"
+@page "/assistant/{UserId:int}"
+@using SoftSync.BLL.Interfaces
+@using SoftSync.Common.Dtos
+@inject IAiAssistantService AssistantService
+
+<div class="max-800 mx-auto h-100 d-flex flex-column" style="min-height: 70vh;">
+    <div class="mb-4">
+        <h2 class="fw-bold mb-1"><i class="bi bi-robot me-2 ss-gradient-text"></i>AI Assistant</h2>
+        <p class="text-muted">Ask me anything about soft skills or your progress.</p>
+    </div>
+
+    <div class="ss-card flex-grow-1 p-4 mb-4 overflow-auto d-flex flex-column" style="max-height: 500px;">
+        @foreach (var msg in messages)
+        {
+            <div class="chat-bubble @(msg.Sender == SoftSync.Common.Enums.ChatSender.User ? "chat-user" : "chat-assistant")">
+                @msg.Content
+            </div>
+        }
+        @if (isTyping)
+        {
+            <div class="chat-bubble chat-assistant text-muted">
+                <span class="spinner-grow spinner-grow-sm" role="status"></span> Typing...
+            </div>
+        }
+    </div>
+
+    <div class="input-group">
+        <input type="text" class="form-control form-control-lg p-3" placeholder="Type your message..." 
+               @bind="userInput" @bind:event="oninput" @onkeyup="HandleKeyUp" />
+        <button class="ss-btn-primary px-4" @onclick="SendMessage" disabled="@(string.IsNullOrWhiteSpace(userInput))">
+            <i class="bi bi-send-fill"></i>
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public int UserId { get; set; } = 1; // Default for MVP Demo
+    private string userInput = "";
+    private bool isTyping = false;
+    private List<MessageDto> messages = new()
+    {
+        new MessageDto { Sender = SoftSync.Common.Enums.ChatSender.Assistant, Content = "Chào bạn! Tôi có thể giúp gì cho bạn hôm nay?", CreatedAt = DateTime.Now }
+    };
+
+    private async Task SendMessage()
+    {
+        if (string.IsNullOrWhiteSpace(userInput)) return;
+
+        var userMsg = userInput;
+        userInput = "";
+        messages.Add(new MessageDto { Sender = SoftSync.Common.Enums.ChatSender.User, Content = userMsg, CreatedAt = DateTime.Now });
+
+        isTyping = true;
+        StateHasChanged();
+
+        // Simulate AI response delay
+        await Task.Delay(1000);
+        var reply = await AssistantService.GetReplyAsync(userMsg, UserId);
+
+        messages.Add(new MessageDto { Sender = SoftSync.Common.Enums.ChatSender.Assistant, Content = reply, CreatedAt = DateTime.Now });
+        isTyping = false;
+    }
+
+    private async Task HandleKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") await SendMessage();
+    }
+}
+
+<style>
+    .max-800 { max-width: 800px; }
+    .overflow-auto { overflow-y: auto; }
+</style>

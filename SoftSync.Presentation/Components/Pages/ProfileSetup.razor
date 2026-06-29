@@ -1,0 +1,57 @@
+@page "/profile-setup"
+@using SoftSync.BLL.Interfaces
+@using SoftSync.Common.Dtos
+@inject IUserService UserService
+@inject NavigationManager Nav
+
+<div class="max-600 mx-auto">
+    <StepIndicator CurrentStep="1" />
+
+    <div class="ss-card p-5">
+        <h2 class="fw-bold mb-4">Set up your profile</h2>
+        <div class="mb-3">
+            <label class="form-label fw-medium">Full Name</label>
+            <input type="text" class="form-control form-control-lg p-3" @bind="user.FullName" placeholder="e.g. John Doe" />
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label fw-medium">Age</label>
+                <input type="number" class="form-control form-control-lg p-3" @bind="user.Age" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-medium">Role</label>
+                <select class="form-select form-select-lg p-3" @bind="user.Role">
+                    <option value="Student">Student / Sinh viên</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-4">
+            <label class="form-label fw-medium">What is your learning goal?</label>
+            <textarea class="form-control form-control-lg p-3" rows="3" @bind="user.Goal" placeholder="e.g. Improve communication skills for job interviews"></textarea>
+        </div>
+        <button class="ss-btn-primary w-100 py-3 fs-5" @onclick="HandleSubmit">
+            Continue <i class="bi bi-arrow-right ms-2"></i>
+        </button>
+    </div>
+</div>
+
+@code {
+    private UserDto user = new() { Role = SoftSync.Common.Enums.UserRole.Student };
+
+    private async Task HandleSubmit()
+    {
+        if (string.IsNullOrWhiteSpace(user.FullName)) return;
+        
+        var created = await UserService.CreateUserAsync(user);
+        // Store user ID in session or just pass to next page (for MVP demo, we'll just hardcode ID 1 for subsequent pages if needed, but better to pass)
+        Nav.NavigateTo($"/select-skills/{created.Id}");
+    }
+}
+
+<style>
+    .max-600 { max-width: 600px; }
+    .form-control:focus, .form-select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.25);
+    }
+</style>

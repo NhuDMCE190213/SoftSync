@@ -1,0 +1,184 @@
+:root {
+    --primary: #6366f1;       /* Indigo */
+    --primary-dark: #4f46e5;
+    --secondary: #8b5cf6;      /* Violet */
+    --accent: #ec4899;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --bg-soft: #f8fafc;
+    --card-bg: #ffffff;
+    --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+    --gradient-soft: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(139, 92, 246, 0.08));
+    --radius: 1rem;
+    --shadow-card: 0 4px 20px rgba(99, 102, 241, 0.08);
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background-color: var(--bg-soft);
+}
+
+/* Common Classes */
+.ss-gradient-text {
+    background: var(--gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ss-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: var(--shadow-card);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 1.5rem;
+}
+
+.ss-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.ss-btn-primary {
+    background: var(--gradient);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.ss-btn-primary:hover {
+    opacity: 0.9;
+    color: white;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    transform: scale(1.02);
+}
+
+/* Nav */
+.ss-nav {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Step Indicator */
+.ss-onboarding-step {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e2e8f0;
+    color: #64748b;
+    font-weight: bold;
+    margin: 0 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.ss-onboarding-step.active {
+    background: var(--gradient);
+    color: white;
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+}
+
+/* Roadmap */
+.ss-roadmap-line {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.ss-roadmap-line::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #e2e8f0;
+}
+
+.ss-roadmap-dot {
+    position: absolute;
+    left: 0.35rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background: #cbd5e1;
+    z-index: 1;
+    border: 3px solid white;
+}
+
+.ss-roadmap-dot.active {
+    background: var(--gradient);
+}
+
+/* Chat Assistant */
+.chat-bubble {
+    padding: 0.75rem 1.25rem;
+    border-radius: 1.25rem;
+    margin-bottom: 1rem;
+    max-width: 75%;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.chat-user {
+    background: var(--gradient);
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.chat-assistant {
+    background: #f1f5f9;
+    color: var(--text);
+    margin-right: auto;
+    border-bottom-left-radius: 0.25rem;
+}
+
+/* Onboarding Flow Classes */
+.cursor-pointer { cursor: pointer; }
+
+/* Blazor Default Overrides/Preservations */
+.blazor-error-boundary {
+    background: #ff000022;
+    padding: 1rem;
+    border-radius: var(--radius);
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+.validation-message {
+    color: var(--accent);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
