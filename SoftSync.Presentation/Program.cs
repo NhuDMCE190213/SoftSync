@@ -1,14 +1,16 @@
-﻿using SoftSync.Presentation.Components;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using SoftSync.DAL.Data;
-using SoftSync.DAL.Repositories;
 using SoftSync.BLL.Interfaces;
 using SoftSync.BLL.Services;
 using SoftSync.BLL.Services.Fake;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using System.Security.Claims;
 using SoftSync.Common.Dtos;
+using SoftSync.Common.Dtos.Auth;
+using SoftSync.DAL.Data;
+using SoftSync.DAL.Repositories;
+using SoftSync.Presentation.Components;
+using SoftSync.Presentation.Infrastructure;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,8 +46,17 @@ builder.Services.AddScoped<IRoadmapService, RoadmapService>();
 builder.Services.AddScoped<IProgressService, ProgressService>();
 builder.Services.AddScoped<ICaseStudyService, CaseStudyService>();
 builder.Services.AddScoped<IMentorService, MentorService>();
-builder.Services.AddScoped<IAuthService, AuthService>();          // MỚI
-builder.Services.AddScoped<IEmailService, SmtpEmailService>();    // MỚI
+builder.Services.AddScoped<IAuthService, AuthService>();          
+builder.Services.AddScoped<IEmailService, SmtpEmailService>();    
+builder.Services.AddScoped<IEntryTestRepository, EntryTestRepository>();
+builder.Services.AddScoped<IEntryTestService, EntryTestService>();
+builder.Services.AddScoped<IMiniGameRepository, MiniGameRepository>();
+builder.Services.AddScoped<IMiniGameService, MiniGameService>();
+builder.Services.AddScoped<IMiniGameAttemptRepository, MiniGameAttemptRepository>();
+builder.Services.AddScoped<ITheoryLessonRepository, TheoryLessonRepository>();
+builder.Services.AddScoped<ITheoryLessonService, TheoryLessonService>();
+
+builder.Services.AddScoped<CurrentUserAccessor>();
 
 // 5. HttpClient for future AI integration
 builder.Services.AddHttpClient("AiApi", client =>
@@ -217,6 +228,14 @@ app.MapPost("/api/auth/change-password", async (HttpContext http, IAuthService a
         ? $"/change-password?message={Uri.EscapeDataString(result.Message)}"
         : $"/change-password?error={Uri.EscapeDataString(result.Message)}");
 }).RequireAuthorization();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<SoftSyncDbContext>();
+    await db.Database.MigrateAsync();
+    var seedFolder = Path.Combine(app.Environment.ContentRootPath, "SeedData");
+    await SoftSync.DAL.Seed.JsonContentSeeder.SeedAsync(db, seedFolder);
+}
 // ====== HẾT PHẦN MỚI ======
 
 app.MapRazorComponents<App>()

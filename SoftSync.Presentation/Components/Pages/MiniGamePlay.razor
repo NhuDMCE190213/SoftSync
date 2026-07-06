@@ -1,0 +1,85 @@
+﻿@page "/game/{MiniGameId:int}/play"
+@using SoftSync.BLL.Interfaces
+@using SoftSync.Common.Dtos.MiniGame
+@inject IMiniGameService MiniGameService
+@inject NavigationManager Nav
+@attribute [Authorize]
+
+<div class="max-800 mx-auto">
+    @if (questions == null)
+    {
+        <div class="text-center py-5"><div class="spinner-border text-primary"></div></div>
+    }
+    else if (currentIndex < questions.Count)
+    {
+        var q = questions[currentIndex];
+        <div class="ss-card p-5">
+            <span class="badge bg-primary mb-3">Câu @(currentIndex + 1)/@questions.Count</span>
+            @if (!string.IsNullOrEmpty(q.ContextNote))
+            {
+                <p class="text-muted fst-italic">@q.ContextNote</p>
+            }
+            <h4 class="fw-bold mb-4">@q.ScenarioText</h4>
+
+            <div class="d-grid gap-3">
+                @foreach (var opt in q.Options)
+                {
+                    <button class="btn btn-outline-primary text-start p-3"
+                            @onclick="() => SelectOption(opt.Id)"
+                            disabled="@answered">
+                        @opt.OptionText
+                    </button>
+                }
+            </div>
+
+            @if (answered)
+            {
+                <div class="mt-4 text-end">
+                    <button class="ss-btn-primary px-4" @onclick="NextQuestion">Câu tiếp theo</button>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="ss-card p-5 text-center">
+            <h3 class="fw-bold">Hoàn thành!</h3>
+            <p class="fs-5">Điểm của bạn: <strong>@finalScore</strong></p>
+            <button class="ss-btn-primary px-5" @onclick="BackToGames">Quay lại danh sách game</button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int MiniGameId { get; set; }
+    private List<MiniGameQuestionDto>? questions;
+    private int currentIndex = 0;
+    private bool answered = false;
+    private int finalScore = 0;
+    private List<MiniGameAnswerDto> answers = new();
+    private int userId = 1; // TODO: lấy từ AuthenticationState thật
+
+    protected override async Task OnInitializedAsync()
+    {
+        questions = await MiniGameService.GetRandomQuestionsAsync(MiniGameId);
+    }
+
+    private void SelectOption(int optionId)
+    {
+        answers.Add(new MiniGameAnswerDto { QuestionId = questions![currentIndex].Id, OptionId = optionId });
+        answered = true;
+    }
+
+    private async Task NextQuestion()
+    {
+        currentIndex++;
+        answered = false;
+
+        if (currentIndex >= questions!.Count)
+        {
+            finalScore = await MiniGameService.SubmitAttemptAsync(userId, MiniGameId, answers);
+        }
+    }
+
+    private void BackToGames() => Nav.NavigateTo("/");
+}

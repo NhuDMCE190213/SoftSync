@@ -1,0 +1,18 @@
+{
+  "skillId": "TIME_MANAGEMENT",
+  "skillName": "Kỹ năng Quản lý thời gian",
+  "academicRecommendation": "Ít nhất 2 giờ tự học ngoài giờ cho mỗi 1 giờ lên lớp[cite: 460].",
+  "procrastinationImpact": "Gây căng thẳng tột độ và làm suy giảm kết quả học tập[cite: 451].",
+  "timeEstimationMetrics": {
+    "readingStandardPage": { "minMinutes": 5, "maxMinutes": 7, "unit": "trang" },
+    "readingTechnicalPage": { "minMinutes": 10, "maxMinutes": 15, "unit": "trang" },
+    "complexMathQuestion": { "fixedMinutes": 15, "unit": "câu" },
+    "essayWithoutResearchPage": { "fixedMinutes": 60, "unit": "trang" },
+    "essayWithResearchPage": { "fixedMinutes": 105, "unit": "trang [cite: 461]" }
+  },
+  "frameworks": [
+    { "name": "Ma trận Eisenhower", "description": "Phân loại công việc dựa trên Khẩn cấp × Quan trọng[cite: 468]." },
+    { "name": "Pomodoro", "description": "25 phút tập trung làm + 3–5 phút nghỉ ngắn; nghỉ dài 15–30 phút sau 4 lượt[cite: 463]." },
+    { "name": "Eat the Frog", "description": "Giải quyết nhiệm vụ khó khăn, lớn nhất ngay vào đầu ngày[cite: 452, 455]." }
+  ]
+}

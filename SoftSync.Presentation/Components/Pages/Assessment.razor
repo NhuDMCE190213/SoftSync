@@ -1,9 +1,8 @@
-@page "/assessment/{UserId:int}"
+﻿@page "/assessment/{UserId:int}"
 @using SoftSync.BLL.Interfaces
-@using SoftSync.Common.Dtos
-@inject IAssessmentService AssessmentService
+@using SoftSync.Common.Dtos.EntryTest
+@inject IEntryTestService EntryTestService
 @inject NavigationManager Nav
-
 @attribute [Authorize]
 
 <div class="max-800 mx-auto">
@@ -22,7 +21,7 @@
         <div class="ss-card p-5">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <span class="badge bg-primary px-3 py-2">Question @(currentQuestionIndex + 1) of @questions.Count</span>
-                <span class="text-muted small">Skill: Communication</span>
+                <span class="text-muted small">Kỹ năng: @GetSkillName(q.SkillId)</span>
             </div>
             
             <h3 class="fw-bold mb-4">@q.QuestionText</h3>
@@ -55,25 +54,22 @@
 
 @code {
     [Parameter] public int UserId { get; set; }
-    private List<AssessmentQuestionDto>? questions;
+    private List<EntryTestQuestionDto>? questions;
     private int currentQuestionIndex = 0;
     private int selectedOptionId = 0;
-    private List<UserAnswerDto> answers = new();
+    private List<EntryTestAnswerDto> answers = new();
 
     protected override async Task OnInitializedAsync()
     {
-        questions = (await AssessmentService.GetAssessmentQuestionsAsync(UserId)).ToList();
+        questions = await EntryTestService.GetQuestionsAsync();
     }
 
-    private void SelectOption(int id)
-    {
-        selectedOptionId = id;
-    }
+    private void SelectOption(int id) => selectedOptionId = id;
 
     private async Task NextQuestion()
     {
-        answers.Add(new UserAnswerDto { QuestionId = questions![currentQuestionIndex].Id, OptionId = selectedOptionId });
-        
+        answers.Add(new EntryTestAnswerDto { QuestionId = questions![currentQuestionIndex].Id, OptionId = selectedOptionId });
+
         if (currentQuestionIndex < questions.Count - 1)
         {
             currentQuestionIndex++;
@@ -81,11 +77,19 @@
         }
         else
         {
-            currentQuestionIndex++; // Move to processing state
-            await AssessmentService.SubmitAssessmentAsync(UserId, answers);
+            currentQuestionIndex++;
+            await EntryTestService.SubmitAsync(UserId, answers);
             Nav.NavigateTo($"/assessment-result/{UserId}");
         }
     }
+
+    private string GetSkillName(int skillId) => skillId switch
+    {
+        1 => "Quản lý thời gian",
+        2 => "Giao tiếp",
+        3 => "Tư duy phản biện",
+        _ => ""
+    };
 }
 
 <style>

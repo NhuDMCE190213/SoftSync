@@ -1,7 +1,11 @@
-@page "/roadmap/{UserId:int}"
+﻿@page "/roadmap"
 @using SoftSync.BLL.Interfaces
 @using SoftSync.Common.Dtos
+@using SoftSync.Common.Dtos.Roadmap
+@using SoftSync.Presentation.Infrastructure
 @inject IRoadmapService RoadmapService
+@inject NavigationManager Nav
+@inject CurrentUserAccessor CurrentUserAccessor
 
 @attribute [Authorize]
 
@@ -28,7 +32,7 @@
             @foreach (var item in roadmap.Items)
             {
                 <div class="mb-5 position-relative">
-                    <div class="ss-roadmap-dot @(item.IsCompleted ? "active" : "")" style="top: 0.5rem; @(item.IsCompleted ? "" : "background: #cbd5e1;")"></div>
+                    <div class='ss-roadmap-dot @(item.IsCompleted ? "active" : "")' style="top: 0.5rem; @(item.IsCompleted ? "" : "background: #cbd5e1;")"></div>
                     <div class="ss-card p-4 ms-2">
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <div>
@@ -36,11 +40,18 @@
                                 <h5 class="fw-bold mt-1">@item.Title</h5>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input fs-4 cursor-pointer" type="checkbox" checked="@item.IsCompleted" 
+                                <input class="form-check-input fs-4 cursor-pointer" type="checkbox" checked="@item.IsCompleted"
                                        @onchange="() => ToggleComplete(item)" />
                             </div>
                         </div>
                         <p class="text-muted mb-0">@item.Description</p>
+
+                        @if (item.SkillId.HasValue)
+                        {
+                            <button class="ss-btn-primary btn-sm mt-2" @onclick='() => Nav.NavigateTo($"/skill/{item.SkillId}/theory")'>
+                                Bắt đầu học <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
+                        }
                     </div>
                 </div>
             }
@@ -49,12 +60,16 @@
 </div>
 
 @code {
-    [Parameter] public int UserId { get; set; }
+    private int? userId;
     private RoadmapDto? roadmap;
 
     protected override async Task OnInitializedAsync()
     {
-        roadmap = await RoadmapService.GetUserRoadmapAsync(UserId);
+        userId = await CurrentUserAccessor.GetUserIdAsync();
+        if (userId.HasValue)
+        {
+            roadmap = await RoadmapService.GetUserRoadmapAsync(userId.Value);
+        }
     }
 
     private async Task ToggleComplete(RoadmapItemDto item)

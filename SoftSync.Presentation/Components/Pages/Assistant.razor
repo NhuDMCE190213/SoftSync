@@ -1,8 +1,9 @@
 @page "/assistant"
-@page "/assistant/{UserId:int}"
 @using SoftSync.BLL.Interfaces
 @using SoftSync.Common.Dtos
+@using SoftSync.Presentation.Infrastructure
 @inject IAiAssistantService AssistantService
+@inject CurrentUserAccessor CurrentUserAccessor
 
 @attribute [Authorize]
 
@@ -37,13 +38,18 @@
 </div>
 
 @code {
-    [Parameter] public int UserId { get; set; } = 1; // Default for MVP Demo
+    private int? userId;
     private string userInput = "";
     private bool isTyping = false;
     private List<MessageDto> messages = new()
     {
         new MessageDto { Sender = SoftSync.Common.Enums.ChatSender.Assistant, Content = "Chào bạn! Tôi có thể giúp gì cho bạn hôm nay?", CreatedAt = DateTime.Now }
     };
+
+    protected override async Task OnInitializedAsync()
+    {
+        userId = await CurrentUserAccessor.GetUserIdAsync();
+    }
 
     private async Task SendMessage()
     {
@@ -58,7 +64,7 @@
 
         // Simulate AI response delay
         await Task.Delay(1000);
-        var reply = await AssistantService.GetReplyAsync(userMsg, UserId);
+        var reply = await AssistantService.GetReplyAsync(userMsg, userId.Value);
 
         messages.Add(new MessageDto { Sender = SoftSync.Common.Enums.ChatSender.Assistant, Content = reply, CreatedAt = DateTime.Now });
         isTyping = false;

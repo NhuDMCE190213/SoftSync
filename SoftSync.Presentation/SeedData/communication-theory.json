@@ -1,0 +1,22 @@
+{
+  "skillId": "COMMUNICATION",
+  "skillName": "Kỹ năng Giao tiếp",
+  "definitions": {
+    "concept": "Giao tiếp là quá trình thấu hiểu và chia sẻ ý nghĩa giữa các cá nhân[cite: 474].",
+    "components": [
+      "Nguồn gửi (Source)", "Thông điệp (Message)", "Kênh truyền (Channel)", "Người nhận (Receiver)",
+      "Phản hồi (Feedback)", "Môi trường (Environment)", "Bối cảnh (Context)", "Nhiễu/Sự can thiệp (Interference) [cite: 475]"
+    ],
+    "models": [
+      { "name": "Transactional", "description": "Gửi và nhận thông điệp đồng thời." },
+      { "name": "Constructivist", "description": "Thương lượng để đạt được ý nghĩa chung." }
+    ],
+    "netiquette": "Tuân thủ Quy tắc Vàng — không viết IN HOA (bị hiểu là la hét trực tuyến), giữ tranh luận ôn hòa, tôn trọng riêng tư[cite: 367, 477].",
+    "barriers": [
+      {
+        "name": "Bypassing",
+        "description": "Hiện tượng hiểu sai lệch cùng một từ ngữ do khác biệt địa lý, thế hệ hoặc bối cảnh văn hóa[cite: 368, 478]."
+      }
+    ]
+  }
+}

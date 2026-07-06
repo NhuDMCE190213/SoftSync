@@ -24,7 +24,12 @@ public class SoftSyncDbContext : DbContext
     public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
     public DbSet<TheoryLesson> TheoryLessons { get; set; }
     public DbSet<MiniGame> MiniGames { get; set; }
+    public DbSet<MiniGameOption> MiniGameOptions { get; set; }
     public DbSet<MiniGameQuestion> MiniGameQuestions { get; set; }
+    public DbSet<EntryTestQuestion> EntryTestQuestions { get; set; }
+    public DbSet<EntryTestOption> EntryTestOptions { get; set; }
+    public DbSet<EntryTestResult> EntryTestResults { get; set; }
+    public DbSet<MiniGameAttempt> MiniGameAttempts { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -53,28 +58,24 @@ public class SoftSyncDbContext : DbContext
     {
         // 1. Skills
         modelBuilder.Entity<Skill>().HasData(
-            new Skill { Id = 1, Name = "Communication", Description = "Effective verbal and non-verbal interaction.", IconName = "bi-chat-dots" },
-            new Skill { Id = 2, Name = "Teamwork", Description = "Collaborating effectively with others.", IconName = "bi-people" },
-            new Skill { Id = 3, Name = "Time Management", Description = "Organizing and planning your time.", IconName = "bi-clock" },
-            new Skill { Id = 4, Name = "Critical Thinking", Description = "Analyzing info to make judgments.", IconName = "bi-lightbulb" },
-            new Skill { Id = 5, Name = "Problem Solving", Description = "Finding solutions to complex issues.", IconName = "bi-tools" },
-            new Skill { Id = 6, Name = "Emotional Management", Description = "Recognizing and managing emotions.", IconName = "bi-heart" },
-            new Skill { Id = 7, Name = "Adaptability", Description = "Adjusting to new conditions.", IconName = "bi-arrow-repeat" }
+            new Skill { Id = 1, Name = "Time Management", Description = "Quản lý thời gian hiệu quả.", IconName = "bi-clock" },
+            new Skill { Id = 2, Name = "Communication", Description = "Giao tiếp hiệu quả.", IconName = "bi-chat-dots" },
+            new Skill { Id = 3, Name = "Critical Thinking", Description = "Tư duy phản biện.", IconName = "bi-lightbulb" }
         );
 
         // 2. Assessment Questions (Communication)
-        modelBuilder.Entity<AssessmentQuestion>().HasData(
-            new AssessmentQuestion { Id = 1, SkillId = 1, QuestionText = "How do you handle a conflict during a group discussion?", Type = QuestionType.Scenario },
-            new AssessmentQuestion { Id = 2, SkillId = 1, QuestionText = "How important is active listening in a conversation?", Type = QuestionType.MultipleChoice }
-        );
+        //modelBuilder.Entity<AssessmentQuestion>().HasData(
+        //    new AssessmentQuestion { Id = 1, SkillId = 1, QuestionText = "How do you handle a conflict during a group discussion?", Type = QuestionType.Scenario },
+        //    new AssessmentQuestion { Id = 2, SkillId = 1, QuestionText = "How important is active listening in a conversation?", Type = QuestionType.MultipleChoice }
+        //);
 
-        modelBuilder.Entity<AssessmentOption>().HasData(
-            new AssessmentOption { Id = 1, QuestionId = 1, OptionText = "Stay quiet to avoid more conflict.", ScoreValue = 1 },
-            new AssessmentOption { Id = 2, QuestionId = 1, OptionText = "Listen to all sides and suggest a compromise.", ScoreValue = 5 },
-            new AssessmentOption { Id = 3, QuestionId = 1, OptionText = "Insist on my point of view.", ScoreValue = 2 },
-            new AssessmentOption { Id = 4, QuestionId = 2, OptionText = "Not important.", ScoreValue = 1 },
-            new AssessmentOption { Id = 5, QuestionId = 2, OptionText = "Very important.", ScoreValue = 5 }
-        );
+        //modelBuilder.Entity<AssessmentOption>().HasData(
+        //    new AssessmentOption { Id = 1, QuestionId = 1, OptionText = "Stay quiet to avoid more conflict.", ScoreValue = 1 },
+        //    new AssessmentOption { Id = 2, QuestionId = 1, OptionText = "Listen to all sides and suggest a compromise.", ScoreValue = 5 },
+        //    new AssessmentOption { Id = 3, QuestionId = 1, OptionText = "Insist on my point of view.", ScoreValue = 2 },
+        //    new AssessmentOption { Id = 4, QuestionId = 2, OptionText = "Not important.", ScoreValue = 1 },
+        //    new AssessmentOption { Id = 5, QuestionId = 2, OptionText = "Very important.", ScoreValue = 5 }
+        //);
 
         // 3. Case Studies
         modelBuilder.Entity<CaseStudy>().HasData(

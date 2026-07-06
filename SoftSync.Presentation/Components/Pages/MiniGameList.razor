@@ -1,0 +1,48 @@
+﻿@page "/skill/{SkillId:int}/games"
+@using SoftSync.BLL.Interfaces
+@using SoftSync.Common.Dtos.MiniGame
+@inject IMiniGameService MiniGameService
+@inject NavigationManager Nav
+@attribute [Authorize]
+
+<div class="max-800 mx-auto">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0">Mini Games</h2>
+        <button class="btn btn-outline-primary" @onclick="GoToTheory">
+            <i class="bi bi-book me-1"></i> Xem lại lý thuyết
+        </button>
+    </div>
+
+    @if (games == null)
+    {
+        <div class="text-center py-5">Loading...</div>
+    }
+    else
+    {
+        <div class="d-grid gap-3">
+            @foreach (var g in games)
+            {
+                <div class="ss-card p-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="fw-bold mb-1">@g.Name</h5>
+                        <p class="text-muted mb-0">@g.Description</p>
+                    </div>
+                    <button class="ss-btn-primary px-4" @onclick="() => Play(g.Id)">Chơi ngay</button>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int SkillId { get; set; }
+    private List<MiniGameDto>? games;
+
+    protected override async Task OnInitializedAsync()
+    {
+        games = await MiniGameService.GetMiniGamesBySkillIdAsync(SkillId);
+    }
+
+    private void Play(int miniGameId) => Nav.NavigateTo($"/game/{miniGameId}/play");
+    private void GoToTheory() => Nav.NavigateTo($"/skill/{SkillId}/theory");
+}

@@ -1,5 +1,6 @@
 ﻿using SoftSync.BLL.Interfaces;
 using SoftSync.Common.Dtos;
+using SoftSync.Common.Dtos.Auth;
 using SoftSync.Common.Security;
 using SoftSync.DAL.Entities;
 using SoftSync.DAL.Repositories;

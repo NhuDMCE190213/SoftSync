@@ -1,0 +1,95 @@
+﻿@page "/skill/{SkillId:int}/theory"
+@using SoftSync.BLL.Interfaces
+@using SoftSync.Common.Dtos
+@using Markdig
+@inject ITheoryLessonService TheoryService
+@inject NavigationManager Nav
+@attribute [Authorize]
+
+<div class="max-800 mx-auto">
+    <h2 class="fw-bold mb-4"><i class="bi bi-book ss-gradient-text me-2"></i>Lý thuyết - @GetSkillName(SkillId)</h2>
+
+    @if (lessons == null)
+    {
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+        </div>
+    }
+    else if (lessons.Count == 0)
+    {
+        <div class="ss-card p-4 text-center text-muted">
+            Nội dung lý thuyết cho kỹ năng này đang được cập nhật.
+        </div>
+    }
+    else
+    {
+        var lesson = lessons[currentIndex];
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="badge bg-primary px-3 py-2">Bài @(currentIndex + 1)/@lessons.Count</span>
+            <span class="fw-bold">@lesson.Title</span>
+        </div>
+
+        @if (!string.IsNullOrEmpty(lesson.VideoUrl))
+        {
+            <div class="ratio ratio-16x9 mb-4">
+                <iframe src="@lesson.VideoUrl" allowfullscreen></iframe>
+            </div>
+        }
+
+        <div class="ss-card p-4 mb-4">
+            @((MarkupString)RenderMarkdown(lesson.ContentMarkdown))
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <button class="btn btn-outline-primary px-4" disabled="@(currentIndex == 0)" @onclick="PrevLesson">
+                <i class="bi bi-arrow-left me-1"></i> Bài trước
+            </button>
+
+            @if (currentIndex < lessons.Count - 1)
+            {
+                <button class="ss-btn-primary px-4" @onclick="NextLesson">
+                    Bài tiếp theo <i class="bi bi-arrow-right ms-1"></i>
+                </button>
+            }
+            else
+            {
+                <button class="ss-btn-primary px-4" @onclick="GoToGames">
+                    Vào phần luyện tập <i class="bi bi-controller ms-1"></i>
+                </button>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int SkillId { get; set; }
+    private List<TheoryLessonDto>? lessons;
+    private int currentIndex = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        lessons = await TheoryService.GetBySkillIdAsync(SkillId);
+    }
+
+    private void PrevLesson() { if (currentIndex > 0) currentIndex--; }
+    private void NextLesson() { if (lessons != null && currentIndex < lessons.Count - 1) currentIndex++; }
+
+    private void GoToGames() => Nav.NavigateTo($"/skill/{SkillId}/games");
+
+    private string RenderMarkdown(string markdown) => Markdown.ToHtml(markdown);
+
+    private string GetSkillName(int skillId) => skillId switch
+    {
+        1 => "Quản lý thời gian",
+        2 => "Giao tiếp",
+        3 => "Tư duy phản biện",
+        _ => ""
+    };
+}
+
+<style>
+    .max-800 {
+        max-width: 800px;
+    }
+</style>

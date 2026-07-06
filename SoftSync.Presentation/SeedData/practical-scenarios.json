@@ -1,0 +1,105 @@
+[
+  {
+    "scenarioId": "COM_SCENARIO_01",
+    "skillId": "COMMUNICATION",
+    "type": "MULTIPLE_CHOICE",
+    "context": "Bạn cần hỏi giáo sư về một bài tập bị chấm điểm thấp vì bạn tin rằng bài làm của mình xứng đáng điểm cao hơn[cite: 380].",
+    "questionText": "Hành động nào sau đây là phù hợp nhất để đạt hiệu quả giao tiếp[cite: 381]?",
+    "options": [
+      {
+        "text": "Gửi tin nhắn văn bản ngắn gọn để hỏi lý do[cite: 382].",
+        "points": 3,
+        "feedback": "Tông giọng quá ngắn gọn dễ bị hiểu lầm là thiếu trang trọng hoặc áp đặt qua không gian mạng."
+      },
+      {
+        "text": "Gọi điện trực tiếp cho giáo sư và hy vọng họ đang rảnh[cite: 383].",
+        "points": 0,
+        "feedback": "Rủi ro cao gây phiền hà, vi phạm quy tắc tôn trọng thời gian và ranh giới cá nhân của giảng viên."
+      },
+      {
+        "text": "Tìm hiểu giờ tiếp sinh viên (office hours) của giáo sư và đến gặp để trực tiếp trao đổi ôn hòa[cite: 384].",
+        "points": 10,
+        "isCorrect": true,
+        "feedback": "Tối ưu! Giao tiếp trực tiếp giúp truyền tải đầy đủ thông điệp phi ngôn ngữ, đồng thời tận dụng office hours giúp xây dựng mối quan hệ hợp tác tốt hơn[cite: 385]."
+      }
+    ]
+  },
+  {
+    "scenarioId": "COM_SCENARIO_02",
+    "skillId": "COMMUNICATION",
+    "type": "MULTIPLE_CHOICE",
+    "context": "Khi viết email chính thức gửi giáo sư hoặc đồng nghiệp trong môi trường học thuật/chuyên nghiệp[cite: 386].",
+    "questionText": "Thói quen nào giúp email của bạn giữ được sự chuyên nghiệp nhất[cite: 386]?",
+    "options": [
+      {
+        "text": "Viết toàn bộ IN HOA để gây sự chú ý[cite: 387].",
+        "points": 0,
+        "feedback": "Vi phạm nghiêm trọng Netiquette, việc viết hoa toàn bộ bị coi là hành vi la hét trực tuyến[cite: 389]."
+      },
+      {
+        "text": "Dùng các từ viết tắt phổ biến trực tuyến như FWIW, IMHO, LOL[cite: 388].",
+        "points": 2,
+        "feedback": "Các từ viết tắt không chuẩn hóa không phù hợp cho các bối cảnh giao tiếp chính thức, chuyên nghiệp[cite: 390]."
+      },
+      {
+        "text": "Tiêu đề ngắn gọn cụ thể, câu hoàn chỉnh đúng ngữ pháp, lời chào trang trọng (vd: Dear Ms. X), kết thúc bằng chữ ký có thông tin liên hệ[cite: 389].",
+        "points": 10,
+        "isCorrect": true,
+        "feedback": "Chính xác! Đảm bảo đầy đủ các quy chuẩn Netiquette học thuật và kiểm soát chặt chẽ tông giọng khẳng định ôn hòa[cite: 477]."
+      }
+    ]
+  },
+  {
+    "scenarioId": "TIME_SCENARIO_01",
+    "skillId": "TIME_MANAGEMENT",
+    "type": "SITUATIONAL_ANSWER",
+    "context": "Quản lý yêu cầu bạn tăng ca vào tối thứ Bảy, nhưng bạn đã lên lịch viết một bài luận quan trọng cho tuần sau[cite: 393].",
+    "questionText": "Bạn nên xử lý tình huống xung đột ưu tiên này như thế nào[cite: 393]?",
+    "idealSolution": {
+      "action": "Chủ động báo sớm, thảo luận rõ ràng về ưu tiên học tập[cite: 394].",
+      "example": "Xin phép từ chối tăng ca tối thứ Bảy, chủ động đề xuất giải pháp thay thế như hỗ trợ bù vào ngày Chủ Nhật[cite: 394].",
+      "takeaway": "Giải quyết xung đột lịch trình chủ động giúp bảo vệ uy tín làm việc (Ethos) đồng thời bảo toàn tiến độ học tập[cite: 310]."
+    }
+  },
+  {
+    "scenarioId": "CRIT_SCENARIO_01",
+    "skillId": "CRITICAL_THINKING",
+    "type": "FACT_OR_OPINION",
+    "questionText": "Hãy phân định rạch ròi các tuyên bố sau đây là Fact (Sự thật) hay Opinion (Ý kiến cá nhân)[cite: 496].",
+    "items": [
+      { "statement": "Năm 1952, Elizabeth trở thành Nữ hoàng Anh[cite: 398].", "answer": "FACT", "explanation": "Có dữ liệu lịch sử xác minh được khách quan." },
+      { "statement": "Bột yến mạch có vị rất nhạt nhẽo [cite: 399].", "answer": "OPINION", "explanation": "Cảm nhận vị giác mang tính chủ quan của cá nhân[cite: 498]." },
+      { "statement": "Mụn trứng cá là tình trạng da gây xấu hổ[cite: 400].", "answer": "OPINION", "explanation": "Trạng thái cảm xúc phán đoán chủ quan." },
+      { "statement": "Điện thoại di động gây ra khối u não [cite: 401].", "answer": "OPINION", "explanation": "Chưa có bằng chứng khoa học thực nghiệm xác thực củng cố[cite: 401]." }
+    ]
+  },
+  {
+    "scenarioId": "CRIT_SCENARIO_02",
+    "skillId": "CRITICAL_THINKING",
+    "type": "MULTIPLE_CHOICE",
+    "context": "Nhóm lập kế hoạch du lịch với ngân sách giới hạn $200/người. Thành viên A thực hiện thu thập dữ liệu, nghiên cứu chi phí du thuyền/cabin để tối ưu hóa ngân sách. Thành viên B vội vã đặt cọc ngay phòng ăn 25 người ở nhà hàng đắt đỏ[cite: 402, 403].",
+    "questionText": "Ai là người thể hiện năng lực tư duy phản biện tốt hơn trong bối cảnh này[cite: 403]?",
+    "options": [
+      {
+        "text": "Thành viên A [cite: 403]",
+        "points": 10,
+        "isCorrect": true,
+        "feedback": "Đúng. Thành viên A chủ động nghiên cứu phương án, thu thập bằng chứng thực tế phù hợp với ranh giới ngân sách nhóm[cite: 404]."
+      },
+      {
+        "text": "Thành viên B [cite: 403]",
+        "points": 0,
+        "feedback": "Sai. Thành viên B đưa ra quyết định vội vã dựa trên cảm tính, làm lãng phí ngân sách và vi phạm mục tiêu ban đầu của nhóm[cite: 404]."
+      }
+    ]
+  },
+  {
+    "scenarioId": "CRIT_FALLACY_01",
+    "skillId": "CRITICAL_THINKING",
+    "type": "IDENTIFY_FALLACY",
+    "context": "Tranh luận nhóm xuất hiện luận điểm: 'Tất cả mọi người trong trường đều đồng ý quy định này vô lý, vì vậy chúng ta chắc chắn không cần tuân theo nó nữa.' [cite: 405]",
+    "questionText": "Đoạn lập luận trên đã phạm phải lỗi ngụy biện logic nào[cite: 405]?",
+    "correctAnswer": "BANDWAGON",
+    "feedback": "Mắc ngụy biện Bandwagon (Ad Populum) — cố tình sử dụng niềm tin số đông để khẳng định một kết luận là đúng mà không đưa ra bằng chứng thực nghiệm[cite: 406]."
+  }
+]

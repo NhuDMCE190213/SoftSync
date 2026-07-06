@@ -1,56 +1,23 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">SoftSync</a>
-    </div>
-</div>
-
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
+﻿<AuthorizeView>
+    <Authorized>
+        <div class="nav-item px-3"><NavLink class="nav-link" href="" Match="NavLinkMatch.All"><span class="bi bi-house-door-fill-nav-menu"></span> Trang chủ</NavLink></div>
+        <div class="nav-item px-3"><NavLink class="nav-link" href="roadmap"><span class="bi bi-map"></span> Lộ trình học</NavLink></div>
+        <div class="nav-item px-3"><NavLink class="nav-link" href="progress"><span class="bi bi-graph-up"></span> Tiến độ</NavLink></div>
+        <div class="nav-item px-3"><NavLink class="nav-link" href="case-studies"><span class="bi bi-briefcase"></span> Tình huống thực tế</NavLink></div>
+        <div class="nav-item px-3"><NavLink class="nav-link" href="assistant"><span class="bi bi-robot"></span> Trợ lý AI</NavLink></div>
+        <div class="nav-item px-3"><NavLink class="nav-link" href="community"><span class="bi bi-people"></span> Cộng đồng / Mentor</NavLink></div>
+        <div class="nav-item px-3"><NavLink class="nav-link" href="profile"><span class="bi bi-person-circle"></span> Hồ sơ</NavLink></div>
+        <div class="nav-item px-3 mt-3 text-white-50 small">Xin chào, <strong>@context.User.Identity?.Name</strong></div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
+            <form method="post" action="/api/auth/logout">
+                <button type="submit" class="nav-link btn btn-link text-start w-100 p-0" style="border:none">
+                    <span class="bi bi-box-arrow-right"></span> Đăng xuất
+                </button>
+            </form>
         </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-
-        <AuthorizeView>
-            <Authorized>
-                <div class="nav-item px-3 mt-3 text-white-50 small">
-                    Xin chào, <strong>@context.User.Identity?.Name</strong>
-                </div>
-                <div class="nav-item px-3">
-                    <form method="post" action="/api/auth/logout">
-                        <button type="submit" class="nav-link btn btn-link text-start w-100 p-0" style="border:none">
-                            <span class="bi bi-box-arrow-right" aria-hidden="true"></span> Đăng xuất
-                        </button>
-                    </form>
-                </div>
-            </Authorized>
-            <NotAuthorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="login">
-                        <span class="bi bi-box-arrow-in-right" aria-hidden="true"></span> Đăng nhập
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="register">
-                        <span class="bi bi-person-plus-fill" aria-hidden="true"></span> Đăng ký
-                    </NavLink>
-                </div>
-            </NotAuthorized>
-        </AuthorizeView>
-    </nav>
-</div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="nav-item px-3"><NavLink class="nav-link" href="login"><span class="bi bi-box-arrow-in-right"></span> Đăng nhập</NavLink></div>
+        <div class="nav-item px-3"><NavLink class="nav-link" href="register"><span class="bi bi-person-plus-fill"></span> Đăng ký</NavLink></div>
+    </NotAuthorized>
+</AuthorizeView>

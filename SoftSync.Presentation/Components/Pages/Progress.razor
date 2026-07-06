@@ -1,8 +1,12 @@
-@page "/progress"
-@page "/progress/{UserId:int}"
+﻿@page "/progress"
 @using SoftSync.BLL.Interfaces
+@using SoftSync.BLL.Services
 @using SoftSync.Common.Dtos
+@using SoftSync.Common.Dtos.Roadmap
+@using SoftSync.Presentation.Infrastructure
+@inject NavigationManager Nav
 @inject IProgressService ProgressService
+@inject CurrentUserAccessor CurrentUserAccessor
 
 @attribute [Authorize]
 
@@ -46,19 +50,25 @@
                     </div>
                 </div>
             }
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-primary" @onclick='() => Nav.NavigateTo("/roadmap")'>Quay lại lộ trình</button>
+            </div>
         </div>
     }
 </div>
 
 @code {
-    [Parameter] public int UserId { get; set; } = 1;
+    private int? userId;
+    private RoadmapDto? roadmap;
     private IEnumerable<ProgressDto>? progressLogs;
 
     protected override async Task OnInitializedAsync()
     {
-        // For MVP, if no data, we yield some mock data in the service normally
-        // but here we just fetch.
-        progressLogs = await ProgressService.GetUserProgressAsync(UserId);
+        userId = await CurrentUserAccessor.GetUserIdAsync();
+        if (userId.HasValue)
+        {
+            progressLogs = await ProgressService.GetUserProgressAsync(userId.Value);
+        }
     }
 }
 

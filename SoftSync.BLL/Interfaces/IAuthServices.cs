@@ -1,4 +1,5 @@
 ﻿using SoftSync.Common.Dtos;
+using SoftSync.Common.Dtos.Auth;
 
 namespace SoftSync.BLL.Interfaces;
 

@@ -1,5 +1,7 @@
 using SoftSync.BLL.Interfaces;
 using SoftSync.Common.Dtos;
+using SoftSync.Common.Dtos.Assessment;
+using SoftSync.Common.Dtos.Roadmap;
 using SoftSync.Common.Enums;
 
 namespace SoftSync.BLL.Services.Fake;
@@ -11,13 +13,15 @@ public class FakeAiAssessmentService : IAiAssessmentService
 {
     public Task<AssessmentResultDto> EvaluateAsync(List<UserAnswerDto> answers)
     {
-        // Simulate AI logic: more answers = better score
         int score = (answers.Count * 23) % 100;
-        var level = score < 50 ? AssessmentLevel.Weak : score < 80 ? AssessmentLevel.Average : AssessmentLevel.Good;
+        var level = score < 25 ? AssessmentLevel.Passive
+                  : score < 50 ? AssessmentLevel.Developing
+                  : score < 75 ? AssessmentLevel.Proactive
+                  : AssessmentLevel.Exceptional;
 
         return Task.FromResult(new AssessmentResultDto
         {
-            SkillId = 1, // Defaulting to Communication for demo
+            SkillId = 1,
             Score = score,
             Level = level,
             CreatedAt = DateTime.UtcNow
@@ -54,10 +58,10 @@ public class FakeAiRoadmapService : IAiRoadmapService
             UserId = userId,
             Items = new List<RoadmapItemDto>
             {
-                new RoadmapItemDto { WeekNumber = 1, Title = "Khám phá bản thân", Description = "Hoàn thành bài đánh giá năng lực và xác định mục tiêu.", IsCompleted = false },
-                new RoadmapItemDto { WeekNumber = 2, Title = "Kỹ năng Giao tiếp cơ bản", Description = "Tham gia mini-game về tình huống đối thoại.", IsCompleted = false },
-                new RoadmapItemDto { WeekNumber = 3, Title = "Kỹ năng Làm việc nhóm", Description = "Học cách giải quyết xung đột trong team.", IsCompleted = false },
-                new RoadmapItemDto { WeekNumber = 4, Title = "Tổng kết tháng", Description = "Xem lại tiến độ và nhận feedback từ AI Mentor.", IsCompleted = false }
+                new RoadmapItemDto { SkillId = 1, WeekNumber = 1, Title = "Khám phá bản thân", Description = "Hoàn thành bài đánh giá năng lực và xác định mục tiêu.", IsCompleted = false },
+                new RoadmapItemDto { SkillId = 2, WeekNumber = 2, Title = "Kỹ năng Giao tiếp cơ bản", Description = "Tham gia mini-game về tình huống đối thoại.", IsCompleted = false },
+                new RoadmapItemDto { SkillId = 3, WeekNumber = 3, Title = "Kỹ năng Làm việc nhóm", Description = "Học cách giải quyết xung đột trong team.", IsCompleted = false },
+                new RoadmapItemDto { SkillId = 4, WeekNumber = 4, Title = "Tổng kết tháng", Description = "Xem lại tiến độ và nhận feedback từ AI Mentor.", IsCompleted = false }
             }
         };
         return Task.FromResult(roadmap);
