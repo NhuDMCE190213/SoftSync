@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using SoftSync.DAL.Entities;
 using SoftSync.Common.Enums;
+using SoftSync.Common.Security;
+using SoftSync.DAL.Entities;
 
 namespace SoftSync.DAL.Data;
 
@@ -20,6 +21,11 @@ public class SoftSyncDbContext : DbContext
     public DbSet<ProgressLog> ProgressLogs { get; set; }
     public DbSet<ChatMessage> ChatMessages { get; set; }
     public DbSet<Mentor> Mentors { get; set; }
+    public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
+    public DbSet<TheoryLesson> TheoryLessons { get; set; }
+    public DbSet<MiniGame> MiniGames { get; set; }
+    public DbSet<MiniGameQuestion> MiniGameQuestions { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -83,9 +89,19 @@ public class SoftSyncDbContext : DbContext
             new CaseStudyOption { Id = 4, CaseStudyId = 2, OptionText = "Inform the stakeholders immediately and propose a new timeline.", IsRecommended = true, Feedback = "Transparency and proactive planning are essential." }
         );
 
-        // 4. Demo Users
+        // 4. Demo Users — MỚI: thêm Email + PasswordHash
         modelBuilder.Entity<User>().HasData(
-            new User { Id = 1, FullName = "Nguyễn Văn A", Age = 20, Role = UserRole.Student, Goal = "Cải thiện kỹ năng giao tiếp", CreatedAt = DateTime.UtcNow.AddDays(-10) }
+            new User
+            {
+                Id = 1,
+                FullName = "Nguyễn Văn A",
+                Email = "demo@softsync.vn",
+                PasswordHash = PasswordHasher.Hash("Demo@123"),
+                Age = 20,
+                Role = UserRole.Student,
+                Goal = "Cải thiện kỹ năng giao tiếp",
+                CreatedAt = DateTime.UtcNow.AddDays(-10)
+            }
         );
 
         // 5. Mentors

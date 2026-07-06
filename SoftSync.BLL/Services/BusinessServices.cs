@@ -1,4 +1,4 @@
-using SoftSync.BLL.Interfaces;
+﻿using SoftSync.BLL.Interfaces;
 using SoftSync.Common.Dtos;
 using SoftSync.DAL.Entities;
 using SoftSync.DAL.Repositories;
@@ -38,6 +38,22 @@ public class UserService : IUserService
             }
             await _userRepo.SaveChangesAsync();
         }
+    }
+
+    public async Task<AuthResultDto> UpdateProfileAsync(int userId, string fullName, int age, string goal)
+    {
+        var user = await _userRepo.GetByIdAsync(userId);
+        if (user == null)
+            return AuthResultDto.Fail("Không tìm thấy tài khoản.");
+
+        user.FullName = fullName;
+        user.Age = age;
+        user.Goal = goal;
+        _userRepo.Update(user);
+        await _userRepo.SaveChangesAsync();
+
+        var dto = new UserDto { Id = user.Id, FullName = user.FullName, Email = user.Email, Age = user.Age, Role = user.Role, Goal = user.Goal, CreatedAt = user.CreatedAt };
+        return AuthResultDto.Ok("Cập nhật hồ sơ thành công!", dto);
     }
 }
 

@@ -4,6 +4,8 @@
 @using SoftSync.Common.Dtos
 @inject IAiAssistantService AssistantService
 
+@attribute [Authorize]
+
 <div class="max-800 mx-auto h-100 d-flex flex-column" style="min-height: 70vh;">
     <div class="mb-4">
         <h2 class="fw-bold mb-1"><i class="bi bi-robot me-2 ss-gradient-text"></i>AI Assistant</h2>

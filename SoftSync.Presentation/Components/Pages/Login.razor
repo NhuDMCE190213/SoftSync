@@ -1,0 +1,47 @@
+﻿@page "/login"
+
+<PageTitle>Đăng nhập - SoftSync</PageTitle>
+
+<div class="container" style="max-width:420px;margin-top:60px">
+    <h3 class="mb-4 text-center">Đăng nhập</h3>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="alert alert-danger">@ErrorMessage</div>
+    }
+    @if (!string.IsNullOrEmpty(InfoMessage))
+    {
+        <div class="alert alert-success">@InfoMessage</div>
+    }
+
+    <form method="post" action="/api/auth/login">
+        <input type="hidden" name="ReturnUrl" value="@ReturnUrl" />
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="Email" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Mật khẩu</label>
+            <input type="password" name="Password" class="form-control" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+    </form>
+
+    <div class="d-flex justify-content-between mt-3">
+        <a href="/forgot-password">Quên mật khẩu?</a>
+        <a href="/register">Chưa có tài khoản? Đăng ký</a>
+    </div>
+</div>
+
+@code {
+    [SupplyParameterFromQuery(Name = "error")]
+    public string? ErrorMessage { get; set; }
+
+    [SupplyParameterFromQuery(Name = "message")]
+    public string? InfoMessage { get; set; }
+
+    [SupplyParameterFromQuery(Name = "returnUrl")]
+    public string? ReturnUrl { get; set; }
+}

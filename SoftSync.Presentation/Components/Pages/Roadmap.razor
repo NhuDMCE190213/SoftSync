@@ -3,6 +3,8 @@
 @using SoftSync.Common.Dtos
 @inject IRoadmapService RoadmapService
 
+@attribute [Authorize]
+
 <div class="max-800 mx-auto">
     <StepIndicator CurrentStep="5" />
 

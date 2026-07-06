@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SoftSync.DAL.Entities;
 
 namespace SoftSync.DAL.Repositories;
@@ -38,8 +38,62 @@ public class Repository<T> : IRepository<T> where T : class
 }
 
 // Specialized interfaces
-public interface IUserRepository : IRepository<User> { }
-public class UserRepository : Repository<User>, IUserRepository { public UserRepository(Data.SoftSyncDbContext context) : base(context) { } }
+public interface IUserRepository : IRepository<User>
+{
+    Task<User?> GetByEmailAsync(string email);
+    Task<bool> EmailExistsAsync(string email);
+}
+public class UserRepository : Repository<User>, IUserRepository
+{
+    public UserRepository(Data.SoftSyncDbContext context) : base(context) { }
+
+    public async Task<User?> GetByEmailAsync(string email)
+        => await _dbSet.FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+
+    public async Task<bool> EmailExistsAsync(string email)
+        => await _dbSet.AnyAsync(u => u.Email.ToLower() == email.ToLower());
+}
+
+public interface IPasswordResetTokenRepository : IRepository<PasswordResetToken>
+{
+    Task<PasswordResetToken?> GetValidTokenAsync(string token);
+}
+
+public class PasswordResetTokenRepository : Repository<PasswordResetToken>, IPasswordResetTokenRepository
+{
+    public PasswordResetTokenRepository(Data.SoftSyncDbContext context) : base(context) { }
+
+    public async Task<PasswordResetToken?> GetValidTokenAsync(string token)
+    {
+        return await _dbSet
+            .Include(t => t.User)
+            .FirstOrDefaultAsync(t => t.Token == token && !t.IsUsed && t.ExpiresAt > DateTime.UtcNow);
+    }
+}
+
+public interface IMiniGameRepository : IRepository<MiniGame>
+{
+    Task<IEnumerable<MiniGame>> GetAllWithQuestionsAsync();
+    Task<List<MiniGameQuestion>> GetRandomQuestionsAsync(int miniGameId, int count);
+}
+
+public class MiniGameRepository : Repository<MiniGame>, IMiniGameRepository
+{
+    public MiniGameRepository(Data.SoftSyncDbContext context) : base(context) { }
+    public async Task<IEnumerable<MiniGame>> GetAllWithQuestionsAsync()
+    {
+        return await _dbSet.Include(mg => mg.Questions).ToListAsync();
+    }
+    public async Task<List<MiniGameQuestion>> GetRandomQuestionsAsync(int miniGameId, int count)
+    {
+        return await _context.MiniGameQuestions
+            .Where(q => q.MiniGameId == miniGameId)
+            .Include(q => q.Options)
+            .OrderBy(q => Guid.NewGuid())   // SQL Server dịch thành ORDER BY NEWID()
+            .Take(count)
+            .ToListAsync();
+    }
+}
 
 public interface ISkillRepository : IRepository<Skill> { }
 public class SkillRepository : Repository<Skill>, ISkillRepository { public SkillRepository(Data.SoftSyncDbContext context) : base(context) { } }
@@ -143,4 +197,7 @@ public class ChatRepository : Repository<ChatMessage>, IChatRepository
 }
 
 public interface IMentorRepository : IRepository<Mentor> { }
-public class MentorRepository : Repository<Mentor>, IMentorRepository { public MentorRepository(Data.SoftSyncDbContext context) : base(context) { } }
+public class MentorRepository : Repository<Mentor>, IMentorRepository
+{
+    public MentorRepository(Data.SoftSyncDbContext context) : base(context) { }
+}

@@ -5,6 +5,8 @@
 @inject IUserService UserService
 @inject NavigationManager Nav
 
+@attribute [Authorize]
+
 <div class="max-800 mx-auto">
     <StepIndicator CurrentStep="2" />
 

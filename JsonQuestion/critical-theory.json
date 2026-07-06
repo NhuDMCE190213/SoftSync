@@ -1,0 +1,20 @@
+{
+  "skillId": "CRITICAL_THINKING",
+  "skillName": "Kỹ năng Tư duy phản biện",
+  "coreConcept": "Tư duy tự định hướng, tự kỷ luật, tự giám sát và tự sửa lỗi sau khi phân tích kỹ quan điểm/bằng chứng[cite: 375].",
+  "factVsOpinion": {
+    "fact": "Có bằng chứng khách quan, xác minh được qua nghiên cứu hoặc quan sát khoa học[cite: 497].",
+    "opinion": "Phán đoán chủ quan, niềm tin cá nhân không có bằng chứng hỗ trợ trực tiếp[cite: 498]."
+  },
+  "fallacies": [
+    { "code": "AD_HOMINEM", "name": "Ngụy biện công kích cá nhân", "description": "Tấn công đặc điểm cá nhân người nói thay vì phản bác luận điểm[cite: 502]." },
+    { "code": "BANDWAGON", "name": "Ngụy biện số đông (Ad Populum)", "description": "Khẳng định một điều là đúng chỉ vì có đám đông tin theo như vậy[cite: 405, 502]." },
+    { "code": "REDUCTION_TO_ABSURDITY", "name": "Ngụy biện cường điệu hóa (Giảm đến mức vô lý)", "description": "Cường điệu hóa lập luận để biến nó thành lố bịch[cite: 378]." },
+    { "code": "RED_HERRING", "name": "Ngụy biện đánh lạc hướng", "description": "Đưa thông tin không liên quan vào để phân tán sự chú ý[cite: 378]." },
+    { "code": "STRAW_MAN", "name": "Ngụy biện bù nhìn rơm", "description": "Bóp méo hoặc xuyên tạc luận điểm của đối phương rồi tấn công bản bóp méo đó[cite: 378]." }
+  ],
+  "verificationMethod": {
+    "name": "Lateral Reading (Đọc ngang)",
+    "description": "Rời trang web đang đọc, nhanh chóng mở nhiều tab trình duyệt mới để tra cứu chéo, đối chiếu nguồn độc lập nhằm xác thực uy tín của tác giả hoặc nguồn thông tin[cite: 505]."
+  }
+}

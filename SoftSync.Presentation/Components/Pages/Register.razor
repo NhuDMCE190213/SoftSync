@@ -1,0 +1,52 @@
+﻿@page "/register"
+
+<PageTitle>Đăng ký - SoftSync</PageTitle>
+
+<div class="container" style="max-width:480px;margin-top:40px">
+    <h3 class="mb-4 text-center">Tạo tài khoản</h3>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="alert alert-danger">@ErrorMessage</div>
+    }
+
+    <form method="post" action="/api/auth/register">
+        <div class="mb-3">
+            <label class="form-label">Họ và tên</label>
+            <input type="text" name="FullName" class="form-control" required maxlength="100" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="Email" class="form-control" required />
+        </div>
+        <div class="row">
+            <div class="col mb-3">
+                <label class="form-label">Mật khẩu</label>
+                <input type="password" name="Password" class="form-control" required minlength="6" />
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Xác nhận mật khẩu</label>
+                <input type="password" name="ConfirmPassword" class="form-control" required minlength="6" />
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Tuổi</label>
+            <input type="number" name="Age" class="form-control" min="1" max="120" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Mục tiêu của bạn (tuỳ chọn)</label>
+            <textarea name="Goal" class="form-control" maxlength="500"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
+    </form>
+
+    <div class="text-center mt-3">
+        <a href="/login">Đã có tài khoản? Đăng nhập</a>
+    </div>
+</div>
+
+@code {
+    [SupplyParameterFromQuery(Name = "error")]
+    public string? ErrorMessage { get; set; }
+}

@@ -1,0 +1,71 @@
+﻿@page "/profile"
+@attribute [Authorize]
+@using SoftSync.BLL.Interfaces
+@using SoftSync.Common.Dtos
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
+@inject IUserService UserService
+@inject AuthenticationStateProvider AuthProvider
+
+<PageTitle>Hồ sơ của tôi - SoftSync</PageTitle>
+
+<div class="container" style="max-width:480px">
+    <h3 class="mb-4">Hồ sơ của tôi</h3>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="alert alert-danger">@ErrorMessage</div>
+    }
+    @if (!string.IsNullOrEmpty(InfoMessage))
+    {
+        <div class="alert alert-success">@InfoMessage</div>
+    }
+
+    @if (currentUser == null)
+    {
+        <p class="text-muted">Đang tải...</p>
+    }
+    else
+    {
+        <form method="post" action="/api/user/update-profile">
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" value="@currentUser.Email" disabled />
+                <div class="form-text">Email không thể thay đổi.</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Họ và tên</label>
+                <input type="text" name="FullName" class="form-control" value="@currentUser.FullName" required maxlength="100" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tuổi</label>
+                <input type="number" name="Age" class="form-control" value="@currentUser.Age" min="1" max="120" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Mục tiêu của bạn</label>
+                <textarea name="Goal" class="form-control" maxlength="500">@currentUser.Goal</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+        </form>
+    }
+</div>
+
+@code {
+    [SupplyParameterFromQuery(Name = "error")]
+    public string? ErrorMessage { get; set; }
+
+    [SupplyParameterFromQuery(Name = "message")]
+    public string? InfoMessage { get; set; }
+
+    private UserDto? currentUser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+        var userIdClaim = authState.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userIdClaim != null && int.TryParse(userIdClaim, out var userId))
+        {
+            currentUser = await UserService.GetUserByIdAsync(userId);
+        }
+    }
+}

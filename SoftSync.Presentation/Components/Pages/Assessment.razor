@@ -1,9 +1,10 @@
 @page "/assessment/{UserId:int}"
 @using SoftSync.BLL.Interfaces
-@using SoftSync.BLL.Interfaces
 @using SoftSync.Common.Dtos
 @inject IAssessmentService AssessmentService
 @inject NavigationManager Nav
+
+@attribute [Authorize]
 
 <div class="max-800 mx-auto">
     <StepIndicator CurrentStep="3" />
