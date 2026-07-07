@@ -4,5 +4,5 @@ namespace SoftSync.BLL.Interfaces;
 
 public interface IAiRoadmapService
 {
-    Task<RoadmapDto> GenerateRoadmapAsync(int userId, List<string> weakSkills);
+    Task<RoadmapDto> GenerateRoadmapAsync(int userId, List<SkillWeaknessDto> weakSkills);
 }

@@ -1,4 +1,4 @@
-namespace SoftSync.Common.Dtos.Roadmap;
+﻿namespace SoftSync.Common.Dtos.Roadmap;
 
 public class RoadmapItemDto
 {
@@ -8,4 +8,5 @@ public class RoadmapItemDto
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public bool IsCompleted { get; set; }
+    public bool IsLocked { get; set; } // MỚI
 }

@@ -10,7 +10,7 @@
   },
   "fallacies": [
     { "code": "AD_HOMINEM", "name": "Ngụy biện công kích cá nhân", "description": "Tấn công đặc điểm cá nhân người nói thay vì phản bác luận điểm." },
-    { "code": "BANDWAGON", "name": "Ngụy biện số đông (Ad Populum)", "description": "Khẳng định một điều là đúng chỉ vì có đám đông tin theo như vậy[cite: 405, 502]." },
+    { "code": "BANDWAGON", "name": "Ngụy biện số đông (Ad Populum)", "description": "Khẳng định một điều là đúng chỉ vì có đám đông tin theo như vậy." },
     { "code": "REDUCTION_TO_ABSURDITY", "name": "Ngụy biện cường điệu hóa (Giảm đến mức vô lý)", "description": "Cường điệu hóa lập luận để biến nó thành lố bịch." },
     { "code": "RED_HERRING", "name": "Ngụy biện đánh lạc hướng", "description": "Đưa thông tin không liên quan vào để phân tán sự chú ý." },
     { "code": "STRAW_MAN", "name": "Ngụy biện bù nhìn rơm", "description": "Bóp méo hoặc xuyên tạc luận điểm của đối phương rồi tấn công bản bóp méo đó." }

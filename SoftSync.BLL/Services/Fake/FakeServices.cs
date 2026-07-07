@@ -3,6 +3,7 @@ using SoftSync.Common.Dtos;
 using SoftSync.Common.Dtos.Assessment;
 using SoftSync.Common.Dtos.Roadmap;
 using SoftSync.Common.Enums;
+using SoftSync.DAL.Repositories;
 
 namespace SoftSync.BLL.Services.Fake;
 
@@ -11,7 +12,10 @@ namespace SoftSync.BLL.Services.Fake;
 // chỉ cần đổi class đăng ký trong DI tại Program.cs.
 public class FakeAiAssessmentService : IAiAssessmentService
 {
-    public Task<AssessmentResultDto> EvaluateAsync(List<UserAnswerDto> answers)
+    private readonly IEntryTestRepository _entryTestRepo;
+    public FakeAiAssessmentService(IEntryTestRepository entryTestRepo) => _entryTestRepo = entryTestRepo;
+
+    public async Task<AssessmentResultDto> EvaluateAsync(List<UserAnswerDto> answers)
     {
         int score = (answers.Count * 23) % 100;
         var level = score < 25 ? AssessmentLevel.Passive
@@ -19,13 +23,18 @@ public class FakeAiAssessmentService : IAiAssessmentService
                   : score < 75 ? AssessmentLevel.Proactive
                   : AssessmentLevel.Exceptional;
 
-        return Task.FromResult(new AssessmentResultDto
+        var questions = await _entryTestRepo.GetAllQuestionsAsync();
+        int skillId = answers.Any()
+            ? questions.First(q => q.Id == answers[0].QuestionId).SkillId
+            : 0;
+
+        return new AssessmentResultDto
         {
-            SkillId = 1,
+            SkillId = skillId,
             Score = score,
             Level = level,
             CreatedAt = DateTime.UtcNow
-        });
+        };
     }
 }
 
@@ -51,19 +60,29 @@ public class FakeAiAssistantService : IAiAssistantService
 // sinh lộ trình thật từ LLM/AI.
 public class FakeAiRoadmapService : IAiRoadmapService
 {
-    public Task<RoadmapDto> GenerateRoadmapAsync(int userId, List<string> weakSkills)
+    public Task<RoadmapDto> GenerateRoadmapAsync(int userId, List<SkillWeaknessDto> weaknesses)
     {
-        var roadmap = new RoadmapDto
+        var week = 1;
+        var items = new List<RoadmapItemDto>
         {
-            UserId = userId,
-            Items = new List<RoadmapItemDto>
-            {
-                new RoadmapItemDto { SkillId = 1, WeekNumber = 1, Title = "Khám phá bản thân", Description = "Hoàn thành bài đánh giá năng lực và xác định mục tiêu.", IsCompleted = false },
-                new RoadmapItemDto { SkillId = 2, WeekNumber = 2, Title = "Kỹ năng Giao tiếp cơ bản", Description = "Tham gia mini-game về tình huống đối thoại.", IsCompleted = false },
-                new RoadmapItemDto { SkillId = 3, WeekNumber = 3, Title = "Kỹ năng Làm việc nhóm", Description = "Học cách giải quyết xung đột trong team.", IsCompleted = false },
-                new RoadmapItemDto { SkillId = 4, WeekNumber = 4, Title = "Tổng kết tháng", Description = "Xem lại tiến độ và nhận feedback từ AI Mentor.", IsCompleted = false }
-            }
+            new RoadmapItemDto { SkillId = null, WeekNumber = week++, Title = "Khám phá bản thân", Description = "Hoàn thành bài đánh giá năng lực và xác định mục tiêu.", IsCompleted = false }
         };
-        return Task.FromResult(roadmap);
+
+        // Fake nhưng vẫn tôn trọng input thật thay vì trả cứng
+        foreach (var w in weaknesses.OrderBy(w => w.Level))
+        {
+            items.Add(new RoadmapItemDto
+            {
+                SkillId = w.SkillId,
+                WeekNumber = week++,
+                Title = $"Kỹ năng {w.SkillName}",
+                Description = $"Cải thiện {w.SkillName} (mức hiện tại: {w.Level}).",
+                IsCompleted = false
+            });
+        }
+
+        items.Add(new RoadmapItemDto { SkillId = null, WeekNumber = week, Title = "Tổng kết", Description = "Xem lại tiến độ và nhận feedback từ AI Mentor.", IsCompleted = false });
+
+        return Task.FromResult(new RoadmapDto { UserId = userId, Items = items });
     }
 }

@@ -13,6 +13,5 @@ public class Skill
     [MaxLength(50)]
     public string IconName { get; set; } = string.Empty;
 
-    public ICollection<AssessmentQuestion> Questions { get; set; } = new List<AssessmentQuestion>();
     public ICollection<CaseStudy> CaseStudies { get; set; } = new List<CaseStudy>();
 }

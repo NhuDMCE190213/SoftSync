@@ -2,7 +2,10 @@
 @using SoftSync.BLL.Interfaces
 @using SoftSync.Common.Dtos
 @using Markdig
+@using SoftSync.Presentation.Infrastructure
 @inject ITheoryLessonService TheoryService
+@inject IProgressSyncService ProgressSyncService
+@inject CurrentUserAccessor CurrentUserAccessor
 @inject NavigationManager Nav
 @attribute [Authorize]
 
@@ -64,6 +67,7 @@
 
 @code {
     [Parameter] public int SkillId { get; set; }
+    private int? userId;
 
     private static readonly MarkdownPipeline _pipeline = new MarkdownPipelineBuilder()
     .UseAdvancedExtensions()   // bật bảng, code block có màu, footnote, v.v.
@@ -74,13 +78,34 @@
 
     protected override async Task OnInitializedAsync()
     {
+        userId = await CurrentUserAccessor.GetUserIdAsync();
         lessons = await TheoryService.GetBySkillIdAsync(SkillId);
     }
 
     private void PrevLesson() { if (currentIndex > 0) currentIndex--; }
-    private void NextLesson() { if (lessons != null && currentIndex < lessons.Count - 1) currentIndex++; }
+    private async Task NextLesson()
+    {
+        if (lessons != null && currentIndex < lessons.Count - 1)
+        {
+            await MarkCurrentLessonDone();
+            currentIndex++;
+        }
+    }
 
-    private void GoToGames() => Nav.NavigateTo($"/skill/{SkillId}/games");
+    private async Task GoToGames()
+    {
+        await MarkCurrentLessonDone();
+        Nav.NavigateTo($"/skill/{SkillId}/games");
+    }
+
+    private async Task MarkCurrentLessonDone()
+    {
+        if (userId.HasValue && lessons != null)
+        {
+            var lesson = lessons[currentIndex];
+            await ProgressSyncService.SyncFromTheoryLessonAsync(userId.Value, SkillId, lesson.Id);
+        }
+    }
 
     private string RenderMarkdown(string markdown) => Markdown.ToHtml(markdown, _pipeline);
 
@@ -97,7 +122,8 @@
     .max-800 {
         max-width: 800px;
     }
-    .max-800, .max-800 button, .max-800 span {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+
+        .max-800, .max-800 button, .max-800 span {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 </style>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftSync.DAL.Data;
 
@@ -11,9 +12,11 @@ using SoftSync.DAL.Data;
 namespace SoftSync.DAL.Migrations
 {
     [DbContext(typeof(SoftSyncDbContext))]
-    partial class SoftSyncDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260707161937_InitData")]
+    partial class InitData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,13 +97,6 @@ namespace SoftSync.DAL.Migrations
                             Scenario = "Bạn nhận ra rằng bạn sẽ trễ hạn vào ngày mai. Hành động đầu tiên của bạn là gì?",
                             SkillId = 1,
                             Title = "Missed Deadline"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Scenario = "Bạn phải đưa ra một quyết định quan trọng nhưng thiếu thông tin. Bạn sẽ làm gì?",
-                            SkillId = 3,
-                            Title = "Critical Decision"
                         });
                 });
 
@@ -164,22 +160,6 @@ namespace SoftSync.DAL.Migrations
                             Feedback = "Minh bạch và lập kế hoạch chủ động là điều cần thiết.",
                             IsRecommended = true,
                             OptionText = "Thông báo ngay cho các bên liên quan và đề xuất một lịch trình mới."
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CaseStudyId = 3,
-                            Feedback = "Điều này có thể dẫn đến mất cơ hội.",
-                            IsRecommended = false,
-                            OptionText = "Đợi thêm thông tin trước khi hành động."
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CaseStudyId = 3,
-                            Feedback = "Đánh giá rủi ro và đưa ra quyết định dựa trên dữ liệu hiện có là cách tiếp cận thực tế.",
-                            IsRecommended = true,
-                            OptionText = "Thu thập thông tin có sẵn và đưa ra quyết định tốt nhất có thể."
                         });
                 });
 
@@ -355,64 +335,6 @@ namespace SoftSync.DAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SoftSync.DAL.Entities.MentorConversation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("MentorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MentorId");
-
-                    b.HasIndex("UserId", "MentorId")
-                        .IsUnique();
-
-                    b.ToTable("MentorConversations");
-                });
-
-            modelBuilder.Entity("SoftSync.DAL.Entities.MentorMessage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ConversationId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("SenderType")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ConversationId");
-
-                    b.ToTable("MentorMessages");
-                });
-
             modelBuilder.Entity("SoftSync.DAL.Entities.MiniGame", b =>
                 {
                     b.Property<int>("Id")
@@ -460,9 +382,6 @@ namespace SoftSync.DAL.Migrations
                     b.Property<string>("AnswersJson")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MaxScore")
-                        .HasColumnType("int");
 
                     b.Property<int>("MiniGameId")
                         .HasColumnType("int");
@@ -616,16 +535,7 @@ namespace SoftSync.DAL.Migrations
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsRemedial")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("MiniGameId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("SkillId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TheoryLessonId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -730,33 +640,6 @@ namespace SoftSync.DAL.Migrations
                     b.ToTable("TheoryLessons");
                 });
 
-            modelBuilder.Entity("SoftSync.DAL.Entities.TheoryLessonProgress", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CompletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TheoryLessonId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TheoryLessonId");
-
-                    b.HasIndex("UserId", "TheoryLessonId")
-                        .IsUnique();
-
-                    b.ToTable("TheoryLessonProgresses");
-                });
-
             modelBuilder.Entity("SoftSync.DAL.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -802,11 +685,11 @@ namespace SoftSync.DAL.Migrations
                         {
                             Id = 1,
                             Age = 20,
-                            CreatedAt = new DateTime(2026, 6, 27, 22, 24, 12, 454, DateTimeKind.Utc).AddTicks(2395),
+                            CreatedAt = new DateTime(2026, 6, 27, 16, 19, 37, 619, DateTimeKind.Utc).AddTicks(1343),
                             Email = "demo@softsync.vn",
                             FullName = "Nguyễn Văn A",
                             Goal = "Cải thiện kỹ năng giao tiếp",
-                            PasswordHash = "100000.8ZJ1ZpcNDaKMT9G0c6wkAw==.iVl5eScoFsLK0op9YR+AtUIiVGa6iSoWfjpkssI/mWA=",
+                            PasswordHash = "100000.dWcqqpmE7DUu0BDsGm6a/Q==.ulFl+DO1KnWnHf34E3bKOZrUc0WH20FhnAcu+Mqzqeg=",
                             Role = 0
                         });
                 });
@@ -909,36 +792,6 @@ namespace SoftSync.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SoftSync.DAL.Entities.MentorConversation", b =>
-                {
-                    b.HasOne("SoftSync.DAL.Entities.Mentor", "Mentor")
-                        .WithMany()
-                        .HasForeignKey("MentorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SoftSync.DAL.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Mentor");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SoftSync.DAL.Entities.MentorMessage", b =>
-                {
-                    b.HasOne("SoftSync.DAL.Entities.MentorConversation", "Conversation")
-                        .WithMany("Messages")
-                        .HasForeignKey("ConversationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Conversation");
                 });
 
             modelBuilder.Entity("SoftSync.DAL.Entities.MiniGame", b =>
@@ -1045,25 +898,6 @@ namespace SoftSync.DAL.Migrations
                     b.Navigation("Skill");
                 });
 
-            modelBuilder.Entity("SoftSync.DAL.Entities.TheoryLessonProgress", b =>
-                {
-                    b.HasOne("SoftSync.DAL.Entities.TheoryLesson", "TheoryLesson")
-                        .WithMany()
-                        .HasForeignKey("TheoryLessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SoftSync.DAL.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TheoryLesson");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("SoftSync.DAL.Entities.UserSkillSelection", b =>
                 {
                     b.HasOne("SoftSync.DAL.Entities.Skill", "Skill")
@@ -1091,11 +925,6 @@ namespace SoftSync.DAL.Migrations
             modelBuilder.Entity("SoftSync.DAL.Entities.EntryTestQuestion", b =>
                 {
                     b.Navigation("Options");
-                });
-
-            modelBuilder.Entity("SoftSync.DAL.Entities.MentorConversation", b =>
-                {
-                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("SoftSync.DAL.Entities.MiniGame", b =>

@@ -8,6 +8,7 @@ namespace SoftSync.DAL.Repositories
         Task<IEnumerable<MiniGame>> GetAllWithQuestionsAsync();
         Task<List<MiniGameQuestion>> GetRandomQuestionsAsync(int miniGameId, int count);
         Task<List<MiniGameOption>> GetOptionsByIdsAsync(List<int> optionIds); // MỚI
+        Task<List<MiniGameQuestion>> GetQuestionsByIdsAsync(List<int> questionIds);
     }
 
     public class MiniGameRepository : Repository<MiniGame>, IMiniGameRepository
@@ -32,5 +33,12 @@ namespace SoftSync.DAL.Repositories
                 .Where(o => optionIds.Contains(o.Id))
                 .ToListAsync();
         }
+
+        public async Task<List<MiniGameQuestion>> GetQuestionsByIdsAsync(List<int> questionIds)
+        {
+            return await _context.MiniGameQuestions
+                .Where(q => questionIds.Contains(q.Id))
+                .ToListAsync();
+        }   
     }
 }

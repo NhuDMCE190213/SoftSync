@@ -2,6 +2,8 @@
 @using SoftSync.BLL.Interfaces
 @using SoftSync.Common.Dtos
 @inject IMentorService MentorService
+@inject NavigationManager Nav
+@inject IMentorService MentorService
 
 @attribute [Authorize]
 
@@ -30,7 +32,7 @@
                             </div>
                         </div>
                         <p class="text-muted small mb-4">@mentor.ShortBio</p>
-                        <button class="btn btn-outline-primary w-100 py-2 rounded-pill" @onclick="() => Connect(mentor.Name)">
+                        <button class="btn btn-outline-primary w-100 py-2 rounded-pill" @onclick='() => Nav.NavigateTo($"/community/chat/{mentor.Id}")'>
                             Connect
                         </button>
                     </div>
@@ -38,14 +40,6 @@
             }
         }
     </div>
-
-    @if (!string.IsNullOrEmpty(notification))
-    {
-        <div class="mt-4 alert alert-info alert-dismissible fade show" role="alert">
-            <i class="bi bi-info-circle-fill me-2"></i> @notification
-            <button type="button" class="btn-close" @onclick="() => notification = null"></button>
-        </div>
-    }
 </div>
 
 @code {
@@ -55,11 +49,6 @@
     protected override async Task OnInitializedAsync()
     {
         mentors = await MentorService.GetAllAsync();
-    }
-
-    private void Connect(string name)
-    {
-        notification = $"Feature coming soon! We'll notify you when {name} is available for coaching.";
     }
 }
 

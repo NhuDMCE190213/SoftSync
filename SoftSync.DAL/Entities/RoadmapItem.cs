@@ -15,4 +15,7 @@ public class RoadmapItem
     [MaxLength(1000)]
     public string Description { get; set; } = string.Empty;
     public bool IsCompleted { get; set; }
+    public int? TheoryLessonId { get; set; }
+    public int? MiniGameId { get; set; }
+    public bool IsRemedial { get; set; } = false;
 }

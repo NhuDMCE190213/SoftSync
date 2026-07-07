@@ -1,4 +1,4 @@
-@page "/select-skills/{UserId:int}"
+﻿@page "/select-skills/{UserId:int}"
 @using SoftSync.BLL.Interfaces
 @using SoftSync.Common.Dtos
 @inject ISkillService SkillService
@@ -32,6 +32,14 @@
                         </div>
                         <h5 class="fw-bold">@skill.Name</h5>
                         <p class="small text-muted mb-0">@skill.Description</p>
+                        @if (existingSkillIds.Contains(skill.Id))
+                        {
+                            <span class="badge bg-success mt-2">Đã học</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary mt-2">Chưa học</span>
+                        }
                     </div>
                 </div>
             }
@@ -49,24 +57,31 @@
     [Parameter] public int UserId { get; set; }
     private IEnumerable<SkillDto>? skills;
     private List<int> selectedSkillIds = new();
+    private List<int> existingSkillIds = new();
 
     protected override async Task OnInitializedAsync()
     {
-        skills = await SkillService.GetAllSkillsAsync();
+        skills = await SkillService.GetAllSkillsAsync(); 
+        existingSkillIds = await UserService.GetSelectedSkillIdsAsync(UserId);
+        selectedSkillIds = new List<int>(existingSkillIds);
     }
 
     private void ToggleSkill(int id)
     {
-        if (selectedSkillIds.Contains(id))
-            selectedSkillIds.Remove(id);
-        else
-            selectedSkillIds.Add(id);
+        if (existingSkillIds.Contains(id)) return; // không cho bỏ skill đã học rồi
+        if (selectedSkillIds.Contains(id)) selectedSkillIds.Remove(id);
+        else selectedSkillIds.Add(id);
     }
 
     private async Task HandleSubmit()
     {
-        await UserService.AddSkillSelectionsAsync(UserId, selectedSkillIds);
-        Nav.NavigateTo($"/assessment/{UserId}");
+        var newlyAdded = await UserService.AddSkillSelectionsAsync(UserId, selectedSkillIds);
+        if (!newlyAdded.Any())
+        {
+            Nav.NavigateTo("/roadmap"); // không chọn thêm gì mới -> khỏi bắt làm lại test
+            return;
+        }
+        Nav.NavigateTo($"/assessment/{UserId}?skillIds={string.Join(",", newlyAdded)}");
     }
 }
 

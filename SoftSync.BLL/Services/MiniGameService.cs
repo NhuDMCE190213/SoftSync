@@ -1,5 +1,4 @@
 ﻿using SoftSync.BLL.Interfaces;
-using SoftSync.Common.Dtos;
 using SoftSync.Common.Dtos.MiniGame;
 using SoftSync.DAL.Entities;
 using SoftSync.DAL.Repositories;
@@ -10,13 +9,14 @@ namespace SoftSync.BLL.Services;
 public class MiniGameService : IMiniGameService
 {
     private readonly IMiniGameRepository _miniGameRepo;
-
     private readonly IMiniGameAttemptRepository _attemptRepo;
+    private readonly IProgressSyncService _progressSyncService;
 
-    public MiniGameService(IMiniGameRepository miniGameRepo, IMiniGameAttemptRepository attemptRepo)
+    public MiniGameService(IMiniGameRepository miniGameRepo, IMiniGameAttemptRepository attemptRepo, IProgressSyncService progressSyncService)
     {
         _miniGameRepo = miniGameRepo;
         _attemptRepo = attemptRepo;
+        _progressSyncService = progressSyncService;
     }
 
     public async Task<List<MiniGameDto>> GetMiniGamesBySkillIdAsync(int skillId)
@@ -43,23 +43,33 @@ public class MiniGameService : IMiniGameService
     {
         var optionIds = answers.Select(a => a.OptionId).ToList();
         var options = await _miniGameRepo.GetOptionsByIdsAsync(optionIds);
-
         int totalScore = options.Sum(o => o.Points);
-
         var answersMap = answers.ToDictionary(a => a.QuestionId, a => a.OptionId);
+
+        int maxScore = answers.Count * 10;
 
         var attempt = new MiniGameAttempt
         {
             UserId = userId,
             MiniGameId = miniGameId,
             TotalScore = totalScore,
+            MaxScore = maxScore,
             PlayedAt = DateTime.UtcNow,
             AnswersJson = JsonSerializer.Serialize(answersMap)
         };
-
         await _attemptRepo.AddAsync(attempt);
         await _attemptRepo.SaveChangesAsync();
 
+        var miniGame = await _miniGameRepo.GetByIdAsync(miniGameId);
+        if (miniGame != null)
+            await _progressSyncService.SyncFromMiniGameAsync(userId, miniGame.SkillId, miniGameId, totalScore, maxScore);
+
         return totalScore;
+    }
+
+    public async Task<int> GetByIdAsync(int miniGameId)
+    {
+        var miniGame = await _miniGameRepo.GetByIdAsync(miniGameId);
+        return miniGame?.SkillId ?? 0;
     }
 }

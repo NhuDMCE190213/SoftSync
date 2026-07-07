@@ -1,5 +1,8 @@
-@page "/"
+﻿@page "/"
+@using SoftSync.Presentation.Infrastructure
 @inject NavigationManager Nav
+@inject IEntryTestService EntryTestService
+@inject CurrentUserAccessor CurrentUserAccessor
 
 @attribute [Authorize]
 
@@ -175,3 +178,16 @@
     .badge-1 { top: 20%; right: -10%; }
     .badge-2 { bottom: 30%; left: -5%; }
 </style>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var userId = await CurrentUserAccessor.GetUserIdAsync();
+        if (userId.HasValue)
+        {
+            var result = await EntryTestService.GetResultAsync(userId.Value);
+            if (result != null) Nav.NavigateTo("/roadmap");
+            // chưa có kết quả test -> ở lại trang Home, nút "Start Your Journey" dẫn tới /profile-setup như cũ
+        }
+    }
+}

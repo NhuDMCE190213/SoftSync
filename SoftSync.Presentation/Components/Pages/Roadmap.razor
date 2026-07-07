@@ -17,8 +17,10 @@
             <h2 class="fw-bold mb-1">Weekly <span class="ss-gradient-text">Learning Roadmap</span></h2>
             <p class="text-muted mb-0">Follow this path to master your target skills.</p>
         </div>
-        <div class="text-end">
-            <span class="badge bg-primary fs-6">Demo Mode</span>
+        <div class="text-center mt-4">
+            <button class="btn btn-outline-primary" @onclick='() => Nav.NavigateTo($"/select-skills/{userId}")'>
+                <i class="bi bi-plus-circle me-1"></i> Học thêm kỹ năng khác
+            </button>
         </div>
     </div>
 
@@ -39,17 +41,35 @@
                                 <span class="text-primary fw-bold small text-uppercase">Week @item.WeekNumber</span>
                                 <h5 class="fw-bold mt-1">@item.Title</h5>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input fs-4 cursor-pointer" type="checkbox" checked="@item.IsCompleted"
-                                       @onchange="() => ToggleComplete(item)" />
+                            <div>
+                                @if (item.IsCompleted)
+                                {
+                                    <span class="badge bg-success"><i class="bi bi-check-circle-fill"></i> Đã hoàn thành</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Chưa hoàn thành</span>
+                                }
                             </div>
                         </div>
                         <p class="text-muted mb-0">@item.Description</p>
 
                         @if (item.SkillId.HasValue)
                         {
-                            <button class="ss-btn-primary btn-sm mt-2" @onclick='() => Nav.NavigateTo($"/skill/{item.SkillId}/theory")'>
-                                Bắt đầu học <i class="bi bi-arrow-right ms-1"></i>
+                            <button class="ss-btn-primary btn-sm mt-2" disabled="@item.IsLocked"
+                                    @onclick='() => Nav.NavigateTo($"/skill/{item.SkillId}/theory")'>
+                                @(item.IsLocked ? "Đã khoá - hoàn thành tuần trước" : "Bắt đầu học")
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm mt-2 ms-2" disabled="@item.IsLocked"
+                                    @onclick='() => Nav.NavigateTo($"/case-studies/{item.SkillId}")'>
+                                Case study
+                            </button>
+                        }
+                        else if (!item.IsCompleted)
+                        {
+                            <button class="btn btn-outline-secondary btn-sm mt-2" disabled="@item.IsLocked"
+                                    @onclick="() => ToggleComplete(item)">
+                                Đánh dấu hoàn thành <i class="bi bi-check-lg ms-1"></i>
                             </button>
                         }
                     </div>

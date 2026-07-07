@@ -1,4 +1,5 @@
-@page "/case-studies"
+﻿@page "/case-studies"
+@page "/case-studies/{SkillId:int}"
 @using SoftSync.BLL.Interfaces
 @using SoftSync.Common.Dtos
 @using SoftSync.Common.Dtos.CaseStudy
@@ -12,9 +13,15 @@
         <p class="text-muted">Apply your knowledge to real-world scenarios.</p>
     </div>
 
-    @if (caseStudy == null)
+    @if (caseStudy == null && !loadedOnce)
     {
         <div class="text-center py-5">Loading case studies...</div>
+    }
+    else if (caseStudy == null)
+    {
+        <div class="ss-card p-5 text-center text-muted">
+            Chưa có case study nào cho kỹ năng này. Nội dung đang được cập nhật.
+        </div>
     }
     else
     {
@@ -56,9 +63,13 @@
 </div>
 
 @code {
+    [Parameter] public int SkillId { get; set; } = 2;
+
+    private bool loadedOnce = false;
     private CaseStudyDto? caseStudy;
     private string? feedback;
     private bool isCorrect;
+    private int? lastCaseStudyId;
 
     protected override async Task OnInitializedAsync()
     {
@@ -68,10 +79,18 @@
     private async Task LoadNext()
     {
         feedback = null;
-        var list = await CaseStudyService.GetCaseStudiesBySkillAsync(1); // Communication for demo
+        var list = (await CaseStudyService.GetCaseStudiesBySkillAsync(SkillId)).ToList();
+        loadedOnce = true;
+        if (!list.Any()) { caseStudy = null; return; }
+
+        var candidates = list.Count > 1 && lastCaseStudyId.HasValue
+            ? list.Where(c => c.Id != lastCaseStudyId.Value).ToList()
+            : list;
+
         var random = new Random();
-        var id = list.ElementAt(random.Next(list.Count())).Id;
-        caseStudy = await CaseStudyService.GetCaseStudyByIdAsync(id);
+        var picked = candidates[random.Next(candidates.Count)];
+        lastCaseStudyId = picked.Id;
+        caseStudy = await CaseStudyService.GetCaseStudyByIdAsync(picked.Id);
     }
 
     private void SelectOption(CaseStudyOptionDto opt)

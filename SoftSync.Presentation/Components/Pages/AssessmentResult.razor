@@ -2,6 +2,7 @@
 @using SoftSync.BLL.Interfaces
 @using SoftSync.Common.Dtos.EntryTest
 @inject IEntryTestService EntryTestService
+@inject IUserService UserService
 @inject NavigationManager Nav
 @attribute [Authorize]
 
@@ -12,34 +13,58 @@
 else
 {
     <div class="row g-4 mb-5">
-        @{
-            var pillars = new[]
-            {
-        ("Quản lý thời gian", result.TimeManagementScore, result.TimeManagementLevel),
-        ("Giao tiếp", result.CommunicationScore, result.CommunicationLevel),
-        ("Tư duy phản biện", result.CriticalThinkingScore, result.CriticalThinkingLevel)
-        };
-        }
-        @foreach (var (name, score, level) in pillars)
+        @foreach (var pillar in visiblePillars)
         {
             <div class="col-md-4">
                 <div class="ss-card p-4">
-                    <h5 class="fw-bold">@name</h5>
-                    <span class="badge @GetLevelBadgeClass(level)">@level</span>
-                    <p class="small text-muted mt-2">Điểm: @score / 32</p>
+                    <h5 class="fw-bold">@pillar.Name</h5>
+                    <span class="badge @GetLevelBadgeClass(pillar.Level)">@pillar.Level</span>
+                    <p class="small text-muted mt-2">Điểm: @pillar.Score / 32</p>
                 </div>
             </div>
         }
     </div>
+
+    @if (!visiblePillars.Any())
+    {
+        <div class="alert alert-warning">
+            Không có kỹ năng nào được đánh giá — vui lòng quay lại chọn ít nhất 1 kỹ năng.
+        </div>
+    }
+
     <button class="ss-btn-primary px-5 py-3" @onclick="GoToRoadmap">Xem lộ trình học <i class="bi bi-calendar-check ms-2"></i></button>
 }
 
 @code {
     [Parameter] public int UserId { get; set; }
     private EntryTestResultDto? result;
+    private List<int> selectedSkillIds = new();
+    private List<PillarView> visiblePillars = new();
+
+    private record PillarView(string Name, int SkillId, int Score, string Level);
 
     protected override async Task OnInitializedAsync()
-        => result = await EntryTestService.GetResultAsync(UserId);
+    {
+        result = await EntryTestService.GetResultAsync(UserId);
+        selectedSkillIds = await UserService.GetSelectedSkillIdsAsync(UserId);
+
+        if (result != null)
+        {
+            var allPillars = new List<PillarView>
+            {
+                new("Quản lý thời gian", 1, result.TimeManagementScore, result.TimeManagementLevel),
+                new("Giao tiếp", 2, result.CommunicationScore, result.CommunicationLevel),
+                new("Tư duy phản biện", 3, result.CriticalThinkingScore, result.CriticalThinkingLevel)
+            };
+
+            // Chỉ hiện pillar mà user đã chọn ở /select-skills.
+            // Nếu vì lý do nào đó chưa có skill nào chọn (không nên xảy ra),
+            // fallback hiện đủ cả 3 để không rơi vào màn hình rỗng.
+            visiblePillars = selectedSkillIds.Any()
+                ? allPillars.Where(p => selectedSkillIds.Contains(p.SkillId)).ToList()
+                : allPillars;
+        }
+    }
 
     private string GetLevelBadgeClass(string level) => level switch
     {

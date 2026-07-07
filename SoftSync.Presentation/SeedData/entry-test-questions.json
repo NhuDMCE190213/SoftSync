@@ -2,7 +2,7 @@
   {
     "questionId": "TEST_Q01",
     "skillId": "TIME_MANAGEMENT",
-    "questionText": "Việc học ngoài giờ lên lớp của bạn diễn ra thế nào[cite: 407]?",
+    "questionText": "Việc học ngoài giờ lên lớp của bạn diễn ra thế nào?",
     "options": [
       { "text": "Phụ thuộc lịch người khác sắp xếp", "score": 1 },
       { "text": "Học tùy hứng, không lịch trình", "score": 2 },
@@ -13,7 +13,7 @@
   {
     "questionId": "TEST_Q02",
     "skillId": "TIME_MANAGEMENT",
-    "questionText": "Khi trì hoãn một việc lớn, lý do sâu xa nhất của bạn là gì[cite: 408]?",
+    "questionText": "Khi trì hoãn một việc lớn, lý do sâu xa nhất của bạn là gì?",
     "options": [
       { "text": "Sợ thất bại nên né tránh bắt tay vào làm", "score": 1 },
       { "text": "Dễ mất tập trung bởi điện thoại, mạng xã hội", "score": 2 },
@@ -24,7 +24,7 @@
   {
     "questionId": "TEST_Q03",
     "skillId": "TIME_MANAGEMENT",
-    "questionText": "Bạn ước lượng thời gian làm một việc có chính xác không[cite: 409]?",
+    "questionText": "Bạn ước lượng thời gian làm một việc có chính xác không?",
     "options": [
       { "text": "Sai lệch nặng, việc tưởng 1 giờ hóa ra mất 4-5 giờ", "score": 1 },
       { "text": "Khó ước lượng với tài liệu nhiều số liệu, biểu đồ", "score": 2 },
@@ -35,7 +35,7 @@
   {
     "questionId": "TEST_Q04",
     "skillId": "TIME_MANAGEMENT",
-    "questionText": "Yếu tố nào ảnh hưởng đến sự tập trung của bạn nhất[cite: 410]?",
+    "questionText": "Yếu tố nào ảnh hưởng đến sự tập trung của bạn nhất?",
     "options": [
       { "text": "Liên tục bị cuốn vào thông báo, tin nhắn, game", "score": 1 },
       { "text": "Dễ xao nhãng bởi tiếng ồn, không gian bừa bộn", "score": 2 },
@@ -46,7 +46,7 @@
   {
     "questionId": "TEST_Q05",
     "skillId": "TIME_MANAGEMENT",
-    "questionText": "Bạn có áp dụng phương pháp quản lý thời gian khoa học không[cite: 411]?",
+    "questionText": "Bạn có áp dụng phương pháp quản lý thời gian khoa học không?",
     "options": [
       { "text": "Không, chỉ có động lực khi hạn chót cận kề", "score": 1 },
       { "text": "Có biết nhưng chưa áp dụng thành công lần nào", "score": 2 },
@@ -57,7 +57,7 @@
   {
     "questionId": "TEST_Q06",
     "skillId": "TIME_MANAGEMENT",
-    "questionText": "Bạn quyết định làm việc gì trước dựa trên điều gì[cite: 412]?",
+    "questionText": "Bạn quyết định làm việc gì trước dựa trên điều gì?",
     "options": [
       { "text": "Cảm xúc nhất thời hoặc hoảng loạn vì hạn chót", "score": 1 },
       { "text": "Chọn việc dễ trước, né việc khó nhưng quan trọng", "score": 2 },
@@ -68,7 +68,7 @@
   {
     "questionId": "TEST_Q07",
     "skillId": "TIME_MANAGEMENT",
-    "questionText": "Mục tiêu học tập/công việc của bạn được viết ra như thế nào[cite: 413]?",
+    "questionText": "Mục tiêu học tập/công việc của bạn được viết ra như thế nào?",
     "options": [
       { "text": "Rất mơ hồ, khó đo lường ('học giỏi hơn')", "score": 1 },
       { "text": "Rõ ràng nhưng không gắn thời hạn cụ thể", "score": 2 },
@@ -79,7 +79,7 @@
   {
     "questionId": "TEST_Q08",
     "skillId": "TIME_MANAGEMENT",
-    "questionText": "Khi kế hoạch bị phá vỡ bởi biến cố bất ngờ, bạn phản ứng ra sao[cite: 414]?",
+    "questionText": "Khi kế hoạch bị phá vỡ bởi biến cố bất ngờ, bạn phản ứng ra sao?",
     "options": [
       { "text": "Hoảng loạn, nản chí, bỏ dở công việc", "score": 1 },
       { "text": "Cố chấp bám kế hoạch cũ, căng thẳng tột độ", "score": 2 },
@@ -90,7 +90,7 @@
   {
     "questionId": "TEST_Q09",
     "skillId": "COMMUNICATION",
-    "questionText": "Bạn xử lý việc trao đổi thông tin hai chiều thế nào[cite: 415]?",
+    "questionText": "Bạn xử lý việc trao đổi thông tin hai chiều thế nào?",
     "options": [
       { "text": "Chỉ tập trung nói hết ý mình, ít để ý phản ứng người nghe", "score": 1 },
       { "text": "Có để ý nhưng ngại hỏi thẳng 'có rõ không'", "score": 2 },
@@ -101,7 +101,7 @@
   {
     "questionId": "TEST_Q10",
     "skillId": "COMMUNICATION",
-    "questionText": "Thói quen lắng nghe của bạn bị ảnh hưởng nhiều nhất bởi gì[cite: 416]?",
+    "questionText": "Thói quen lắng nghe của bạn bị ảnh hưởng nhiều nhất bởi gì?",
     "options": [
       { "text": "Bận chuẩn bị phản biện trong đầu, không nghe hết", "score": 1 },
       { "text": "Dễ mất hứng nếu không hợp gu với người nói", "score": 2 },
@@ -112,7 +112,7 @@
   {
     "questionId": "TEST_Q11",
     "skillId": "COMMUNICATION",
-    "questionText": "Bạn xử lý sự khác biệt về từ ngữ, thuật ngữ thế nào[cite: 417]?",
+    "questionText": "Bạn xử lý sự khác biệt về từ ngữ, thuật ngữ thế nào?",
     "options": [
       { "text": "Dùng jargon/từ lóng, mặc định người khác tự hiểu", "score": 1 },
       { "text": "Thỉnh thoảng hiểu lầm vì từ địa phương, viết tắt", "score": 2 },
@@ -123,7 +123,7 @@
   {
     "questionId": "TEST_Q12",
     "skillId": "COMMUNICATION",
-    "questionText": "Phong cách viết tin nhắn/email của bạn thế nào[cite: 418]?",
+    "questionText": "Phong cách viết tin nhắn/email của bạn thế nào?",
     "options": [
       { "text": "Viết HOA khi khẩn cấp, dùng viết tắt cả với cấp trên", "score": 1 },
       { "text": "Phản hồi ngay khi tức giận, dễ dẫn đến tranh cãi", "score": 2 },
@@ -134,7 +134,7 @@
   {
     "questionId": "TEST_Q13",
     "skillId": "COMMUNICATION",
-    "questionText": "Khi bị chỉ trích trong hội thoại, phản ứng tự nhiên của bạn là gì[cite: 419]?",
+    "questionText": "Khi bị chỉ trích trong hội thoại, phản ứng tự nhiên của bạn là gì?",
     "options": [
       { "text": "Phản ứng phòng vệ, công kích cá nhân lại", "score": 1 },
       { "text": "Im lặng, bỏ đi, né tránh xung đột", "score": 2 },
@@ -145,7 +145,7 @@
   {
     "questionId": "TEST_Q14",
     "skillId": "COMMUNICATION",
-    "questionText": "Bạn thích ứng phong cách giao tiếp theo bối cảnh thế nào[cite: 420]?",
+    "questionText": "Bạn thích ứng phong cách giao tiếp theo bối cảnh thế nào?",
     "options": [
       { "text": "Nói chuyện y hệt nhau with mọi đối tượng", "score": 1 },
       { "text": "Cố thay đổi nhưng lúng túng chọn kênh phù hợp", "score": 2 },
@@ -156,7 +156,7 @@
   {
     "questionId": "TEST_Q15",
     "skillId": "COMMUNICATION",
-    "questionText": "Bạn nhận diện phong cách trực tiếp/gián tiếp của mình ra sao[cite: 421]?",
+    "questionText": "Bạn nhận diện phong cách trực tiếp/gián tiếp của mình ra sao?",
     "options": [
       { "text": "Nói thẳng thô, đôi khi làm tổn thương người khác", "score": 1 },
       { "text": "Nói vòng vo đến mức người nghe không hiểu ý", "score": 2 },
@@ -167,7 +167,7 @@
   {
     "questionId": "TEST_Q16",
     "skillId": "COMMUNICATION",
-    "questionText": "Bạn kiểm soát ngôn ngữ cơ thể của mình thế nào[cite: 422]?",
+    "questionText": "Bạn kiểm soát ngôn ngữ cơ thể của mình thế nào?",
     "options": [
       { "text": "Không kiểm soát được, khoanh tay, né ánh mắt", "score": 1 },
       { "text": "Lúng túng về khoảng cách giao tiếp (quá gần/xa)", "score": 2 },
@@ -178,7 +178,7 @@
   {
     "questionId": "TEST_Q17",
     "skillId": "CRITICAL_THINKING",
-    "questionText": "Bạn phân biệt sự thật và ý kiến cá nhân tốt đến đâu[cite: 423]?",
+    "questionText": "Bạn phân biệt sự thật và ý kiến cá nhân tốt đến đâu?",
     "options": [
       { "text": "Tin ngay vào tuyên bố thuyết phục trên mạng xã hội", "score": 1 },
       { "text": "Coi ý kiến người mình yêu thích là sự thật hiển nhiên", "score": 2 },
@@ -189,7 +189,7 @@
   {
     "questionId": "TEST_Q18",
     "skillId": "CRITICAL_THINKING",
-    "questionText": "Bạn đối phó với thiên kiến xác nhận của bản thân thế nào[cite: 424]?",
+    "questionText": "Bạn đối phó với thiên kiến xác nhận của bản thân thế nào?",
     "options": [
       { "text": "Chỉ đọc tin cùng quan điểm, nghĩ người khác sai", "score": 1 },
       { "text": "Khó chịu khi đọc tin trái chiều, tìm cách bác bỏ", "score": 2 },
@@ -200,7 +200,7 @@
   {
     "questionId": "TEST_Q19",
     "skillId": "CRITICAL_THINKING",
-    "questionText": "Khi tranh luận nhóm, bạn thường phản ứng ra sao[cite: 425]?",
+    "questionText": "Khi tranh luận nhóm, bạn thường phản ứng ra sao?",
     "options": [
       { "text": "Công kích cá nhân đối phương khi bị phản bác", "score": 1 },
       { "text": "A dua theo số đông, tránh tư duy độc lập", "score": 2 },
@@ -211,7 +211,7 @@
   {
     "questionId": "TEST_Q20",
     "skillId": "CRITICAL_THINKING",
-    "questionText": "Bạn kiểm chứng một nguồn tin lạ trên mạng ra sao[cite: 426]?",
+    "questionText": "Bạn kiểm chứng một nguồn tin lạ trên mạng ra sao?",
     "options": [
       { "text": "Tin vào giao diện đẹp, lời tự giới thiệu của tác giả", "score": 1 },
       { "text": "Tin theo lượt thích, bình luận tích cực bên dưới", "score": 2 },
@@ -222,7 +222,7 @@
   {
     "questionId": "TEST_Q21",
     "skillId": "CRITICAL_THINKING",
-    "questionText": "Khi gặp vấn đề phức tạp, bạn tìm giải pháp thế nào[cite: 427]?",
+    "questionText": "Khi gặp vấn đề phức tạp, bạn tìm giải pháp thế nào?",
     "options": [
       { "text": "Chỉ giải quyết phần nổi, không tìm hiểu gốc rễ", "score": 1 },
       { "text": "Quyết định vội vàng theo cảm tính", "score": 2 },
@@ -233,7 +233,7 @@
   {
     "questionId": "TEST_Q22",
     "skillId": "CRITICAL_THINKING",
-    "questionText": "Bạn có sẵn sàng thay đổi quan điểm khi có bằng chứng mới không[cite: 428]?",
+    "questionText": "Bạn có sẵn sàng thay đổi quan điểm khi có bằng chứng mới không?",
     "options": [
       { "text": "Bảo thủ, bám quan điểm dù bị chứng minh sai", "score": 1 },
       { "text": "Thay đổi nhưng theo cảm xúc/số đông, không phải bằng chứng", "score": 2 },
@@ -244,7 +244,7 @@
   {
     "questionId": "TEST_Q23",
     "skillId": "CRITICAL_THINKING",
-    "questionText": "Bạn đánh giá độ tin cậy một tài liệu nghiên cứu ra sao[cite: 429]?",
+    "questionText": "Bạn đánh giá độ tin cậy một tài liệu nghiên cứu ra sao?",
     "options": [
       { "text": "Chọn kết quả đầu tiên trên Google, tin là uy tín nhất", "score": 1 },
       { "text": "Chỉ cần viết hay và trùng khớp với điều mình muốn chứng minh", "score": 2 },
@@ -255,7 +255,7 @@
   {
     "questionId": "TEST_Q24",
     "skillId": "CRITICAL_THINKING",
-    "questionText": "Khi gặp vấn đề, bạn có chuẩn bị nhiều phương án không[cite: 430]?",
+    "questionText": "Khi gặp vấn đề, bạn có chuẩn bị nhiều phương án không?",
     "options": [
       { "text": "Chỉ nghĩ 1 giải pháp, bất lực khi nó thất bại", "score": 1 },
       { "text": "Có nghĩ đến nhưng bỏ cuộc vì thấy tốn thời gian", "score": 2 },

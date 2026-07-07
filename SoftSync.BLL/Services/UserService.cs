@@ -15,31 +15,18 @@ public class UserService : IUserService
     {
         var user = await _userRepo.GetByIdAsync(id);
         if (user == null) return null;
-        return new UserDto { Id = user.Id, FullName = user.FullName, Age = user.Age, Goal = user.Goal, CreatedAt = user.CreatedAt };
+        return new UserDto {
+            Id = user.Id,
+            FullName = user.FullName,
+            Email = user.Email,
+            Age = user.Age,
+            Goal = user.Goal,
+            CreatedAt = user.CreatedAt
+        };
     }
 
-    public async Task<UserDto> CreateUserAsync(UserDto dto)
-    {
-        var user = new User { FullName = dto.FullName, Age = dto.Age, Goal = dto.Goal, CreatedAt = DateTime.UtcNow };
-        await _userRepo.AddAsync(user);
-        await _userRepo.SaveChangesAsync();
-        dto.Id = user.Id;
-        return dto;
-    }
-
-    public async Task AddSkillSelectionsAsync(int userId, List<int> skillIds)
-    {
-        var user = await _userRepo.GetByIdAsync(userId);
-        if (user != null)
-        {
-            // Simple logic for MVP: just clear and add
-            foreach (var sid in skillIds)
-            {
-                user.SkillSelections.Add(new UserSkillSelection { UserId = userId, SkillId = sid });
-            }
-            await _userRepo.SaveChangesAsync();
-        }
-    }
+    public async Task<List<int>> AddSkillSelectionsAsync(int userId, List<int> skillIds)
+    => await _userRepo.AddNewSkillSelectionsAsync(userId, skillIds);
 
     public async Task<AuthResultDto> UpdateProfileAsync(int userId, string fullName, int age, string goal)
     {
@@ -55,5 +42,9 @@ public class UserService : IUserService
 
         var dto = new UserDto { Id = user.Id, FullName = user.FullName, Email = user.Email, Age = user.Age, Role = user.Role, Goal = user.Goal, CreatedAt = user.CreatedAt };
         return AuthResultDto.Ok("Cập nhật hồ sơ thành công!", dto);
+    }
+    public async Task<List<int>> GetSelectedSkillIdsAsync(int userId)
+    {
+        return await _userRepo.GetSelectedSkillIdsAsync(userId); // chỉ forward xuống repo có sẵn
     }
 }

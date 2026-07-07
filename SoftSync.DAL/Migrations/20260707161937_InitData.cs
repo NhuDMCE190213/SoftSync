@@ -64,27 +64,6 @@ namespace SoftSync.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AssessmentQuestions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SkillId = table.Column<int>(type: "int", nullable: false),
-                    QuestionText = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AssessmentQuestions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AssessmentQuestions_Skills_SkillId",
-                        column: x => x.SkillId,
-                        principalTable: "Skills",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CaseStudies",
                 columns: table => new
                 {
@@ -352,27 +331,6 @@ namespace SoftSync.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AssessmentOptions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    QuestionId = table.Column<int>(type: "int", nullable: false),
-                    OptionText = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ScoreValue = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AssessmentOptions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AssessmentOptions_AssessmentQuestions_QuestionId",
-                        column: x => x.QuestionId,
-                        principalTable: "AssessmentQuestions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CaseStudyOptions",
                 columns: table => new
                 {
@@ -509,7 +467,7 @@ namespace SoftSync.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Age", "CreatedAt", "Email", "FullName", "Goal", "PasswordHash", "Role" },
-                values: new object[] { 1, 20, new DateTime(2026, 6, 27, 8, 2, 1, 149, DateTimeKind.Utc).AddTicks(583), "demo@softsync.vn", "Nguyễn Văn A", "Cải thiện kỹ năng giao tiếp", "100000.+i5UP8IRdyM5JSCvl83uOA==.9aJMeg1Bn3jWWjIfFMi3fO3khKxLJ9xjU+Xi4GmkvPU=", 0 });
+                values: new object[] { 1, 20, new DateTime(2026, 6, 27, 16, 19, 37, 619, DateTimeKind.Utc).AddTicks(1343), "demo@softsync.vn", "Nguyễn Văn A", "Cải thiện kỹ năng giao tiếp", "100000.dWcqqpmE7DUu0BDsGm6a/Q==.ulFl+DO1KnWnHf34E3bKOZrUc0WH20FhnAcu+Mqzqeg=", 0 });
 
             migrationBuilder.InsertData(
                 table: "CaseStudies",
@@ -530,16 +488,6 @@ namespace SoftSync.DAL.Migrations
                     { 3, 2, "Rủi ro và không quản lý được kỳ vọng.", false, "Làm việc cả đêm và hy vọng điều tốt nhất." },
                     { 4, 2, "Minh bạch và lập kế hoạch chủ động là điều cần thiết.", true, "Thông báo ngay cho các bên liên quan và đề xuất một lịch trình mới." }
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AssessmentOptions_QuestionId",
-                table: "AssessmentOptions",
-                column: "QuestionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AssessmentQuestions_SkillId",
-                table: "AssessmentQuestions",
-                column: "SkillId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AssessmentResults_SkillId",
@@ -641,9 +589,6 @@ namespace SoftSync.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AssessmentOptions");
-
-            migrationBuilder.DropTable(
                 name: "AssessmentResults");
 
             migrationBuilder.DropTable(
@@ -681,9 +626,6 @@ namespace SoftSync.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserSkillSelections");
-
-            migrationBuilder.DropTable(
-                name: "AssessmentQuestions");
 
             migrationBuilder.DropTable(
                 name: "CaseStudies");

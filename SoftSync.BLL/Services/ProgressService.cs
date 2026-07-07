@@ -13,4 +13,11 @@ public class ProgressService : IProgressService
         var logs = await _progressRepo.GetByUserIdAsync(userId);
         return logs.Select(l => new ProgressDto { UserId = l.UserId, SkillId = l.SkillId, SkillName = l.Skill.Name, PercentComplete = l.PercentComplete, UpdatedAt = l.UpdatedAt });
     }
+    public async Task UpsertProgressAsync(int userId, int skillId, int percentDelta)
+    {
+        var log = await _progressRepo.GetOrCreateAsync(userId, skillId);
+        log.PercentComplete = Math.Clamp(log.PercentComplete + percentDelta, 0, 100);
+        log.UpdatedAt = DateTime.UtcNow;
+        await _progressRepo.SaveChangesAsync();
+    }
 }

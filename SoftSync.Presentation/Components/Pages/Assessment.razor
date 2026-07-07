@@ -1,7 +1,9 @@
 ﻿@page "/assessment/{UserId:int}"
 @using SoftSync.BLL.Interfaces
+@using SoftSync.BLL.Services
 @using SoftSync.Common.Dtos.EntryTest
 @inject IEntryTestService EntryTestService
+@inject IRoadmapService RoadmapService
 @inject NavigationManager Nav
 @attribute [Authorize]
 
@@ -58,10 +60,15 @@
     private int currentQuestionIndex = 0;
     private int selectedOptionId = 0;
     private List<EntryTestAnswerDto> answers = new();
+    [SupplyParameterFromQuery(Name = "skillIds")]
+    public string? SkillIdsQuery { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        questions = await EntryTestService.GetQuestionsAsync();
+        var filterIds = string.IsNullOrEmpty(SkillIdsQuery)
+            ? null
+            : SkillIdsQuery.Split(',').Select(int.Parse).ToList();
+        questions = await EntryTestService.GetQuestionsAsync(UserId, filterIds);
     }
 
     private void SelectOption(int id) => selectedOptionId = id;
@@ -79,6 +86,7 @@
         {
             currentQuestionIndex++;
             await EntryTestService.SubmitAsync(UserId, answers);
+            await RoadmapService.GenerateRoadmapAsync(UserId);
             Nav.NavigateTo($"/assessment-result/{UserId}");
         }
     }

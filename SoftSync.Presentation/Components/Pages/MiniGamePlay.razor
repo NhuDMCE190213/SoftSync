@@ -1,8 +1,10 @@
 ﻿@page "/game/{MiniGameId:int}/play"
 @using SoftSync.BLL.Interfaces
 @using SoftSync.Common.Dtos.MiniGame
+@using SoftSync.Presentation.Infrastructure
 @inject IMiniGameService MiniGameService
 @inject NavigationManager Nav
+@inject CurrentUserAccessor CurrentUserAccessor
 @attribute [Authorize]
 
 <div class="max-800 mx-auto">
@@ -57,11 +59,14 @@
     private bool answered = false;
     private int finalScore = 0;
     private List<MiniGameAnswerDto> answers = new();
-    private int userId = 1; // TODO: lấy từ AuthenticationState thật
+    private int? userId = 1; // TODO: lấy từ AuthenticationState thật
+    private int skillId = 1; // TODO: lấy từ MiniGameService.GetMiniGameById(MiniGameId).SkillId
 
     protected override async Task OnInitializedAsync()
     {
+        userId = await CurrentUserAccessor.GetUserIdAsync();
         questions = await MiniGameService.GetRandomQuestionsAsync(MiniGameId);
+        skillId = await MiniGameService.GetByIdAsync(MiniGameId);
     }
 
     private void SelectOption(int optionId)
@@ -77,9 +82,9 @@
 
         if (currentIndex >= questions!.Count)
         {
-            finalScore = await MiniGameService.SubmitAttemptAsync(userId, MiniGameId, answers);
+            finalScore = await MiniGameService.SubmitAttemptAsync(userId!.Value, MiniGameId, answers);
         }
     }
 
-    private void BackToGames() => Nav.NavigateTo("/");
+    private void BackToGames() => Nav.NavigateTo($"/skill/{skillId}/games");
 }

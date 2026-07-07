@@ -25,7 +25,6 @@ builder.Services.AddDbContext<SoftSyncDbContext>(options =>
 // 2. Register Repositories (DAL)
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISkillRepository, SkillRepository>();
-builder.Services.AddScoped<IAssessmentRepository, AssessmentRepository>();
 builder.Services.AddScoped<IRoadmapRepository, RoadmapRepository>();
 builder.Services.AddScoped<ICaseStudyRepository, CaseStudyRepository>();
 builder.Services.AddScoped<IProgressRepository, ProgressRepository>();
@@ -34,14 +33,12 @@ builder.Services.AddScoped<IMentorRepository, MentorRepository>();
 builder.Services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>(); // MỚI
 
 // 3. Register AI Services (BLL - Mocked)
-builder.Services.AddScoped<IAiAssessmentService, FakeAiAssessmentService>();
 builder.Services.AddScoped<IAiAssistantService, FakeAiAssistantService>();
 builder.Services.AddScoped<IAiRoadmapService, FakeAiRoadmapService>();
 
 // 4. Register Business Services (BLL)
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
-//builder.Services.AddScoped<IAssessmentService, AssessmentService>();
 builder.Services.AddScoped<IRoadmapService, RoadmapService>();
 builder.Services.AddScoped<IProgressService, ProgressService>();
 builder.Services.AddScoped<ICaseStudyService, CaseStudyService>();
@@ -55,6 +52,11 @@ builder.Services.AddScoped<IMiniGameService, MiniGameService>();
 builder.Services.AddScoped<IMiniGameAttemptRepository, MiniGameAttemptRepository>();
 builder.Services.AddScoped<ITheoryLessonRepository, TheoryLessonRepository>();
 builder.Services.AddScoped<ITheoryLessonService, TheoryLessonService>();
+builder.Services.AddScoped<IProgressSyncService, ProgressSyncService>();
+builder.Services.AddScoped<IMentorChatRepository, MentorChatRepository>();
+builder.Services.AddScoped<IMentorChatService, MentorChatService>();
+builder.Services.AddScoped<ITheoryLessonProgressRepository, TheoryLessonProgressRepository>();
+builder.Services.AddScoped<IAnswerAnalysisService, AnswerAnalysisService>();
 
 builder.Services.AddScoped<CurrentUserAccessor>();
 
