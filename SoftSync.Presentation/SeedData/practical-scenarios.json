@@ -2,104 +2,218 @@
   {
     "scenarioId": "COM_SCENARIO_01",
     "skillId": "COMMUNICATION",
+    "gameGroup": "COM_GAME_1",
+    "gameName": "Giao tiếp với giảng viên",
     "type": "MULTIPLE_CHOICE",
-    "context": "Bạn cần hỏi giáo sư về một bài tập bị chấm điểm thấp vì bạn tin rằng bài làm của mình xứng đáng điểm cao hơn[cite: 380].",
-    "questionText": "Hành động nào sau đây là phù hợp nhất để đạt hiệu quả giao tiếp[cite: 381]?",
+    "context": "Bạn cần hỏi giáo sư về một bài tập bị chấm điểm thấp vì bạn tin rằng bài làm của mình xứng đáng điểm cao hơn.",
+    "questionText": "Hành động nào sau đây là phù hợp nhất để đạt hiệu quả giao tiếp?",
     "options": [
       {
-        "text": "Gửi tin nhắn văn bản ngắn gọn để hỏi lý do[cite: 382].",
+        "text": "Gửi tin nhắn văn bản ngắn gọn để hỏi lý do.",
         "points": 3,
         "feedback": "Tông giọng quá ngắn gọn dễ bị hiểu lầm là thiếu trang trọng hoặc áp đặt qua không gian mạng."
       },
       {
-        "text": "Gọi điện trực tiếp cho giáo sư và hy vọng họ đang rảnh[cite: 383].",
+        "text": "Gọi điện trực tiếp cho giáo sư và hy vọng họ đang rảnh.",
         "points": 0,
         "feedback": "Rủi ro cao gây phiền hà, vi phạm quy tắc tôn trọng thời gian và ranh giới cá nhân của giảng viên."
       },
       {
-        "text": "Tìm hiểu giờ tiếp sinh viên (office hours) của giáo sư và đến gặp để trực tiếp trao đổi ôn hòa[cite: 384].",
+        "text": "Tìm hiểu giờ tiếp sinh viên (office hours) của giáo sư và đến gặp để trực tiếp trao đổi ôn hòa.",
         "points": 10,
         "isCorrect": true,
-        "feedback": "Tối ưu! Giao tiếp trực tiếp giúp truyền tải đầy đủ thông điệp phi ngôn ngữ, đồng thời tận dụng office hours giúp xây dựng mối quan hệ hợp tác tốt hơn[cite: 385]."
+        "feedback": "Tối ưu! Giao tiếp trực tiếp giúp truyền tải đầy đủ thông điệp phi ngôn ngữ, đồng thời tận dụng office hours giúp xây dựng mối quan hệ hợp tác tốt hơn."
       }
     ]
   },
   {
     "scenarioId": "COM_SCENARIO_02",
     "skillId": "COMMUNICATION",
+    "gameGroup": "COM_GAME_2",
+    "gameName": "Viết Email",
     "type": "MULTIPLE_CHOICE",
-    "context": "Khi viết email chính thức gửi giáo sư hoặc đồng nghiệp trong môi trường học thuật/chuyên nghiệp[cite: 386].",
-    "questionText": "Thói quen nào giúp email của bạn giữ được sự chuyên nghiệp nhất[cite: 386]?",
+    "context": "Khi viết email chính thức gửi giáo sư hoặc đồng nghiệp trong môi trường học thuật/chuyên nghiệp.",
+    "questionText": "Thói quen nào giúp email của bạn giữ được sự chuyên nghiệp nhất?",
     "options": [
       {
-        "text": "Viết toàn bộ IN HOA để gây sự chú ý[cite: 387].",
+        "text": "Viết toàn bộ IN HOA để gây sự chú ý.",
         "points": 0,
-        "feedback": "Vi phạm nghiêm trọng Netiquette, việc viết hoa toàn bộ bị coi là hành vi la hét trực tuyến[cite: 389]."
+        "feedback": "Vi phạm nghiêm trọng Netiquette, việc viết hoa toàn bộ bị coi là hành vi la hét trực tuyến."
       },
       {
-        "text": "Dùng các từ viết tắt phổ biến trực tuyến như FWIW, IMHO, LOL[cite: 388].",
+        "text": "Dùng các từ viết tắt phổ biến trực tuyến như FWIW, IMHO, LOL.",
         "points": 2,
-        "feedback": "Các từ viết tắt không chuẩn hóa không phù hợp cho các bối cảnh giao tiếp chính thức, chuyên nghiệp[cite: 390]."
+        "feedback": "Các từ viết tắt không chuẩn hóa không phù hợp cho các bối cảnh giao tiếp chính thức, chuyên nghiệp."
       },
       {
-        "text": "Tiêu đề ngắn gọn cụ thể, câu hoàn chỉnh đúng ngữ pháp, lời chào trang trọng (vd: Dear Ms. X), kết thúc bằng chữ ký có thông tin liên hệ[cite: 389].",
+        "text": "Tiêu đề ngắn gọn cụ thể, câu hoàn chỉnh đúng ngữ pháp, lời chào trang trọng (vd: Dear Ms. X), kết thúc bằng chữ ký có thông tin liên hệ.",
         "points": 10,
         "isCorrect": true,
-        "feedback": "Chính xác! Đảm bảo đầy đủ các quy chuẩn Netiquette học thuật và kiểm soát chặt chẽ tông giọng khẳng định ôn hòa[cite: 477]."
+        "feedback": "Chính xác! Đảm bảo đầy đủ các quy chuẩn Netiquette học thuật và kiểm soát chặt chẽ tông giọng khẳng định ôn hòa."
       }
     ]
   },
   {
     "scenarioId": "TIME_SCENARIO_01",
     "skillId": "TIME_MANAGEMENT",
+    "gameGroup": "TIME_GAME_1",
+    "gameName": "Lựa chọn quan trọng",
     "type": "SITUATIONAL_ANSWER",
-    "context": "Quản lý yêu cầu bạn tăng ca vào tối thứ Bảy, nhưng bạn đã lên lịch viết một bài luận quan trọng cho tuần sau[cite: 393].",
-    "questionText": "Bạn nên xử lý tình huống xung đột ưu tiên này như thế nào[cite: 393]?",
-    "idealSolution": {
-      "action": "Chủ động báo sớm, thảo luận rõ ràng về ưu tiên học tập[cite: 394].",
-      "example": "Xin phép từ chối tăng ca tối thứ Bảy, chủ động đề xuất giải pháp thay thế như hỗ trợ bù vào ngày Chủ Nhật[cite: 394].",
-      "takeaway": "Giải quyết xung đột lịch trình chủ động giúp bảo vệ uy tín làm việc (Ethos) đồng thời bảo toàn tiến độ học tập[cite: 310]."
-    }
+    "context": "Quản lý yêu cầu bạn tăng ca vào tối thứ Bảy, nhưng bạn đã lên lịch viết một bài luận quan trọng cho tuần sau.",
+    "questionText": "Bạn nên xử lý tình huống xung đột ưu tiên này như thế nào?",
+    "options": [
+      {
+        "text": "Chủ động báo sớm, xin phép từ chối tăng ca và đề xuất bù vào Chủ Nhật.",
+        "points": 10,
+        "isCorrect": true,
+        "feedback": "Giải quyết xung đột lịch trình chủ động giúp bảo vệ uy tín làm việc đồng thời bảo toàn tiến độ học tập."
+      },
+      {
+        "text": "Đồng ý tăng ca rồi thức đêm viết luận sau.",
+        "points": 2,
+        "feedback": "Rủi ro kiệt sức và giảm chất lượng bài luận."
+      },
+      {
+        "text": "Im lặng không tăng ca, không báo trước với quản lý.",
+        "points": 0,
+        "feedback": "Thiếu chủ động thông báo dễ ảnh hưởng uy tín làm việc."
+      }
+    ]
   },
   {
-    "scenarioId": "CRIT_SCENARIO_01",
+    "scenarioId": "CRIT_SCENARIO_01A",
     "skillId": "CRITICAL_THINKING",
+    "gameGroup": "CRIT_GAME_1",
+    "gameName": "Thông tin về Elizabeth",
     "type": "FACT_OR_OPINION",
-    "questionText": "Hãy phân định rạch ròi các tuyên bố sau đây là Fact (Sự thật) hay Opinion (Ý kiến cá nhân)[cite: 496].",
-    "items": [
-      { "statement": "Năm 1952, Elizabeth trở thành Nữ hoàng Anh[cite: 398].", "answer": "FACT", "explanation": "Có dữ liệu lịch sử xác minh được khách quan." },
-      { "statement": "Bột yến mạch có vị rất nhạt nhẽo [cite: 399].", "answer": "OPINION", "explanation": "Cảm nhận vị giác mang tính chủ quan của cá nhân[cite: 498]." },
-      { "statement": "Mụn trứng cá là tình trạng da gây xấu hổ[cite: 400].", "answer": "OPINION", "explanation": "Trạng thái cảm xúc phán đoán chủ quan." },
-      { "statement": "Điện thoại di động gây ra khối u não [cite: 401].", "answer": "OPINION", "explanation": "Chưa có bằng chứng khoa học thực nghiệm xác thực củng cố[cite: 401]." }
+    "questionText": "Năm 1952, Elizabeth trở thành Nữ hoàng Anh. Đây là Fact hay Opinion?",
+    "options": [
+      {
+        "text": "Fact (Sự thật)",
+        "points": 10,
+        "isCorrect": true,
+        "feedback": "Đúng, có dữ liệu lịch sử xác minh được."
+      },
+      {
+        "text": "Opinion (Ý kiến)",
+        "points": 0,
+        "feedback": "Sai, đây là sự kiện có bằng chứng khách quan."
+      }
+    ]
+  },
+  {
+    "scenarioId": "CRIT_SCENARIO_01B",
+    "skillId": "CRITICAL_THINKING",
+    "gameGroup": "CRIT_GAME_1",
+    "gameName": "Yến mạch",
+    "type": "FACT_OR_OPINION",
+    "questionText": "Tuyên bố: 'Bột yến mạch có vị rất nhạt nhẽo.' Đây là Fact (Sự thật) hay Opinion (Ý kiến)?",
+    "options": [
+      {
+        "text": "Fact (Sự thật)",
+        "points": 0,
+        "isCorrect": false,
+        "feedback": "Chưa đúng. Vị giác của mỗi người khác nhau, không thể coi là sự thật khách quan."
+      },
+      {
+        "text": "Opinion (Ý kiến)",
+        "points": 10,
+        "isCorrect": true,
+        "feedback": "Chính xác. Cảm nhận về vị giác hoàn toàn mang tính chủ quan của từng cá nhân."
+      }
+    ]
+  },
+  {
+    "scenarioId": "CRIT_SCENARIO_01C",
+    "skillId": "CRITICAL_THINKING",
+    "gameGroup": "CRIT_GAME_1",
+    "gameName": "Mụn trứng cá",
+    "type": "FACT_OR_OPINION",
+    "questionText": "Tuyên bố: 'Mụn trứng cá là tình trạng da gây xấu hổ.' Đây là Fact (Sự thật) hay Opinion (Ý kiến)?",
+    "options": [
+      {
+        "text": "Fact (Sự thật)",
+        "points": 0,
+        "isCorrect": false,
+        "feedback": "Chưa đúng. Cảm xúc xấu hổ không phải là thuộc tính sinh học cố định của mụn trứng cá."
+      },
+      {
+        "text": "Opinion (Ý kiến)",
+        "points": 10,
+        "isCorrect": true,
+        "feedback": "Chính xác. Định kiến 'gây xấu hổ' là trạng thái cảm xúc và phán đoán chủ quan của con người."
+      }
+    ]
+  },
+  {
+    "scenarioId": "CRIT_SCENARIO_01D",
+    "skillId": "CRITICAL_THINKING",
+    "gameGroup": "CRIT_GAME_1",
+    "gameName": "Điện thoại di động",
+    "type": "FACT_OR_OPINION",
+    "questionText": "Tuyên bố: 'Điện thoại di động gây ra khối u não.' Đây là Fact (Sự thật) hay Opinion (Ý kiến)?",
+    "options": [
+      {
+        "text": "Fact (Sự thật)",
+        "points": 0,
+        "isCorrect": false,
+        "feedback": "Chưa đúng. Tuyên bố này chưa có đủ bằng chứng khoa học thực nghiệm để công nhận là sự thật."
+      },
+      {
+        "text": "Opinion (Ý kiến)",
+        "points": 10,
+        "isCorrect": true,
+        "feedback": "Chính xác. Khi chưa được khoa học chứng minh rõ ràng, tuyên bố mang tính khẳng định này vẫn chỉ dừng lại ở mức quan điểm hoặc giả thuyết cá nhân."
+      }
     ]
   },
   {
     "scenarioId": "CRIT_SCENARIO_02",
     "skillId": "CRITICAL_THINKING",
+    "gameGroup": "CRIT_GAME_2",
+    "gameName": "Kế hoạch nhóm",
     "type": "MULTIPLE_CHOICE",
-    "context": "Nhóm lập kế hoạch du lịch với ngân sách giới hạn $200/người. Thành viên A thực hiện thu thập dữ liệu, nghiên cứu chi phí du thuyền/cabin để tối ưu hóa ngân sách. Thành viên B vội vã đặt cọc ngay phòng ăn 25 người ở nhà hàng đắt đỏ[cite: 402, 403].",
-    "questionText": "Ai là người thể hiện năng lực tư duy phản biện tốt hơn trong bối cảnh này[cite: 403]?",
+    "context": "Nhóm lập kế hoạch du lịch với ngân sách giới hạn $200/người. Thành viên A thực hiện thu thập dữ liệu, nghiên cứu chi phí du thuyền/cabin để tối ưu hóa ngân sách. Thành viên B vội vã đặt cọc ngay phòng ăn 25 người ở nhà hàng đắt đỏ.",
+    "questionText": "Ai là người thể hiện năng lực tư duy phản biện tốt hơn trong bối cảnh này?",
     "options": [
       {
-        "text": "Thành viên A [cite: 403]",
+        "text": "Thành viên A ",
         "points": 10,
         "isCorrect": true,
-        "feedback": "Đúng. Thành viên A chủ động nghiên cứu phương án, thu thập bằng chứng thực tế phù hợp với ranh giới ngân sách nhóm[cite: 404]."
+        "feedback": "Đúng. Thành viên A chủ động nghiên cứu phương án, thu thập bằng chứng thực tế phù hợp với ranh giới ngân sách nhóm."
       },
       {
-        "text": "Thành viên B [cite: 403]",
+        "text": "Thành viên B ",
         "points": 0,
-        "feedback": "Sai. Thành viên B đưa ra quyết định vội vã dựa trên cảm tính, làm lãng phí ngân sách và vi phạm mục tiêu ban đầu của nhóm[cite: 404]."
+        "feedback": "Sai. Thành viên B đưa ra quyết định vội vã dựa trên cảm tính, làm lãng phí ngân sách và vi phạm mục tiêu ban đầu của nhóm."
       }
     ]
   },
   {
     "scenarioId": "CRIT_FALLACY_01",
     "skillId": "CRITICAL_THINKING",
+    "gameGroup": "CRIT_GAME_2",
+    "gameName": "Quy định vô lý",
     "type": "IDENTIFY_FALLACY",
-    "context": "Tranh luận nhóm xuất hiện luận điểm: 'Tất cả mọi người trong trường đều đồng ý quy định này vô lý, vì vậy chúng ta chắc chắn không cần tuân theo nó nữa.' [cite: 405]",
-    "questionText": "Đoạn lập luận trên đã phạm phải lỗi ngụy biện logic nào[cite: 405]?",
-    "correctAnswer": "BANDWAGON",
-    "feedback": "Mắc ngụy biện Bandwagon (Ad Populum) — cố tình sử dụng niềm tin số đông để khẳng định một kết luận là đúng mà không đưa ra bằng chứng thực nghiệm[cite: 406]."
+    "context": "Tranh luận nhóm xuất hiện luận điểm: 'Tất cả mọi người trong trường đều đồng ý quy định này vô lý, vì vậy chúng ta chắc chắn không cần tuân theo nó nữa.' ",
+    "questionText": "Đoạn lập luận trên đã phạm phải lỗi ngụy biện logic nào?",
+    "options": [
+      {
+        "text": "Ngụy biện Bandwagon (Ad Populum)",
+        "points": 10,
+        "isCorrect": true,
+        "feedback": "Đúng — dùng niềm tin số đông thay cho bằng chứng."
+      },
+      {
+        "text": "Ngụy biện Straw Man",
+        "points": 0,
+        "feedback": "Sai, câu này không bóp méo lập luận đối phương."
+      },
+      {
+        "text": "Ngụy biện Ad Hominem",
+        "points": 0,
+        "feedback": "Sai, câu này không công kích cá nhân."
+      }
+    ]
   }
 ]

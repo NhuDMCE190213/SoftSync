@@ -1,20 +1,22 @@
 {
   "skillId": "CRITICAL_THINKING",
   "skillName": "Kỹ năng Tư duy phản biện",
-  "coreConcept": "Tư duy tự định hướng, tự kỷ luật, tự giám sát và tự sửa lỗi sau khi phân tích kỹ quan điểm/bằng chứng[cite: 375].",
+  "videoUrl": "https://www.youtube.com/embed/xxxxxxx",
+  "lessonBody": "# Bài học: Kỹ năng Tư duy Phản biện (Critical Thinking)\n\nTư duy phản biện không phải là tranh cãi, mà là quá trình tư duy chủ động nhằm phân tích, đánh giá thông tin một cách khách quan để đưa ra quyết định đúng đắn.\n\n---\n\n## 💡 Khái niệm cốt lõi (Core Concept)\n> **Tư duy phản biện là tư duy tự định hướng, tự kỷ luật, tự giám sát và tự sửa lỗi sau khi phân tích kỹ quan điểm hoặc bằng chứng.**\n\nNgười có tư duy phản biện tốt sẽ không dễ dàng chấp nhận thông tin ngay lập tức, mà luôn đặt câu hỏi về tính xác thực của nguồn tin.\n\n---\n\n## ⚖️ Phân biệt Sự thật vs Ý kiến (Fact vs Opinion)\nBước đầu tiên của tư duy phản biện là biết bóc tách đâu là dữ liệu khách quan, đâu là cảm tính:\n\n* 📊 **Sự thật (Fact):** Có bằng chứng khách quan, xác minh được qua nghiên cứu, số liệu hoặc quan sát khoa học thực tế.\n* 💭 **Ý kiến (Opinion):** Phán đoán chủ quan, niềm tin cá nhân hoặc cảm xúc cá thể, không có bằng chứng hỗ trợ trực tiếp.\n\n---\n\n## 🚫 Nhận diện các lỗi Ngụy biện phổ biến (Fallacies)\nNgụy biện là các lỗi sai về mặt logic trong lập luận. Hãy cảnh giác với 5 loại ngụy biện sau:\n\n1. **Ngụy biện công kích cá nhân (Ad Hominem):** Tấn công vào đặc điểm, đời tư cá nhân của người nói thay vì tập trung phản bác luận điểm của họ.\n2. **Ngụy biện số đông (Bandwagon):** Khẳng định một điều gì đó chắc chắn đúng chỉ vì thấy đám đông xung quanh ai cũng tin theo như vậy.\n3. **Ngụy biện cường điệu hóa (Reduction to Absurdity):** Cố tình thổi phồng, phóng đại lập luận của người khác lên mức tối đa để biến nó thành lố bịch, vô lý.\n4. **Ngụy biện đánh lạc hướng (Red Herring):** Cố tình đưa một thông tin gây nhiễu, không liên quan vào cuộc thảo luận để phân tán sự chú ý của người nghe.\n5. **Ngụy biện bù nhìn rơm (Straw Man):** Bóp méo, xuyên tạc hoàn toàn luận điểm ban đầu của đối phương, sau đó tấn công mạnh mẽ vào phiên bản đã bị bóp méo đó.\n\n---\n\n## 🔍 Phương pháp Xác thực thông tin (Verification Method)\nKhi đứng trước một thông tin trực tuyến chưa rõ thực hư, hãy áp dụng kỹ thuật **Lateral Reading (Đọc ngang)**:\n* **Hành động:** Thay vì đọc từ trên xuống dưới trang web hiện tại, bạn hãy chủ động rời trang đó.\n* **Thực hiện:** Nhanh chóng mở thêm nhiều tab trình duyệt mới để tra cứu chéo, đối chiếu thông tin với các nguồn độc lập, từ đó đánh giá chuẩn xác uy tín của tác giả hoặc nguồn cung cấp tin ban đầu.",
+  "coreConcept": "Tư duy tự định hướng, tự kỷ luật, tự giám sát và tự sửa lỗi sau khi phân tích kỹ quan điểm/bằng chứng.",
   "factVsOpinion": {
-    "fact": "Có bằng chứng khách quan, xác minh được qua nghiên cứu hoặc quan sát khoa học[cite: 497].",
-    "opinion": "Phán đoán chủ quan, niềm tin cá nhân không có bằng chứng hỗ trợ trực tiếp[cite: 498]."
+    "fact": "Có bằng chứng khách quan, xác minh được qua nghiên cứu hoặc quan sát khoa học.",
+    "opinion": "Phán đoán chủ quan, niềm tin cá nhân không có bằng chứng hỗ trợ trực tiếp."
   },
   "fallacies": [
-    { "code": "AD_HOMINEM", "name": "Ngụy biện công kích cá nhân", "description": "Tấn công đặc điểm cá nhân người nói thay vì phản bác luận điểm[cite: 502]." },
+    { "code": "AD_HOMINEM", "name": "Ngụy biện công kích cá nhân", "description": "Tấn công đặc điểm cá nhân người nói thay vì phản bác luận điểm." },
     { "code": "BANDWAGON", "name": "Ngụy biện số đông (Ad Populum)", "description": "Khẳng định một điều là đúng chỉ vì có đám đông tin theo như vậy[cite: 405, 502]." },
-    { "code": "REDUCTION_TO_ABSURDITY", "name": "Ngụy biện cường điệu hóa (Giảm đến mức vô lý)", "description": "Cường điệu hóa lập luận để biến nó thành lố bịch[cite: 378]." },
-    { "code": "RED_HERRING", "name": "Ngụy biện đánh lạc hướng", "description": "Đưa thông tin không liên quan vào để phân tán sự chú ý[cite: 378]." },
-    { "code": "STRAW_MAN", "name": "Ngụy biện bù nhìn rơm", "description": "Bóp méo hoặc xuyên tạc luận điểm của đối phương rồi tấn công bản bóp méo đó[cite: 378]." }
+    { "code": "REDUCTION_TO_ABSURDITY", "name": "Ngụy biện cường điệu hóa (Giảm đến mức vô lý)", "description": "Cường điệu hóa lập luận để biến nó thành lố bịch." },
+    { "code": "RED_HERRING", "name": "Ngụy biện đánh lạc hướng", "description": "Đưa thông tin không liên quan vào để phân tán sự chú ý." },
+    { "code": "STRAW_MAN", "name": "Ngụy biện bù nhìn rơm", "description": "Bóp méo hoặc xuyên tạc luận điểm của đối phương rồi tấn công bản bóp méo đó." }
   ],
   "verificationMethod": {
     "name": "Lateral Reading (Đọc ngang)",
-    "description": "Rời trang web đang đọc, nhanh chóng mở nhiều tab trình duyệt mới để tra cứu chéo, đối chiếu nguồn độc lập nhằm xác thực uy tín của tác giả hoặc nguồn thông tin[cite: 505]."
+    "description": "Rời trang web đang đọc, nhanh chóng mở nhiều tab trình duyệt mới để tra cứu chéo, đối chiếu nguồn độc lập nhằm xác thực uy tín của tác giả hoặc nguồn thông tin."
   }
 }

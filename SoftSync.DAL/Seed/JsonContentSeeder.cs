@@ -60,21 +60,20 @@ public static class JsonContentSeeder
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
 
         // Tạm gom theo skillId thành 1 MiniGame mặc định/kỹ năng — sau này tách nhiều game thì sửa lại đây
-        var gamesBySkill = new Dictionary<int, MiniGame>();
+        var gamesByGroup = new Dictionary<string, MiniGame>();
         foreach (var s in raw)
         {
-            int skillId = SkillMap[s.SkillId];
-            if (!gamesBySkill.TryGetValue(skillId, out var game))
+            if (!gamesByGroup.TryGetValue(s.GameGroup, out var game))
             {
                 game = new MiniGame
                 {
-                    SkillId = skillId,
-                    Name = $"Tình huống thực hành - {s.SkillId}",
+                    SkillId = SkillMap[s.SkillId],
+                    Name = s.GameName ?? s.GameGroup,
                     Type = Common.Enums.MiniGameType.ChooseBestAnswer,
                     Description = "Chọn phương án phù hợp nhất cho tình huống.",
                     QuestionsPerRound = 5
                 };
-                gamesBySkill[skillId] = game;
+                gamesByGroup[s.GameGroup] = game;
                 db.MiniGames.Add(game);
             }
 
@@ -108,14 +107,16 @@ public static class JsonContentSeeder
         foreach (var (file, skillId, title) in files)
         {
             var path = Path.Combine(folder, file);
-            var raw = await File.ReadAllTextAsync(path);
-            // Bước đầu: lưu tạm nguyên JSON pretty-print làm markdown code block,
-            // sau này viết tay lại thành bài học markdown chuẩn khi có nội dung từ các cô.
+            var json = await File.ReadAllTextAsync(path);
+            var lesson = JsonSerializer.Deserialize<RawTheoryLesson>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+
             db.TheoryLessons.Add(new TheoryLesson
             {
                 SkillId = skillId,
                 Title = title,
-                ContentMarkdown = $"```json\n{raw}\n```",
+                ContentMarkdown = lesson.LessonBody,
+                VideoUrl = lesson.VideoUrl,
                 OrderIndex = 1
             });
         }
@@ -137,6 +138,8 @@ public static class JsonContentSeeder
     private class RawScenario
     {
         public string SkillId { get; set; } = "";
+        public string GameGroup { get; set; } = "";   // MỚI
+        public string? GameName { get; set; }          // MỚI
         public string? Context { get; set; }
         public string? QuestionText { get; set; }
         public List<RawScenarioOption>? Options { get; set; }
@@ -146,5 +149,13 @@ public static class JsonContentSeeder
         public string Text { get; set; } = "";
         public int Points { get; set; }
         public string? Feedback { get; set; }
+    }
+    
+    private class RawTheoryLesson
+    {
+        public string SkillId { get; set; } = "";
+        public string SkillName { get; set; } = "";
+        public string? VideoUrl { get; set; }
+        public string LessonBody { get; set; } = "";
     }
 }

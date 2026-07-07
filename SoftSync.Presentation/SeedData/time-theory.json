@@ -1,18 +1,20 @@
 {
   "skillId": "TIME_MANAGEMENT",
   "skillName": "Kỹ năng Quản lý thời gian",
-  "academicRecommendation": "Ít nhất 2 giờ tự học ngoài giờ cho mỗi 1 giờ lên lớp[cite: 460].",
-  "procrastinationImpact": "Gây căng thẳng tột độ và làm suy giảm kết quả học tập[cite: 451].",
+  "videoUrl": "https://www.youtube.com/embed/xxxxxxx",
+  "lessonBody": "# Bài học: Kỹ năng Quản lý Thời gian (Time Management)\n\nQuản lý thời gian hiệu quả là chìa khóa giúp bạn tối ưu hóa hiệu suất học tập, giảm áp lực và đạt được sự cân bằng trong cuộc sống học đường.\n\n---\n\n## 🎯 Khuyến nghị Học thuật (Academic Recommendation)\nĐể đảm bảo tiếp thu kiến thức một cách tốt nhất, quy tắc cốt lõi bạn cần áp dụng là:\n> **Ít nhất 2 giờ tự học ngoài giờ cho mỗi 1 giờ lên lớp.**\n\nViệc tự nghiên cứu, làm bài tập và ôn tập lại kiến thức cũ trong khoảng thời gian này đóng vai trò quyết định đến kết quả thi cử của bạn.\n\n---\n\n## ⚠️ Tác động tiêu cực của sự trì hoãn (Procrastination Impact)\nTrì hoãn là \"kẻ thù\" lớn nhất của quản lý thời gian. Khi bạn liên tục dời lịch học:\n* 📉 **Gây căng thẳng tột độ:** Áp lực sát hạn chót (deadline) khiến tâm lý luôn lo lắng, mệt mỏi.\n* ❌ **Suy giảm kết quả học tập:** Việc \"học vẹt\", \"học tủ\" vào phút chót không đảm bảo chất lượng và làm giảm sút điểm số đáng kể.\n\n---\n\n## ⏱️ Chỉ số Ước lượng Thời gian (Time Estimation Metrics)\nTrước khi bắt tay vào học, hãy thực hiện ước lượng thời gian chuẩn xác cho từng tác vụ bằng bảng tham khảo dưới đây để xây dựng thời gian biểu (timetable) thực tế:\n\n| Loại công việc | Thời gian ước tính | Đơn vị tính |\n| :--- | :--- | :--- |\n| **Đọc tài liệu tiêu chuẩn** | 5 – 7 phút | 1 trang |\n| **Đọc tài liệu chuyên ngành (Kỹ thuật/Học thuật)** | 10 – 15 phút | 1 trang |\n| **Giải câu hỏi Toán học phức tạp** | 15 phút | 1 câu |\n| **Viết luận (Không cần nghiên cứu/Tìm tài liệu)** | 60 phút | 1 trang |\n| **Viết luận (Có nghiên cứu/Tìm tài liệu sâu)** | 105 phút | 1 trang |\n\n---\n\n## 🛠️ Các Khung phương pháp Quản lý Thời gian kinhdefini (Frameworks)\n\nHãy lựa chọn hoặc kết hợp các phương pháp dưới đây để kiểm soát ngày làm việc của bạn:\n\n### 1. Ma trận Eisenhower\n* **Cốt lõi:** Phân loại công việc dựa trên hai tiêu chí: **Khẩn cấp** và **Quan trọng**.\n* **Cách dùng:** Chia các việc cần làm vào 4 ô (Làm ngay, Lên lịch làm sau, Ủy quyền/Nhờ giúp đỡ, và Xóa bỏ những việc vô bổ).\n\n### 2. Phương pháp Pomodoro (Cà chua học tập)\n* **Cốt lõi:** Quản trị năng lượng bằng các khoảng thời gian tập trung ngắn xen kẽ nghỉ ngơi.\n* **Quy trình:** \n  * Tập trung cao độ trong **25 phút**.\n  * Nghỉ ngắn từ **3 – 5 phút**.\n  * Sau **4 lượt** (chu kỳ) liên tục, hãy tự thưởng cho mình một khoảng nghỉ dài từ **15 – 30 phút**.\n\n### 3. Phương pháp Eat the Frog (Ăn ếch)\n* **Cốt lõi:** Giải quyết nhiệm vụ khó khăn, lớn nhất ngay vào đầu ngày.\n* **Cách dùng:** Chọn ra \"con ếch\" (việc quan trọng nhất, dễ khiến bạn trì hoãn nhất) và xử lý nó đầu tiên khi năng lượng của bạn đang ở mức cao nhất. Sau đó, những việc còn lại trong ngày sẽ trở nên nhẹ nhàng hơn rất nhiều.",
+  "academicRecommendation": "Ít nhất 2 giờ tự học ngoài giờ cho mỗi 1 giờ lên lớp.",
+  "procrastinationImpact": "Gây căng thẳng tột độ và làm suy giảm kết quả học tập.",
   "timeEstimationMetrics": {
     "readingStandardPage": { "minMinutes": 5, "maxMinutes": 7, "unit": "trang" },
     "readingTechnicalPage": { "minMinutes": 10, "maxMinutes": 15, "unit": "trang" },
     "complexMathQuestion": { "fixedMinutes": 15, "unit": "câu" },
     "essayWithoutResearchPage": { "fixedMinutes": 60, "unit": "trang" },
-    "essayWithResearchPage": { "fixedMinutes": 105, "unit": "trang [cite: 461]" }
+    "essayWithResearchPage": { "fixedMinutes": 105, "unit": "trang " }
   },
   "frameworks": [
-    { "name": "Ma trận Eisenhower", "description": "Phân loại công việc dựa trên Khẩn cấp × Quan trọng[cite: 468]." },
-    { "name": "Pomodoro", "description": "25 phút tập trung làm + 3–5 phút nghỉ ngắn; nghỉ dài 15–30 phút sau 4 lượt[cite: 463]." },
+    { "name": "Ma trận Eisenhower", "description": "Phân loại công việc dựa trên Khẩn cấp × Quan trọng." },
+    { "name": "Pomodoro", "description": "25 phút tập trung làm + 3–5 phút nghỉ ngắn; nghỉ dài 15–30 phút sau 4 lượt." },
     { "name": "Eat the Frog", "description": "Giải quyết nhiệm vụ khó khăn, lớn nhất ngay vào đầu ngày[cite: 452, 455]." }
   ]
-}
+  }

@@ -12,7 +12,7 @@ using SoftSync.DAL.Data;
 namespace SoftSync.DAL.Migrations
 {
     [DbContext(typeof(SoftSyncDbContext))]
-    [Migration("20260706221107_InitData")]
+    [Migration("20260707080201_InitData")]
     partial class InitData
     {
         /// <inheritdoc />
@@ -137,15 +137,15 @@ namespace SoftSync.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            Scenario = "Your team member is not contributing. What do you do?",
-                            SkillId = 1,
+                            Scenario = "Thành viên nhóm của bạn không đóng góp. Bạn sẽ làm gì?",
+                            SkillId = 2,
                             Title = "Group Communication"
                         },
                         new
                         {
                             Id = 2,
-                            Scenario = "You realize you will miss a deadline tomorrow. What is your first action?",
-                            SkillId = 3,
+                            Scenario = "Bạn nhận ra rằng bạn sẽ trễ hạn vào ngày mai. Hành động đầu tiên của bạn là gì?",
+                            SkillId = 1,
                             Title = "Missed Deadline"
                         });
                 });
@@ -183,33 +183,33 @@ namespace SoftSync.DAL.Migrations
                         {
                             Id = 1,
                             CaseStudyId = 1,
-                            Feedback = "This leads to burnout and doesn't solve the team dynamic issue.",
+                            Feedback = "Điều này dẫn đến kiệt sức và không giải quyết được vấn đề động lực nhóm.",
                             IsRecommended = false,
-                            OptionText = "Do their work myself."
+                            OptionText = "Làm công việc của họ."
                         },
                         new
                         {
                             Id = 2,
                             CaseStudyId = 1,
-                            Feedback = "Direct, empathetic communication is key.",
+                            Feedback = "Giao tiếp trực tiếp và đồng cảm là chìa khóa.",
                             IsRecommended = true,
-                            OptionText = "Talk to them privately to understand their situation."
+                            OptionText = "Nói chuyện riêng với họ để hiểu tình hình."
                         },
                         new
                         {
                             Id = 3,
                             CaseStudyId = 2,
-                            Feedback = "Risky and doesn't manage expectations.",
+                            Feedback = "Rủi ro và không quản lý được kỳ vọng.",
                             IsRecommended = false,
-                            OptionText = "Work all night and hope for the best."
+                            OptionText = "Làm việc cả đêm và hy vọng điều tốt nhất."
                         },
                         new
                         {
                             Id = 4,
                             CaseStudyId = 2,
-                            Feedback = "Transparency and proactive planning are essential.",
+                            Feedback = "Minh bạch và lập kế hoạch chủ động là điều cần thiết.",
                             IsRecommended = true,
-                            OptionText = "Inform the stakeholders immediately and propose a new timeline."
+                            OptionText = "Thông báo ngay cho các bên liên quan và đề xuất một lịch trình mới."
                         });
                 });
 
@@ -637,51 +637,23 @@ namespace SoftSync.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Effective verbal and non-verbal interaction.",
-                            IconName = "bi-chat-dots",
-                            Name = "Communication"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Collaborating effectively with others.",
-                            IconName = "bi-people",
-                            Name = "Teamwork"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Organizing and planning your time.",
+                            Description = "Quản lý thời gian hiệu quả.",
                             IconName = "bi-clock",
                             Name = "Time Management"
                         },
                         new
                         {
-                            Id = 4,
-                            Description = "Analyzing info to make judgments.",
+                            Id = 2,
+                            Description = "Giao tiếp hiệu quả.",
+                            IconName = "bi-chat-dots",
+                            Name = "Communication"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Tư duy phản biện.",
                             IconName = "bi-lightbulb",
                             Name = "Critical Thinking"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "Finding solutions to complex issues.",
-                            IconName = "bi-tools",
-                            Name = "Problem Solving"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Description = "Recognizing and managing emotions.",
-                            IconName = "bi-heart",
-                            Name = "Emotional Management"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "Adjusting to new conditions.",
-                            IconName = "bi-arrow-repeat",
-                            Name = "Adaptability"
                         });
                 });
 
@@ -763,11 +735,11 @@ namespace SoftSync.DAL.Migrations
                         {
                             Id = 1,
                             Age = 20,
-                            CreatedAt = new DateTime(2026, 6, 26, 22, 11, 6, 719, DateTimeKind.Utc).AddTicks(5166),
+                            CreatedAt = new DateTime(2026, 6, 27, 8, 2, 1, 149, DateTimeKind.Utc).AddTicks(583),
                             Email = "demo@softsync.vn",
                             FullName = "Nguyễn Văn A",
                             Goal = "Cải thiện kỹ năng giao tiếp",
-                            PasswordHash = "100000.ia/YzWCIvvslvI9U5YNlkg==.LdOq2bhddth5faKFocvX+9T/WOo7V+7fYTpN8CuAZnk=",
+                            PasswordHash = "100000.+i5UP8IRdyM5JSCvl83uOA==.9aJMeg1Bn3jWWjIfFMi3fO3khKxLJ9xjU+Xi4GmkvPU=",
                             Role = 0
                         });
                 });

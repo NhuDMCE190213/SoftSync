@@ -41,7 +41,7 @@ builder.Services.AddScoped<IAiRoadmapService, FakeAiRoadmapService>();
 // 4. Register Business Services (BLL)
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
-builder.Services.AddScoped<IAssessmentService, AssessmentService>();
+//builder.Services.AddScoped<IAssessmentService, AssessmentService>();
 builder.Services.AddScoped<IRoadmapService, RoadmapService>();
 builder.Services.AddScoped<IProgressService, ProgressService>();
 builder.Services.AddScoped<ICaseStudyService, CaseStudyService>();

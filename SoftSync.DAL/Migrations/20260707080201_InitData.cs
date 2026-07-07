@@ -501,27 +501,23 @@ namespace SoftSync.DAL.Migrations
                 columns: new[] { "Id", "Description", "IconName", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Effective verbal and non-verbal interaction.", "bi-chat-dots", "Communication" },
-                    { 2, "Collaborating effectively with others.", "bi-people", "Teamwork" },
-                    { 3, "Organizing and planning your time.", "bi-clock", "Time Management" },
-                    { 4, "Analyzing info to make judgments.", "bi-lightbulb", "Critical Thinking" },
-                    { 5, "Finding solutions to complex issues.", "bi-tools", "Problem Solving" },
-                    { 6, "Recognizing and managing emotions.", "bi-heart", "Emotional Management" },
-                    { 7, "Adjusting to new conditions.", "bi-arrow-repeat", "Adaptability" }
+                    { 1, "Quản lý thời gian hiệu quả.", "bi-clock", "Time Management" },
+                    { 2, "Giao tiếp hiệu quả.", "bi-chat-dots", "Communication" },
+                    { 3, "Tư duy phản biện.", "bi-lightbulb", "Critical Thinking" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Age", "CreatedAt", "Email", "FullName", "Goal", "PasswordHash", "Role" },
-                values: new object[] { 1, 20, new DateTime(2026, 6, 26, 22, 11, 6, 719, DateTimeKind.Utc).AddTicks(5166), "demo@softsync.vn", "Nguyễn Văn A", "Cải thiện kỹ năng giao tiếp", "100000.ia/YzWCIvvslvI9U5YNlkg==.LdOq2bhddth5faKFocvX+9T/WOo7V+7fYTpN8CuAZnk=", 0 });
+                values: new object[] { 1, 20, new DateTime(2026, 6, 27, 8, 2, 1, 149, DateTimeKind.Utc).AddTicks(583), "demo@softsync.vn", "Nguyễn Văn A", "Cải thiện kỹ năng giao tiếp", "100000.+i5UP8IRdyM5JSCvl83uOA==.9aJMeg1Bn3jWWjIfFMi3fO3khKxLJ9xjU+Xi4GmkvPU=", 0 });
 
             migrationBuilder.InsertData(
                 table: "CaseStudies",
                 columns: new[] { "Id", "Scenario", "SkillId", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Your team member is not contributing. What do you do?", 1, "Group Communication" },
-                    { 2, "You realize you will miss a deadline tomorrow. What is your first action?", 3, "Missed Deadline" }
+                    { 1, "Thành viên nhóm của bạn không đóng góp. Bạn sẽ làm gì?", 2, "Group Communication" },
+                    { 2, "Bạn nhận ra rằng bạn sẽ trễ hạn vào ngày mai. Hành động đầu tiên của bạn là gì?", 1, "Missed Deadline" }
                 });
 
             migrationBuilder.InsertData(
@@ -529,10 +525,10 @@ namespace SoftSync.DAL.Migrations
                 columns: new[] { "Id", "CaseStudyId", "Feedback", "IsRecommended", "OptionText" },
                 values: new object[,]
                 {
-                    { 1, 1, "This leads to burnout and doesn't solve the team dynamic issue.", false, "Do their work myself." },
-                    { 2, 1, "Direct, empathetic communication is key.", true, "Talk to them privately to understand their situation." },
-                    { 3, 2, "Risky and doesn't manage expectations.", false, "Work all night and hope for the best." },
-                    { 4, 2, "Transparency and proactive planning are essential.", true, "Inform the stakeholders immediately and propose a new timeline." }
+                    { 1, 1, "Điều này dẫn đến kiệt sức và không giải quyết được vấn đề động lực nhóm.", false, "Làm công việc của họ." },
+                    { 2, 1, "Giao tiếp trực tiếp và đồng cảm là chìa khóa.", true, "Nói chuyện riêng với họ để hiểu tình hình." },
+                    { 3, 2, "Rủi ro và không quản lý được kỳ vọng.", false, "Làm việc cả đêm và hy vọng điều tốt nhất." },
+                    { 4, 2, "Minh bạch và lập kế hoạch chủ động là điều cần thiết.", true, "Thông báo ngay cho các bên liên quan và đề xuất một lịch trình mới." }
                 });
 
             migrationBuilder.CreateIndex(

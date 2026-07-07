@@ -1,21 +1,23 @@
 {
   "skillId": "COMMUNICATION",
   "skillName": "Kỹ năng Giao tiếp",
+  "videoUrl": "https://www.youtube.com/embed/xxxxxxx",
+  "lessonBody": "# Bài học: Kỹ năng Giao tiếp (Communication Skills)\n\nGiao tiếp không chỉ đơn thuần là nói hay viết, mà là một quá trình tương tác phức tạp nhằm đạt được sự thấu hiểu lẫn nhau giữa các cá nhân.\n\n---\n\n## 💡 Khái niệm Giao tiếp (Concept)\n> **Giao tiếp là quá trình thấu hiểu và chia sẻ ý nghĩa giữa các cá nhân.**\n\nGiao tiếp hiệu quả chỉ xảy ra khi thông điệp của người gửi được người nhận thấu hiểu đúng bản chất và ý nghĩa cốt lõi.\n\n---\n\n## ⚙️ 8 Thành phần cơ bản của Giao tiếp (Components)\nMột quá trình giao tiếp hoàn chỉnh luôn được cấu thành từ 8 yếu tố đan xen:\n1. **Nguồn gửi (Source):** Người khởi xướng và mã hóa thông điệp.\n2. **Thông điệp (Message):** Nội dung, ý tưởng hoặc cảm xúc muốn truyền tải.\n3. **Kênh truyền (Channel):** Phương tiện truyền tải (lời nói, văn bản, email, cử chỉ).\n4. **Người nhận (Receiver):** Đối tượng tiếp nhận và giải mã thông điệp.\n5. **Phản hồi (Feedback):** Phản ứng phản hồi lại của người nhận cho nguồn gửi.\n6. **Môi trường (Environment):** Không gian vật lý nơi cuộc giao tiếp diễn ra.\n7. **Bối cảnh (Context):** Tình huống, mối quan hệ và mong đợi của các bên.\n8. **Nhiễu/Sự can thiệp (Interference):** Bất kỳ yếu tố nào làm lu mờ hoặc gián đoạn thông điệp.\n\n---\n\n## 🔄 Các Mô hình Giao tiếp (Models)\nCách thức vận hành của giao tiếp được giải thích qua hai mô hình chính:\n* 🔀 **Transactional Model:** Quá trình giao tiếp diễn ra liên tục, nơi các bên đồng thời vừa gửi vừa nhận thông điệp cùng một lúc.\n* 🤝 **Constructivist Model:** Quá trình các bên chủ động thương lượng, trao đổi để cùng đi đến một ý nghĩa chung thống nhất.\n\n---\n\n## 🌐 Quy tắc Ứng xử trên Mạng (Netiquette)\nKhi giao tiếp trong môi trường kỹ thuật số, bạn cần tuân thủ nghiêm ngặt **Quy tắc Vàng**:\n* 🔇 **Không viết IN HOA toàn bộ:** Hành vi này dễ bị người đọc hiểu lầm là bạn đang la hét, giận dữ trực tuyến.\n* 🕊️ **Giữ tranh luận ôn hòa:** Tập trung vào quan điểm xây dựng, tránh công kích hay tạo xung đột ác ý.\n* 🔒 **Tôn trọng riêng tư:** Bảo vệ thông tin cá nhân của bản thân và không xâm phạm quyền riêng tư của người khác.\n\n---\n\n## 🛑 Rào cản Giao tiếp lớn nhất: Hiện tượng Bypassing\n* **Khái niệm:** Đây là hiện tượng các bên hiểu sai lệch hoàn toàn về cùng một từ ngữ hoặc thuật ngữ được sử dụng.\n* **Nguyên nhân:** Do sự khác biệt sâu sắc về mặt địa lý vùng miền, khoảng cách thế hệ hoặc bối cảnh văn hóa riêng biệt của mỗi người làm thay đổi ý nghĩa của từ ngữ đó.",
   "definitions": {
-    "concept": "Giao tiếp là quá trình thấu hiểu và chia sẻ ý nghĩa giữa các cá nhân[cite: 474].",
+    "concept": "Giao tiếp là quá trình thấu hiểu và chia sẻ ý nghĩa giữa các cá nhân.",
     "components": [
       "Nguồn gửi (Source)", "Thông điệp (Message)", "Kênh truyền (Channel)", "Người nhận (Receiver)",
-      "Phản hồi (Feedback)", "Môi trường (Environment)", "Bối cảnh (Context)", "Nhiễu/Sự can thiệp (Interference) [cite: 475]"
+      "Phản hồi (Feedback)", "Môi trường (Environment)", "Bối cảnh (Context)", "Nhiễu/Sự can thiệp (Interference) "
     ],
     "models": [
       { "name": "Transactional", "description": "Gửi và nhận thông điệp đồng thời." },
       { "name": "Constructivist", "description": "Thương lượng để đạt được ý nghĩa chung." }
     ],
-    "netiquette": "Tuân thủ Quy tắc Vàng — không viết IN HOA (bị hiểu là la hét trực tuyến), giữ tranh luận ôn hòa, tôn trọng riêng tư[cite: 367, 477].",
+    "netiquette": "Tuân thủ Quy tắc Vàng — không viết IN HOA (bị hiểu là la hét trực tuyến), giữ tranh luận ôn hòa, tôn trọng riêng tư.",
     "barriers": [
       {
         "name": "Bypassing",
-        "description": "Hiện tượng hiểu sai lệch cùng một từ ngữ do khác biệt địa lý, thế hệ hoặc bối cảnh văn hóa[cite: 368, 478]."
+        "description": "Hiện tượng hiểu sai lệch cùng một từ ngữ do khác biệt địa lý, thế hệ hoặc bối cảnh văn hóa."
       }
     ]
   }

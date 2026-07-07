@@ -63,31 +63,17 @@ public class SoftSyncDbContext : DbContext
             new Skill { Id = 3, Name = "Critical Thinking", Description = "Tư duy phản biện.", IconName = "bi-lightbulb" }
         );
 
-        // 2. Assessment Questions (Communication)
-        //modelBuilder.Entity<AssessmentQuestion>().HasData(
-        //    new AssessmentQuestion { Id = 1, SkillId = 1, QuestionText = "How do you handle a conflict during a group discussion?", Type = QuestionType.Scenario },
-        //    new AssessmentQuestion { Id = 2, SkillId = 1, QuestionText = "How important is active listening in a conversation?", Type = QuestionType.MultipleChoice }
-        //);
-
-        //modelBuilder.Entity<AssessmentOption>().HasData(
-        //    new AssessmentOption { Id = 1, QuestionId = 1, OptionText = "Stay quiet to avoid more conflict.", ScoreValue = 1 },
-        //    new AssessmentOption { Id = 2, QuestionId = 1, OptionText = "Listen to all sides and suggest a compromise.", ScoreValue = 5 },
-        //    new AssessmentOption { Id = 3, QuestionId = 1, OptionText = "Insist on my point of view.", ScoreValue = 2 },
-        //    new AssessmentOption { Id = 4, QuestionId = 2, OptionText = "Not important.", ScoreValue = 1 },
-        //    new AssessmentOption { Id = 5, QuestionId = 2, OptionText = "Very important.", ScoreValue = 5 }
-        //);
-
         // 3. Case Studies
         modelBuilder.Entity<CaseStudy>().HasData(
-            new CaseStudy { Id = 1, Title = "Group Communication", Scenario = "Your team member is not contributing. What do you do?", SkillId = 1 },
-            new CaseStudy { Id = 2, Title = "Missed Deadline", Scenario = "You realize you will miss a deadline tomorrow. What is your first action?", SkillId = 3 }
+            new CaseStudy { Id = 1, Title = "Group Communication", Scenario = "Thành viên nhóm của bạn không đóng góp. Bạn sẽ làm gì?", SkillId = 2 },
+            new CaseStudy { Id = 2, Title = "Missed Deadline", Scenario = "Bạn nhận ra rằng bạn sẽ trễ hạn vào ngày mai. Hành động đầu tiên của bạn là gì?", SkillId = 1 }
         );
 
         modelBuilder.Entity<CaseStudyOption>().HasData(
-            new CaseStudyOption { Id = 1, CaseStudyId = 1, OptionText = "Do their work myself.", IsRecommended = false, Feedback = "This leads to burnout and doesn't solve the team dynamic issue." },
-            new CaseStudyOption { Id = 2, CaseStudyId = 1, OptionText = "Talk to them privately to understand their situation.", IsRecommended = true, Feedback = "Direct, empathetic communication is key." },
-            new CaseStudyOption { Id = 3, CaseStudyId = 2, OptionText = "Work all night and hope for the best.", IsRecommended = false, Feedback = "Risky and doesn't manage expectations." },
-            new CaseStudyOption { Id = 4, CaseStudyId = 2, OptionText = "Inform the stakeholders immediately and propose a new timeline.", IsRecommended = true, Feedback = "Transparency and proactive planning are essential." }
+            new CaseStudyOption { Id = 1, CaseStudyId = 1, OptionText = "Làm công việc của họ.", IsRecommended = false, Feedback = "Điều này dẫn đến kiệt sức và không giải quyết được vấn đề động lực nhóm." },
+            new CaseStudyOption { Id = 2, CaseStudyId = 1, OptionText = "Nói chuyện riêng với họ để hiểu tình hình.", IsRecommended = true, Feedback = "Giao tiếp trực tiếp và đồng cảm là chìa khóa." },
+            new CaseStudyOption { Id = 3, CaseStudyId = 2, OptionText = "Làm việc cả đêm và hy vọng điều tốt nhất.", IsRecommended = false, Feedback = "Rủi ro và không quản lý được kỳ vọng." },
+            new CaseStudyOption { Id = 4, CaseStudyId = 2, OptionText = "Thông báo ngay cho các bên liên quan và đề xuất một lịch trình mới.", IsRecommended = true, Feedback = "Minh bạch và lập kế hoạch chủ động là điều cần thiết." }
         );
 
         // 4. Demo Users — MỚI: thêm Email + PasswordHash

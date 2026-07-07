@@ -64,6 +64,11 @@
 
 @code {
     [Parameter] public int SkillId { get; set; }
+
+    private static readonly MarkdownPipeline _pipeline = new MarkdownPipelineBuilder()
+    .UseAdvancedExtensions()   // bật bảng, code block có màu, footnote, v.v.
+    .Build();
+
     private List<TheoryLessonDto>? lessons;
     private int currentIndex = 0;
 
@@ -77,7 +82,7 @@
 
     private void GoToGames() => Nav.NavigateTo($"/skill/{SkillId}/games");
 
-    private string RenderMarkdown(string markdown) => Markdown.ToHtml(markdown);
+    private string RenderMarkdown(string markdown) => Markdown.ToHtml(markdown, _pipeline);
 
     private string GetSkillName(int skillId) => skillId switch
     {
@@ -91,5 +96,8 @@
 <style>
     .max-800 {
         max-width: 800px;
+    }
+    .max-800, .max-800 button, .max-800 span {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 </style>
