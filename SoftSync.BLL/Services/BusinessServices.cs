@@ -16,7 +16,16 @@ public class UserService : IUserService
     {
         var user = await _userRepo.GetByIdAsync(id);
         if (user == null) return null;
-        return new UserDto { Id = user.Id, FullName = user.FullName, Age = user.Age, Role = user.Role, Gender = user.Gender, Goal = user.Goal, AvatarUrl = user.AvatarUrl, ExperiencePoints = user.ExperiencePoints, CreatedAt = user.CreatedAt };
+        return new UserDto
+        {
+            Id = user.Id, FullName = user.FullName, Age = user.Age, Role = user.Role,
+            Gender = user.Gender, Goal = user.Goal, AvatarUrl = user.AvatarUrl,
+            ExperiencePoints = user.ExperiencePoints, CreatedAt = user.CreatedAt,
+            DisplayName = user.DisplayName,
+            CurrentLevel = user.CurrentLevel, DailyStudyMinutes = user.DailyStudyMinutes,
+            StudyDaysPerWeek = user.StudyDaysPerWeek, PreferredStudyTime = user.PreferredStudyTime,
+            PreferredLanguage = user.PreferredLanguage, Theme = user.Theme, ReduceMotion = user.ReduceMotion
+        };
     }
 
     public async Task<UserDto> CreateUserAsync(UserDto dto)
@@ -59,16 +68,58 @@ public class UserService : IUserService
 
     public async Task AddSkillSelectionsAsync(int userId, List<int> skillIds)
     {
+        // Idempotent replace: users can re-run the wizard, so we must survive
+        // duplicate submissions. Old code just Added rows and hit
+        // "Violation of PRIMARY KEY constraint PK_UserSkillSelections" on
+        // (UserId, SkillId) the second time. Diff instead: keep what's still
+        // selected, drop what was unselected, add what's new.
+        var user = await _userRepo.GetWithSkillSelectionsAsync(userId);
+        if (user == null) return;
+
+        var desired = new HashSet<int>(skillIds);
+        var existing = user.SkillSelections.ToDictionary(s => s.SkillId);
+
+        // Remove selections the user no longer wants.
+        foreach (var s in existing.Values.Where(s => !desired.Contains(s.SkillId)).ToList())
+            user.SkillSelections.Remove(s);
+
+        // Add newly selected skills only.
+        foreach (var sid in desired.Where(id => !existing.ContainsKey(id)))
+            user.SkillSelections.Add(new UserSkillSelection { UserId = userId, SkillId = sid });
+
+        await _userRepo.SaveChangesAsync();
+    }
+
+    public async Task UpdateSettingsAsync(int userId, UserDto dto)
+    {
         var user = await _userRepo.GetByIdAsync(userId);
-        if (user != null)
-        {
-            // Simple logic for MVP: just clear and add
-            foreach (var sid in skillIds)
-            {
-                user.SkillSelections.Add(new UserSkillSelection { UserId = userId, SkillId = sid });
-            }
-            await _userRepo.SaveChangesAsync();
-        }
+        if (user == null) return;
+
+        // Account / display
+        if (!string.IsNullOrWhiteSpace(dto.FullName)) user.FullName = dto.FullName;
+        user.DisplayName = dto.DisplayName?.Trim() ?? string.Empty;
+        user.Gender = dto.Gender;
+        if (dto.Age > 0) user.Age = dto.Age;
+
+        // Learning personalization
+        user.Goal = dto.Goal;
+        user.CurrentLevel = dto.CurrentLevel;
+        user.DailyStudyMinutes = dto.DailyStudyMinutes;
+        user.StudyDaysPerWeek = Math.Clamp(dto.StudyDaysPerWeek, 0, 7);
+        user.PreferredStudyTime = dto.PreferredStudyTime;
+
+        // Appearance
+        user.PreferredLanguage = dto.PreferredLanguage?.Trim() ?? string.Empty;
+        user.Theme = dto.Theme;
+        user.ReduceMotion = dto.ReduceMotion;
+
+        await _userRepo.SaveChangesAsync();
+    }
+
+    public async Task<List<int>> GetSelectedSkillIdsAsync(int userId)
+    {
+        var user = await _userRepo.GetWithSkillSelectionsAsync(userId);
+        return user?.SkillSelections.Select(s => s.SkillId).ToList() ?? new List<int>();
     }
 }
 
@@ -78,8 +129,12 @@ public class SkillService : ISkillService
     public SkillService(ISkillRepository skillRepo) => _skillRepo = skillRepo;
     public async Task<IEnumerable<SkillDto>> GetAllSkillsAsync()
     {
+        // Only surface skills that have a finalized quiz bank. Others stay hidden
+        // until re-enabled in QuizSeedData.ActiveSkillIds.
         var skills = await _skillRepo.GetAllAsync();
-        return skills.Select(s => new SkillDto { Id = s.Id, Name = s.Name, Description = s.Description, IconName = s.IconName });
+        return skills
+            .Where(s => QuizSeedData.ActiveSkillIds.Contains(s.Id))
+            .Select(s => new SkillDto { Id = s.Id, Name = s.Name, Description = s.Description, IconName = s.IconName });
     }
 }
 
@@ -101,8 +156,10 @@ public class AssessmentService : IAssessmentService
         // Quiz only the skills the user selected in the wizard. If none were
         // selected, fall back to all skills so the assessment is never empty.
         var skillIds = await _assessmentRepo.GetSelectedSkillIdsAsync(userId);
+        // Never quiz a hidden skill: keep only those with a finalized bank.
+        skillIds = skillIds.Where(id => QuizSeedData.ActiveSkillIds.Contains(id)).ToList();
         if (skillIds.Count == 0)
-            skillIds = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            skillIds = QuizSeedData.ActiveSkillIds.ToList();
 
         var questions = await _assessmentRepo.GetQuestionsBySkillIdsAsync(skillIds);
         return questions.Select(q => new AssessmentQuestionDto
@@ -185,17 +242,25 @@ public class AssessmentService : IAssessmentService
 
     public async Task<IEnumerable<AssessmentResultDto>> GetLatestResultsAsync(int userId)
     {
+        // Repo returns rows newest-first. Guard the results screen against:
+        //  - duplicate cards per skill (older attempts still in the table), and
+        //  - skills whose quiz was hidden (QuizSeedData.ActiveSkillIds).
+        // Keep only the most recent result per active skill.
         var results = await _assessmentRepo.GetResultsByUserIdAsync(userId);
-        return results.Select(r => new AssessmentResultDto
-        {
-            Id = r.Id,
-            UserId = r.UserId,
-            SkillId = r.SkillId,
-            SkillName = r.Skill.Name,
-            Score = r.Score,
-            Level = r.Level,
-            CreatedAt = r.CreatedAt
-        });
+        return results
+            .Where(r => QuizSeedData.ActiveSkillIds.Contains(r.SkillId))
+            .GroupBy(r => r.SkillId)
+            .Select(g => g.First()) // First == newest (repo orders by CreatedAt desc)
+            .Select(r => new AssessmentResultDto
+            {
+                Id = r.Id,
+                UserId = r.UserId,
+                SkillId = r.SkillId,
+                SkillName = r.Skill.Name,
+                Score = r.Score,
+                Level = r.Level,
+                CreatedAt = r.CreatedAt
+            });
     }
 }
 

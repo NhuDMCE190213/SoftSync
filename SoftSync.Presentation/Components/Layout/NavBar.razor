@@ -56,7 +56,7 @@
                     <span class="ss-bell-badge">3</span>
                 </button>
 
-                <div class="ss-userchip" @onclick="ToggleUserMenu">
+                <div class="ss-userchip" @onclick='() => Nav.NavigateTo("/settings")' title="@L["nav.settings"]">
                     <div class="ss-avatar tw:flex tw:items-center tw:justify-center">
                         @if (!string.IsNullOrEmpty(profile?.AvatarUrl))
                         {
@@ -71,42 +71,6 @@
                         <span class="tw:font-semibold tw:text-sm">@(profile?.FullName ?? context.User.Identity?.Name)</span>
                         <span class="ss-userchip-sub">@L["nav.level"] @(profile?.Level ?? 1)</span>
                     </div>
-                    <i class="bi bi-chevron-down ss-userchip-caret"></i>
-
-                    @if (userMenuOpen)
-                    {
-                        <div class="ss-usermenu" @onclick:stopPropagation="true">
-                            <div class="ss-usermenu-xp">
-                                <div class="tw:flex tw:justify-between tw:text-sm tw:mb-1">
-                                    <span class="tw:font-semibold">@L["nav.level"] @(profile?.Level ?? 1)</span>
-                                    <span class="text-muted">@(profile?.ExperiencePoints ?? 0) XP</span>
-                                </div>
-                                <div class="ss-xp-bar-mini">
-                                    <div class="ss-xp-fill-mini" style="width: @(profile?.LevelProgressPercent ?? 0)%"></div>
-                                </div>
-                            </div>
-                            <a class="ss-usermenu-item" href="/profile">
-                                <i class="bi bi-person-badge"></i> @L["nav.myProfile"]
-                            </a>
-                            <a class="ss-usermenu-item" href="/roadmap">
-                                <i class="bi bi-map"></i> @L["nav.myRoadmap"]
-                            </a>
-                            <a class="ss-usermenu-item" href="/progress">
-                                <i class="bi bi-graph-up-arrow"></i> @L["nav.progress"]
-                            </a>
-                            <a class="ss-usermenu-item" href="/profile-setup">
-                                <i class="bi bi-gear"></i> @L["nav.settings"]
-                            </a>
-                            <div class="ss-usermenu-divider"></div>
-                            <form id="ss-logout-form" action="Account/Logout" method="post" class="tw:m-0">
-                                <AntiforgeryToken />
-                                <input type="hidden" name="ReturnUrl" value="" />
-                                <button type="button" class="ss-usermenu-item ss-usermenu-danger tw:w-full" @onclick="OnLogoutClicked">
-                                    <i class="bi bi-box-arrow-right"></i> @L["nav.logout"]
-                                </button>
-                            </form>
-                        </div>
-                    }
                 </div>
             </Authorized>
             <NotAuthorized>
@@ -118,32 +82,7 @@
     </div>
 </nav>
 
-@if (showLogoutModal)
-{
-    <div class="ss-modal-backdrop" @onclick="CancelLogout">
-        <div class="ss-modal" @onclick:stopPropagation="true">
-            <div class="wiz-mascot ss-modal-mascot">
-                <img src="/images/syncy-male.png" alt="SYNCY"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-                <span class="wiz-mascot-fallback">@Mascot.Emoji</span>
-            </div>
-            <h4 class="tw:font-bold tw:text-center tw:mt-3 tw:mb-2">@L["logout.confirm.title"]</h4>
-            <p class="text-muted tw:text-center tw:mb-5">@L["logout.confirm.body"]</p>
-            <div class="tw:flex tw:gap-3">
-                <button class="btn btn-light tw:flex-1 tw:py-2" @onclick="CancelLogout">@L["logout.confirm.cancel"]</button>
-                <button class="ss-btn-primary tw:flex-1 tw:py-2" @onclick="ConfirmLogout">@L["nav.logout"]</button>
-            </div>
-        </div>
-    </div>
-}
-
 <style>
-    .wiz-mascot-fallback {
-        display: none;
-        width: 100%; height: 100%;
-        align-items: center; justify-content: center;
-        font-size: 2.4rem;
-    }
     .ss-navbar {
         position: sticky;
         top: 0;
@@ -255,67 +194,13 @@
         color: var(--color-brand);
         font-weight: 600;
     }
-    .ss-userchip-caret { color: #9ca3af; font-size: 0.8rem; }
-
-    /* User dropdown menu */
-    .ss-usermenu {
-        position: absolute;
-        top: calc(100% + 8px);
-        right: 0;
-        min-width: 200px;
-        background: var(--glass-bg-strong);
-        backdrop-filter: blur(var(--glass-blur));
-        -webkit-backdrop-filter: blur(var(--glass-blur));
-        border: 1px solid var(--glass-border);
-        border-radius: 14px;
-        box-shadow: var(--shadow-glass);
-        padding: 0.4rem;
-        z-index: 60;
-    }
-    .ss-usermenu-item {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        padding: 0.55rem 0.75rem;
-        border-radius: 10px;
-        color: #374151;
-        font-size: 0.9rem;
-        font-weight: 500;
-        text-decoration: none;
-        border: none;
-        background: transparent;
-        cursor: pointer;
-        text-align: left;
-    }
-    .ss-usermenu-item:hover { background: rgba(99, 102, 241, 0.1); color: var(--color-brand-dark); }
-    .ss-usermenu-danger:hover { background: rgba(239, 68, 68, 0.1); color: #dc2626; }
-    .ss-usermenu-xp {
-        padding: 0.55rem 0.75rem 0.7rem;
-        border-bottom: 1px solid var(--glass-border);
-        margin-bottom: 0.35rem;
-    }
-    .ss-usermenu-divider {
-        height: 1px;
-        background: var(--glass-border);
-        margin: 0.35rem 0.4rem;
-    }
-    .ss-xp-bar-mini {
-        height: 7px; border-radius: 999px;
-        background: rgba(99, 102, 241, 0.15);
-        overflow: hidden;
-    }
-    .ss-xp-fill-mini {
-        height: 100%; border-radius: 999px;
-        background: var(--gradient);
-        transition: width 0.4s ease;
-    }
 
     @@media (max-width: 900px) {
         .ss-navpill span { display: none; }
         .ss-userchip .tw\:flex-col { display: none; }
     }
 
-    /* Logout confirm modal */
+    /* Shared modal (used by Settings suspend/delete confirm) */
     .ss-modal-backdrop {
         position: fixed; inset: 0; z-index: 200;
         background: rgba(15, 23, 42, 0.45);
@@ -332,9 +217,6 @@
         box-shadow: var(--shadow-glass-hover);
         animation: ss-pop-in 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .ss-modal-mascot {
-        width: 72px; height: 72px; margin: 0 auto;
-    }
     @@keyframes ss-fade-in { from { opacity: 0; } to { opacity: 1; } }
     @@keyframes ss-pop-in {
         from { opacity: 0; transform: translateY(12px) scale(0.94); }
@@ -343,9 +225,6 @@
 </style>
 
 @code {
-    private bool userMenuOpen;
-    private bool showLogoutModal;
-
     private UserDto? profile;
 
     protected override void OnInitialized()
@@ -383,34 +262,6 @@
     {
         L.Toggle();
         await JS.InvokeVoidAsync("ssLang.set", L.Code);
-    }
-
-    private void ToggleUserMenu() => userMenuOpen = !userMenuOpen;
-
-    // Pages where unsaved learning progress could be lost — confirm before logout.
-    private static readonly string[] SensitivePaths = { "assessment", "select-skills", "profile-setup" };
-
-    private async Task OnLogoutClicked()
-    {
-        var path = new Uri(Nav.Uri).AbsolutePath.Trim('/').ToLowerInvariant();
-        var inLearningFlow = SensitivePaths.Any(p => path.StartsWith(p));
-        if (inLearningFlow)
-        {
-            userMenuOpen = false;
-            showLogoutModal = true;
-        }
-        else
-        {
-            await JS.InvokeVoidAsync("ssSubmitForm", "ss-logout-form");
-        }
-    }
-
-    private void CancelLogout() => showLogoutModal = false;
-
-    private async Task ConfirmLogout()
-    {
-        showLogoutModal = false;
-        await JS.InvokeVoidAsync("ssSubmitForm", "ss-logout-form");
     }
 
     private void StateHasChangedSafe() => InvokeAsync(StateHasChanged);

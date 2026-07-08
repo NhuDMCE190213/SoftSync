@@ -31,6 +31,17 @@ public static class QuizSeedData
     /// <summary>Max score a single option can carry (used for percentage scoring).</summary>
     public const int MaxOptionScore = 4;
 
+    /// <summary>
+    /// Skills that currently have an authored, real quiz bank and are therefore
+    /// offered to users. Skills NOT listed here are hidden from skill-selection
+    /// screens and from the assessment fallback until their quiz is finalized.
+    ///
+    /// To re-enable a skill after updating its questions, just add its id here:
+    ///   1 Communication, 2 Teamwork, 3 Time Management, 4 Critical Thinking,
+    ///   5 Problem Solving, 6 Emotional Management, 7 Adaptability.
+    /// </summary>
+    public static readonly IReadOnlySet<int> ActiveSkillIds = new HashSet<int> { 1, 3, 4 };
+
     private sealed record Opt(string Text, string TextVi, int Score);
     private sealed record Q(string Text, string TextVi, QuestionType Type, Opt[] Options);
 

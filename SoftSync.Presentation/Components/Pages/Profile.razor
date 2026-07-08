@@ -92,7 +92,7 @@
                 </div>
                 <div class="tw:sm:col-span-2">
                     <div class="text-muted tw:text-sm">@L["profile.goal"]</div>
-                    <div class="tw:font-medium">@(string.IsNullOrWhiteSpace(user.Goal) ? "—" : user.Goal)</div>
+                    <div class="tw:font-medium">@(string.IsNullOrWhiteSpace(user.Goal) ? "—" : L[user.Goal])</div>
                 </div>
             </div>
             <button class="ss-btn-primary tw:mt-6 tw:px-6 tw:py-3" @onclick='() => Nav.NavigateTo("/profile-setup")'>
