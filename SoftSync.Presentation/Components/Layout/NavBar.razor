@@ -200,6 +200,17 @@
         .ss-userchip .tw\:flex-col { display: none; }
     }
 
+    /* Dark theme: lighten nav text/icons so they read on the deep canvas. */
+    html[data-theme="dark"] .ss-navpill { color: #cbd5e1; }
+    html[data-theme="dark"] .ss-navpill:hover { color: #fff; background: rgba(139, 92, 246, 0.18); }
+    html[data-theme="dark"] .ss-navpill.active { color: #fff; background: rgba(139, 92, 246, 0.28); }
+    html[data-theme="dark"] .ss-icon-btn {
+        background: rgba(45, 39, 86, 0.6);
+        color: #cbd5e1;
+    }
+    html[data-theme="dark"] .ss-icon-btn:hover { background: rgba(139, 92, 246, 0.3); color: #fff; }
+    html[data-theme="dark"] .ss-userchip:hover { background: rgba(139, 92, 246, 0.18); }
+
     /* Shared modal (used by Settings suspend/delete confirm) */
     .ss-modal-backdrop {
         position: fixed; inset: 0; z-index: 200;

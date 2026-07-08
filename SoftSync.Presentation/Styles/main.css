@@ -169,22 +169,27 @@
    Overrides the glass tokens + base surfaces so the liquid-glass system reads
    correctly on a dark canvas. */
 html[data-theme="dark"] {
-    --glass-bg: rgba(30, 32, 48, 0.55);
-    --glass-bg-strong: rgba(30, 32, 48, 0.78);
-    --glass-border: rgba(255, 255, 255, 0.12);
-    --glass-highlight: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(32, 28, 60, 0.62);
+    --glass-bg-strong: rgba(24, 21, 47, 0.9);
+    --glass-border: rgba(139, 92, 246, 0.24);
+    --glass-highlight: rgba(255, 255, 255, 0.06);
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.45);
+    --shadow-glass-hover: 0 16px 48px rgba(0, 0, 0, 0.55);
     color-scheme: dark;
 }
-html[data-theme="dark"] body { color: #e5e7eb; }
-html[data-theme="dark"] .ss-aurora { background: #0b1020; }
-html[data-theme="dark"] .ss-aurora span { opacity: 0.4; }
+html[data-theme="dark"] body { color: #ede9fe; }
+/* Deep navy-purple canvas with a slightly brighter aurora so the page reads as a
+   rich dark surface (like the reference) rather than washed-out grey. */
+html[data-theme="dark"] .ss-aurora { background: #0a0918; }
+html[data-theme="dark"] .ss-aurora span { opacity: 0.5; }
 html[data-theme="dark"] .text-muted { color: #9ca3af !important; }
 html[data-theme="dark"] .ss-card,
 html[data-theme="dark"] .card { color: #e5e7eb; }
-html[data-theme="dark"] .form-control {
-    background: rgba(255, 255, 255, 0.06);
-    color: #e5e7eb;
-    border-color: rgba(255, 255, 255, 0.15);
+html[data-theme="dark"] .form-control,
+html[data-theme="dark"] .form-select {
+    background-color: rgba(45, 39, 86, 0.6);
+    color: #ede9fe;
+    border-color: rgba(139, 92, 246, 0.3);
 }
 html[data-theme="dark"] .form-control::placeholder { color: #6b7280; }
 html[data-theme="dark"] .btn-light { background: rgba(255,255,255,0.1); color: #e5e7eb; border-color: transparent; }
@@ -212,7 +217,10 @@ html[data-reduce-motion="1"] * { scroll-behavior: auto !important; }
     backdrop-filter: blur(14px);
     box-shadow: var(--shadow-glass);
 }
-html[data-theme="dark"] .ss-side-card { background: rgba(255,255,255,0.04); }
+html[data-theme="dark"] .ss-side-card {
+    background: linear-gradient(160deg, rgba(38, 32, 74, 0.85), rgba(24, 21, 47, 0.85));
+    border-color: rgba(139, 92, 246, 0.22);
+}
 .ss-side-eyebrow {
     font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
     color: var(--color-brand); text-transform: uppercase; margin-bottom: 0.4rem;
@@ -384,7 +392,10 @@ html[data-theme="dark"] .ss-stat-label { color: #9ca3af; }
     backdrop-filter: blur(14px);
     box-shadow: var(--shadow-glass);
 }
-html[data-theme="dark"] .ss-card--flat { background: rgba(255,255,255,0.04); }
+html[data-theme="dark"] .ss-card--flat {
+    background: linear-gradient(160deg, rgba(30, 27, 61, 0.9), rgba(20, 18, 40, 0.92));
+    border-color: rgba(139, 92, 246, 0.18);
+}
 
 .ss-panel-title { font-size: 1.15rem; font-weight: 800; margin: 0; color: #1f2937; }
 html[data-theme="dark"] .ss-panel-title { color: #f3f4f6; }
@@ -415,7 +426,10 @@ html[data-theme="dark"] .ss-ghost-btn { background: rgba(99,102,241,0.15); color
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .ss-field:focus-within { border-color: var(--color-brand); box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
-html[data-theme="dark"] .ss-field { background: rgba(255,255,255,0.05); }
+html[data-theme="dark"] .ss-field {
+    background: rgba(45, 39, 86, 0.55);
+    border-color: rgba(139, 92, 246, 0.25);
+}
 .ss-field-icon { color: var(--color-brand); font-size: 1rem; flex-shrink: 0; }
 .ss-field-body { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 .ss-field-label { font-size: 0.72rem; color: #6b7280; font-weight: 600; margin: 0; }
@@ -438,7 +452,10 @@ html[data-theme="dark"] .ss-field-input:disabled { color: #9ca3af; }
     border-radius: 14px;
     background: rgba(255,255,255,0.6);
 }
-html[data-theme="dark"] .ss-linked { background: rgba(255,255,255,0.04); }
+html[data-theme="dark"] .ss-linked {
+    background: rgba(45, 39, 86, 0.55);
+    border-color: rgba(139, 92, 246, 0.25);
+}
 .ss-linked-icon {
     width: 36px; height: 36px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
@@ -468,9 +485,31 @@ html[data-theme="dark"] .ss-linked-name { color: #f3f4f6; }
     font-weight: 600; font-size: 0.9rem; color: #374151; cursor: pointer;
     transition: all 0.15s ease;
 }
-html[data-theme="dark"] .ss-seg button { background: rgba(255,255,255,0.06); color: #e5e7eb; }
+html[data-theme="dark"] .ss-seg button {
+    background: rgba(45, 39, 86, 0.7);
+    border-color: rgba(139, 92, 246, 0.28);
+    color: #ddd6fe;
+}
 .ss-seg button:hover { border-color: var(--color-brand); }
-.ss-seg button.active { border-color: var(--color-brand); background: var(--gradient); color: #fff; }
+.ss-seg button.active { border-color: var(--color-brand); background: var(--gradient); color: #fff; box-shadow: 0 6px 18px rgba(99,102,241,0.4); }
+
+/* Chip pills for goals + priority skills (reuse the wizard choice look). */
+.ss-seg-1 {
+    display: inline-flex; align-items: center;
+    border: 2px solid var(--glass-border);
+    background: rgba(255,255,255,0.5);
+    border-radius: 999px; padding: 0.5rem 1rem;
+    font-weight: 600; font-size: 0.9rem; color: #374151; cursor: pointer;
+    transition: all 0.15s ease;
+}
+.ss-seg-1:hover { border-color: var(--color-brand); }
+.ss-seg-1.active { border-color: var(--color-brand); background: var(--gradient); color: #fff; box-shadow: 0 6px 18px rgba(99,102,241,0.4); }
+html[data-theme="dark"] .ss-seg-1 {
+    background: rgba(45, 39, 86, 0.7);
+    border-color: rgba(139, 92, 246, 0.28);
+    color: #ddd6fe;
+}
+html[data-theme="dark"] .ss-seg-1.active { border-color: var(--color-brand); background: var(--gradient); color: #fff; }
 
 /* Notifications / privacy rows */
 .ss-notif-row {
@@ -487,5 +526,10 @@ html[data-theme="dark"] .ss-seg button { background: rgba(255,255,255,0.06); col
     border: 1px solid rgba(99,102,241,0.2);
     border-radius: 14px;
 }
+html[data-theme="dark"] .ss-billing-plan {
+    background: rgba(99,102,241,0.16);
+    border-color: rgba(139,92,246,0.35);
+}
+html[data-theme="dark"] .ss-notif-row { border-color: rgba(139,92,246,0.18); }
 
 .ss-danger-zone { border: 1.5px solid rgba(239, 68, 68, 0.35); border-radius: 16px; }
