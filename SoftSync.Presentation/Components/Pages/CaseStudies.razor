@@ -3,67 +3,103 @@
 @using SoftSync.BLL.Interfaces
 @using SoftSync.Common.Dtos
 @using SoftSync.Common.Dtos.CaseStudy
+@using SoftSync.Presentation.Infrastructure
 @inject ICaseStudyService CaseStudyService
+@inject ISkillService SkillService
+@inject IUserService UserService
+@inject CurrentUserAccessor CurrentUserAccessor
+@inject NavigationManager Nav
 
 @attribute [Authorize]
 
 <div class="max-800 mx-auto">
     <div class="mb-5">
-        <h2 class="fw-bold mb-1">Interactive <span class="ss-gradient-text">Case Studies</span></h2>
-        <p class="text-muted">Apply your knowledge to real-world scenarios.</p>
+        <h2 class="fw-bold mb-1">Tình huống <span class="ss-gradient-text">Thực tế</span></h2>
+        <p class="text-muted">Ứng dụng kiến thức của bạn vào các tình huống thực tế.</p>
     </div>
 
-    @if (caseStudy == null && !loadedOnce)
+    @if (mySkills == null)
     {
-        <div class="text-center py-5">Loading case studies...</div>
+        <div class="text-center py-5">Đang tải...</div>
     }
-    else if (caseStudy == null)
+    else if (!mySkills.Any())
     {
         <div class="ss-card p-5 text-center text-muted">
-            Chưa có case study nào cho kỹ năng này. Nội dung đang được cập nhật.
+            Bạn chưa chọn kỹ năng nào để học. Hãy chọn kỹ năng ở bước <a href="/select-skills">Chọn Kỹ Năng</a>.
         </div>
     }
     else
     {
-        <div class="ss-card mb-5 overflow-hidden">
-            <div class="bg-primary text-white p-3 px-4 fw-bold">CASE STUDY: @caseStudy.Title</div>
-            <div class="p-5">
-                <p class="fs-5 mb-5 lh-lg">@caseStudy.Scenario</p>
+        <!-- Skill selector - trước đây thiếu, khiến trang luôn khoá cứng vào 1 skill -->
+        <ul class="nav nav-pills mb-4 gap-2">
+            @foreach (var skill in mySkills)
+            {
+                <li class="nav-item">
+                    <button class="nav-link @(skill.Id == activeSkillId ? "active" : "")"
+                            @onclick="() => SwitchSkill(skill.Id)">
+                        @skill.Name
+                    </button>
+                </li>
+            }
+        </ul>
 
-                <h6 class="fw-bold text-uppercase small text-muted mb-3">How would you respond?</h6>
-                <div class="d-grid gap-3">
-                    @foreach (var opt in caseStudy.Options)
+        @if (caseStudy == null && !loadedOnce)
+        {
+            <div class="text-center py-5">Đang tải các tình huống thực tế...</div>
+        }
+        else if (caseStudy == null)
+        {
+            <div class="ss-card p-5 text-center text-muted">
+                Chưa có tình huống thực tế nào cho kỹ năng này. Nội dung đang được cập nhật.
+            </div>
+        }
+        else
+        {
+            <div class="ss-card mb-5 overflow-hidden">
+                <div class="bg-primary text-white p-3 px-4 fw-bold">TÌNH HUỐNG THỰC TẾ: @caseStudy.Title</div>
+                <div class="p-5">
+                    <p class="fs-5 mb-5 lh-lg">@caseStudy.Scenario</p>
+
+                    <h6 class="fw-bold text-uppercase small text-muted mb-3">Bạn sẽ phản ứng như thế nào?</h6>
+                    <div class="d-grid gap-3">
+                        @foreach (var opt in caseStudy.Options)
+                        {
+                            <button class="btn btn-outline-primary text-start p-3 fs-5"
+                                    @onclick="() => SelectOption(opt)"
+                                    disabled="@(feedback != null)">
+                                @opt.OptionText
+                            </button>
+                        }
+                    </div>
+
+                    @if (feedback != null)
                     {
-                        <button class="btn btn-outline-primary text-start p-3 fs-5" 
-                                @onclick="() => SelectOption(opt)"
-                                disabled="@(feedback != null)">
-                            @opt.OptionText
-                        </button>
-                    }
-                </div>
-
-                @if (feedback != null)
-                {
-                    <div class="mt-5 p-4 rounded-3 @(isCorrect ? "bg-success-subtle border-success" : "bg-warning-subtle border-warning") border">
-                        <div class="d-flex gap-3">
-                            <i class="bi @(isCorrect ? "bi-check-circle-fill text-success" : "bi-exclamation-triangle-fill text-warning") fs-4"></i>
-                            <div>
-                                <h5 class="fw-bold @(isCorrect ? "text-success" : "text-warning")">@(isCorrect ? "Great Choice!" : "Room for Improvement")</h5>
-                                <p class="mb-0 text-dark">@feedback</p>
+                        <div class="mt-5 p-4 rounded-3 @(isCorrect ? "bg-success-subtle border-success" : "bg-warning-subtle border-warning") border">
+                            <div class="d-flex gap-3">
+                                <i class="bi @(isCorrect ? "bi-check-circle-fill text-success" : "bi-exclamation-triangle-fill text-warning") fs-4"></i>
+                                <div>
+                                    <h5 class="fw-bold @(isCorrect ? "text-success" : "text-warning")">@(isCorrect ? "Lựa chọn tuyệt vời!" : "Cần cải thiện")</h5>
+                                    <p class="mb-0 text-dark">@feedback</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mt-4 text-center">
-                        <button class="btn btn-primary px-4 py-2" @onclick="LoadNext">Try Another Case</button>
-                    </div>
-                }
+                        <div class="mt-4 text-center">
+                            <button class="btn btn-primary px-4 py-2" @onclick="LoadNext">Thử tình huống khác</button>
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
+        }
     }
 </div>
 
 @code {
-    [Parameter] public int SkillId { get; set; } = 2;
+    // Không còn default cứng = 2. null nghĩa là "chưa chọn qua route", sẽ tự chọn skill đầu tiên user đang học.
+    [Parameter] public int? SkillId { get; set; }
+
+    private int? userId;
+    private List<SkillDto>? mySkills;
+    private int activeSkillId;
 
     private bool loadedOnce = false;
     private CaseStudyDto? caseStudy;
@@ -73,13 +109,43 @@
 
     protected override async Task OnInitializedAsync()
     {
+        userId = await CurrentUserAccessor.GetUserIdAsync();
+        if (!userId.HasValue) return;
+
+        var allSkills = (await SkillService.GetAllSkillsAsync()).ToList();
+        var selectedIds = await UserService.GetSelectedSkillIdsAsync(userId.Value);
+
+        // Chỉ hiện case study cho các skill user thực sự đang học.
+        // Fallback: nếu vì lý do gì đó chưa có skill selection nào được ghi lại, hiện tất cả skill
+        // thay vì trống trơn, để không chặn hoàn toàn tính năng.
+        mySkills = selectedIds.Any()
+            ? allSkills.Where(s => selectedIds.Contains(s.Id)).ToList()
+            : allSkills;
+
+        if (!mySkills.Any()) return;
+
+        // Nếu route có truyền SkillId (vd. từ Roadmap) và nằm trong danh sách skill của user thì dùng nó,
+        // ngược lại mặc định chọn skill ĐẦU TIÊN user đang học (không hardcode = 2 nữa).
+        activeSkillId = SkillId.HasValue && mySkills.Any(s => s.Id == SkillId.Value)
+            ? SkillId.Value
+            : mySkills.First().Id;
+
+        await LoadNext();
+    }
+
+    private async Task SwitchSkill(int skillId)
+    {
+        if (skillId == activeSkillId) return;
+        activeSkillId = skillId;
+        lastCaseStudyId = null;
+        Nav.NavigateTo($"/case-studies/{skillId}");
         await LoadNext();
     }
 
     private async Task LoadNext()
     {
         feedback = null;
-        var list = (await CaseStudyService.GetCaseStudiesBySkillAsync(SkillId)).ToList();
+        var list = (await CaseStudyService.GetCaseStudiesBySkillAsync(activeSkillId)).ToList();
         loadedOnce = true;
         if (!list.Any()) { caseStudy = null; return; }
 
@@ -101,7 +167,15 @@
 }
 
 <style>
-    .max-800 { max-width: 800px; }
-    .bg-success-subtle { background: #dcfce7 !important; }
-    .bg-warning-subtle { background: #fef9c3 !important; }
+    .max-800 {
+        max-width: 800px;
+    }
+
+    .bg-success-subtle {
+        background: #dcfce7 !important;
+    }
+
+    .bg-warning-subtle {
+        background: #fef9c3 !important;
+    }
 </style>

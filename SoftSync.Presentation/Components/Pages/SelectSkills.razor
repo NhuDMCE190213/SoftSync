@@ -11,14 +11,14 @@
     <StepIndicator CurrentStep="2" />
 
     <div class="text-center mb-5">
-        <h2 class="fw-bold">Which skills do you want to improve?</h2>
-        <p class="text-muted">Select as many as you'd like. Our AI will focus on these.</p>
+        <h2 class="fw-bold">Kỹ năng bạn muốn cải thiện?</h2>
+        <p class="text-muted">Chọn bao nhiêu kỹ năng bạn muốn. AI của chúng tôi sẽ tập trung vào những kỹ năng này.</p>
     </div>
 
     <div class="row g-4 mb-5">
         @if (skills == null)
         {
-            <div class="col-12 text-center">Loading skills...</div>
+            <div class="col-12 text-center">Đang tải kỹ năng...</div>
         }
         else
         {
@@ -48,7 +48,7 @@
 
     <div class="text-center">
         <button class="ss-btn-primary px-5 py-3 fs-5" @onclick="HandleSubmit" disabled="@(!selectedSkillIds.Any())">
-            Start Assessment <i class="bi bi-arrow-right ms-2"></i>
+            Bắt đầu đánh giá <i class="bi bi-arrow-right ms-2"></i>
         </button>
     </div>
 </div>

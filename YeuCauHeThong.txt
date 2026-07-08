@@ -1,6 +1,0 @@
-Dạ các cô ơi, đây là phần data sẵn mà tụi con dự kiến sẽ upload lên website cho dự án SoftSync ạ.
-Hiện tại tụi con muốn xây dựng một chatbot trong web để người dùng có thể hỏi các nội dung lý thuyết liên quan đến 3 kỹ năng chính là: giao tiếp, quản lý thời gian và tư duy phản biện.
-Trước khi bắt đầu học, người dùng sẽ làm một bài kiểm tra đầu vào để đánh giá trình độ ban đầu. Sau đó, người dùng có thể chọn kỹ năng muốn học. Trong mỗi kỹ năng sẽ có phần lý thuyết, video bài giảng/demo do các cô hỗ trợ quay, câu hỏi trắc nghiệm và các mini game để luyện tập.
-Dự kiến mỗi kỹ năng sẽ có khoảng 3–5 mini game, tùy theo tiến độ phát triển. Mỗi game sẽ có khoảng 20 câu hỏi/tình huống trong bộ dữ liệu. Tuy nhiên, khi người dùng chơi mỗi vòng thì hệ thống chỉ chọn ngẫu nhiên khoảng 5 câu để tránh bị lặp và giúp trải nghiệm nhẹ hơn.
-Hiện tại vì đây là bản thử nghiệm nên tụi con mới làm trước phần data cơ bản. Tụi con mong các cô góp ý thêm về nội dung, cách đặt câu hỏi, mức độ phù hợp của lý thuyết, câu trả lời mẫu và tiêu chí đánh giá để tụi con hoàn thiện data tốt hơn ạ.
-Dạ tụi con cảm ơn các cô nhiều ạ.

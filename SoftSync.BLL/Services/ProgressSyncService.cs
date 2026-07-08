@@ -12,13 +12,15 @@ public class ProgressSyncService : IProgressSyncService
     private readonly IProgressRepository _progressRepo;
     private readonly IRoadmapRepository _roadmapRepo;
     private readonly ITheoryLessonProgressRepository _theoryProgressRepo;
-    private readonly ITheoryLessonRepository _theoryLessonRepo;       // MỚI
-    private readonly IMiniGameAttemptRepository _attemptRepo;         // MỚI
+    private readonly ITheoryLessonRepository _theoryLessonRepo;
+    private readonly IMiniGameRepository _miniGameRepo;             // MỚI - cần để biết TỔNG số minigame của skill
+    private readonly IMiniGameAttemptRepository _attemptRepo;
 
     public ProgressSyncService(IProgressRepository progressRepo,
                                IRoadmapRepository roadmapRepo,
                                ITheoryLessonProgressRepository theoryProgressRepo,
                                ITheoryLessonRepository theoryLessonRepo,
+                               IMiniGameRepository miniGameRepo,     // MỚI
                                IMiniGameAttemptRepository attemptRepo,
                                IConfiguration config)
     {
@@ -26,8 +28,8 @@ public class ProgressSyncService : IProgressSyncService
         _roadmapRepo = roadmapRepo;
         _theoryProgressRepo = theoryProgressRepo;
         _theoryLessonRepo = theoryLessonRepo;
+        _miniGameRepo = miniGameRepo;
         _attemptRepo = attemptRepo;
-        // Cách 2: ép kiểu nullable rồi mới dùng ??
         _passingRatio = config.GetValue<double?>("Gamification:PassingScoreThreshold") ?? 0.7;
         _remedialRatio = config.GetValue<double?>("Gamification:RemedialScoreThreshold") ?? 0.5;
     }
@@ -42,10 +44,8 @@ public class ProgressSyncService : IProgressSyncService
 
         if (passed)
         {
-            // Cơ chế 1: cộng % Progress
-            var log = await _progressRepo.GetOrCreateAsync(userId, skillId);
-            log.PercentComplete = Math.Min(100, log.PercentComplete + 10);
-            log.UpdatedAt = DateTime.UtcNow;
+            // Cơ chế 1: tính lại % dựa trên tỉ lệ nội dung đã hoàn thành (không cộng cứng nữa)
+            await RecalculatePercentAsync(userId, skillId);
 
             await TryCompleteRoadmapItemAsync(userId, skillId);
         }
@@ -85,16 +85,44 @@ public class ProgressSyncService : IProgressSyncService
             TheoryLessonId = theoryLessonId,
             CompletedAt = DateTime.UtcNow
         });
-
-        var log = await _progressRepo.GetOrCreateAsync(userId, skillId);
-        log.PercentComplete = Math.Min(100, log.PercentComplete + 5); // bước nhỏ hơn mini-game vì chỉ là đọc lý thuyết
-        log.UpdatedAt = DateTime.UtcNow;
-
         await _theoryProgressRepo.SaveChangesAsync();
+
+        // tính lại % dựa trên tỉ lệ nội dung đã hoàn thành (không cộng cứng +5 nữa)
+        await RecalculatePercentAsync(userId, skillId);
         await _progressRepo.SaveChangesAsync();
 
         await TryCompleteRoadmapItemAsync(userId, skillId);
     }
+
+    /// <summary>
+    /// Tính lại PercentComplete của 1 skill dựa trên tỉ lệ:
+    /// (số bài lý thuyết đã học + số minigame đã pass ít nhất 1 lần) / (tổng bài lý thuyết + tổng minigame của skill).
+    /// Thay cho việc cộng cứng +5 / +10 trước đây (nguyên nhân khiến % không bao giờ đạt 100
+    /// vì tổng các bước cộng cứng không khớp với tổng số nội dung thật của từng skill).
+    /// </summary>
+    private async Task RecalculatePercentAsync(int userId, int skillId)
+    {
+        var lessons = await _theoryLessonRepo.GetBySkillIdAsync(skillId);
+        var lessonIds = lessons.Select(l => l.Id).ToList();
+        int completedLessons = lessonIds.Count == 0
+            ? 0
+            : await _theoryProgressRepo.CountCompletedAsync(userId, lessonIds);
+
+        var games = await _miniGameRepo.GetBySkillIdAsync(skillId);
+        int totalGames = games.Count;
+        int completedGames = totalGames == 0
+            ? 0
+            : await _attemptRepo.CountDistinctPassedAsync(userId, skillId, _passingRatio);
+
+        int totalItems = lessonIds.Count + totalGames;
+
+        var log = await _progressRepo.GetOrCreateAsync(userId, skillId);
+        log.PercentComplete = totalItems == 0
+            ? 0
+            : (int)Math.Round(100.0 * (completedLessons + completedGames) / totalItems);
+        log.UpdatedAt = DateTime.UtcNow;
+    }
+
     private async Task TryCompleteRoadmapItemAsync(int userId, int skillId)
     {
         // Điều kiện A: đã đọc hết TẤT CẢ bài lý thuyết của skill này
@@ -103,11 +131,10 @@ public class ProgressSyncService : IProgressSyncService
         bool theoryDone = lessonIds.Count == 0
             || await _theoryProgressRepo.CountCompletedAsync(userId, lessonIds) >= lessonIds.Count;
 
-        // Điều kiện B: có ít nhất 1 lần chơi mini-game ĐẠT ngưỡng của skill này
-        var attempts = await _attemptRepo.GetRecentByUserAndSkillAsync(userId, skillId, 20);
-        bool gameDone = attempts.Any(a =>
-            a.MaxScore > 0 &&
-            (double)a.TotalScore / a.MaxScore >= _passingRatio);
+        // Điều kiện B: đã pass TẤT CẢ minigame của skill này (không chỉ 1 game bất kỳ trong 20 lượt gần nhất)
+        var games = await _miniGameRepo.GetBySkillIdAsync(skillId);
+        bool gameDone = games.Count == 0
+            || await _attemptRepo.CountDistinctPassedAsync(userId, skillId, _passingRatio) >= games.Count;
 
         if (!theoryDone || !gameDone) return;
 

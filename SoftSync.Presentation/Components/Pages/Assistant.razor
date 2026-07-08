@@ -9,8 +9,8 @@
 
 <div class="max-800 mx-auto h-100 d-flex flex-column" style="min-height: 70vh;">
     <div class="mb-4">
-        <h2 class="fw-bold mb-1"><i class="bi bi-robot me-2 ss-gradient-text"></i>AI Assistant</h2>
-        <p class="text-muted">Ask me anything about soft skills or your progress.</p>
+        <h2 class="fw-bold mb-1"><i class="bi bi-robot me-2 ss-gradient-text"></i>Trợ lý AI</h2>
+        <p class="text-muted">Hỏi tôi bất cứ điều gì về kỹ năng mềm hoặc tiến trình học tập của bạn.</p>
     </div>
 
     <div class="ss-card flex-grow-1 p-4 mb-4 overflow-auto d-flex flex-column" style="max-height: 500px;">
@@ -23,13 +23,13 @@
         @if (isTyping)
         {
             <div class="chat-bubble chat-assistant text-muted">
-                <span class="spinner-grow spinner-grow-sm" role="status"></span> Typing...
+                <span class="spinner-grow spinner-grow-sm" role="status"></span> Đang nhập...
             </div>
         }
     </div>
 
     <div class="input-group">
-        <input type="text" class="form-control form-control-lg p-3" placeholder="Type your message..." 
+        <input type="text" class="form-control form-control-lg p-3" placeholder="Nhập tin nhắn của bạn..." 
                @bind="userInput" @bind:event="oninput" @onkeyup="HandleKeyUp" />
         <button class="ss-btn-primary px-4" @onclick="SendMessage" disabled="@(string.IsNullOrWhiteSpace(userInput))">
             <i class="bi bi-send-fill"></i>

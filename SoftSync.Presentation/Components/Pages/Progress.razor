@@ -12,21 +12,21 @@
 
 <div class="max-800 mx-auto">
     <div class="mb-5">
-        <h2 class="fw-bold mb-1">Learning <span class="ss-gradient-text">Progress</span></h2>
-        <p class="text-muted">Track your growth across all soft skills.</p>
+        <h2 class="fw-bold mb-1">Tiến độ <span class="ss-gradient-text">Học tập</span></h2>
+        <p class="text-muted">Theo dõi sự phát triển của bạn qua các kỹ năng mềm.</p>
     </div>
 
     @if (progressLogs == null)
     {
-        <div class="text-center py-5">Loading your statistics...</div>
+        <div class="text-center py-5">Đang tải thống kê của bạn...</div>
     }
     else if (!progressLogs.Any())
     {
         <div class="ss-card p-5 text-center">
             <i class="bi bi-lightning-charge fs-1 text-muted mb-3"></i>
-            <h4>No data yet</h4>
-            <p class="text-muted">Start learning and completing your roadmap to see progress here!</p>
-            <a href="/" class="btn btn-primary mt-3">Start Now</a>
+            <h4>Chưa có dữ liệu</h4>
+            <p class="text-muted">Bắt đầu học và hoàn thành lộ trình của bạn để xem tiến độ tại đây!</p>
+            <a href="/" class="btn btn-primary mt-3">Bắt đầu ngay</a>
         </div>
     }
     else

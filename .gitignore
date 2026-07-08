@@ -1,12 +1,31 @@
-## Visual Studio cache and settings
-.vs/
-[Bb]in/
-[Oo]bj/
+## .NET
+bin/
+obj/
 *.user
 *.suo
+
+## Visual Studio / Rider / VS Code
+.vs/
+.vscode/
+.idea/
 *.userosscache
 *.sln.docstates
 
-## OS generated files
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+bld/
+
+## Logs
+*.log
+
+## OS files
 .DS_Store
 Thumbs.db
+
+## Secrets (nếu bạn tách file cấu hình riêng cho máy cá nhân)
+appsettings.Local.json
+appsettings.*.Secrets.json
