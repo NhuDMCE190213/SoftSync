@@ -167,10 +167,7 @@ Một vài file đáng chú ý khi cần chỉnh sửa:
 - [ ] Cấu hình ngưỡng điểm đạt/ôn tập (`Gamification:PassingScoreThreshold`, `RemedialScoreThreshold`) đã được đưa ra `appsettings.json`, nhưng nên rà lại toàn bộ code để chắc chắn không còn số hardcode (7/10, 5/10...) rải rác ở nơi khác.
 
 ### Ưu tiên thấp / kỹ thuật
-- [ ] Chưa có file `.sln` — hiện dùng `ProjectReference` giữa các `.csproj` nên `dotnet run` vẫn build đủ cả chuỗi layer, nhưng nếu dùng Visual Studio thì nên tạo `.sln` cho tiện mở cả 4 project cùng lúc (`dotnet new sln && dotnet sln add **/*.csproj`).
-- [ ] Chưa có test tự động (unit test/integration test) cho các luồng: sync Progress ↔ Roadmap, gating theo tuần, chấm điểm mini-game.
 - [ ] Chưa có CI (GitHub Actions) để tự build/test khi có Pull Request.
-- [ ] Nên thêm `.gitignore` (đã kèm sẵn trong repo này) để tránh commit nhầm `bin/`, `obj/`.
 
 ---
 
