@@ -269,11 +269,16 @@ public class RoadmapService : IRoadmapService
     private readonly IRoadmapRepository _roadmapRepo;
     private readonly IAiRoadmapService _aiService;
     private readonly IUserRepository _userRepo;
-    public RoadmapService(IRoadmapRepository roadmapRepo, IAiRoadmapService aiService, IUserRepository userRepo)
+    private readonly IAssessmentRepository _assessmentRepo;
+    private readonly ISkillRepository _skillRepo;
+    public RoadmapService(IRoadmapRepository roadmapRepo, IAiRoadmapService aiService, IUserRepository userRepo,
+        IAssessmentRepository assessmentRepo, ISkillRepository skillRepo)
     {
         _roadmapRepo = roadmapRepo;
         _aiService = aiService;
         _userRepo = userRepo;
+        _assessmentRepo = assessmentRepo;
+        _skillRepo = skillRepo;
     }
 
     public async Task<RoadmapDto> GetUserRoadmapAsync(int userId)
@@ -281,7 +286,8 @@ public class RoadmapService : IRoadmapService
         var items = await _roadmapRepo.GetByUserIdAsync(userId);
         if (!items.Any())
         {
-            var fakeRoadmap = await _aiService.GenerateRoadmapAsync(userId, new List<string> { "Communication" });
+            var focusSkills = await GetFocusSkillNamesAsync(userId);
+            var fakeRoadmap = await _aiService.GenerateRoadmapAsync(userId, focusSkills);
             foreach (var item in fakeRoadmap.Items)
             {
                 await _roadmapRepo.AddAsync(new RoadmapItem { UserId = userId, WeekNumber = item.WeekNumber, Title = item.Title, Description = item.Description });
@@ -295,6 +301,43 @@ public class RoadmapService : IRoadmapService
             UserId = userId,
             Items = items.Select(i => new RoadmapItemDto { Id = i.Id, WeekNumber = i.WeekNumber, Title = i.Title, Description = i.Description, IsCompleted = i.IsCompleted }).ToList()
         };
+    }
+
+    /// <summary>
+    /// Picks which skills the roadmap should focus on, restricted to the 3 active
+    /// skills (<see cref="QuizSeedData.ActiveSkillIds"/>). Preference order:
+    ///  1. The user's assessment results, weakest score first (most to improve).
+    ///  2. Skills they selected in the wizard (if they haven't been assessed).
+    ///  3. All active skills, as a last resort.
+    /// Only real skill names from the DB are returned — no external data.
+    /// </summary>
+    private async Task<List<string>> GetFocusSkillNamesAsync(int userId)
+    {
+        // 1. From assessment results (active skills only), weakest first.
+        var results = await _assessmentRepo.GetResultsByUserIdAsync(userId);
+        var byScore = results
+            .Where(r => QuizSeedData.ActiveSkillIds.Contains(r.SkillId))
+            .GroupBy(r => r.SkillId)
+            .Select(g => g.First()) // newest per skill (repo orders by CreatedAt desc)
+            .OrderBy(r => r.Score)  // weakest skill first
+            .Select(r => r.Skill.Name)
+            .ToList();
+        if (byScore.Count > 0) return byScore;
+
+        // 2. Fall back to the skills the user selected (active only).
+        var allSkills = (await _skillRepo.GetAllAsync()).ToList();
+        var selectedIds = await _assessmentRepo.GetSelectedSkillIdsAsync(userId);
+        var selected = allSkills
+            .Where(s => selectedIds.Contains(s.Id) && QuizSeedData.ActiveSkillIds.Contains(s.Id))
+            .Select(s => s.Name)
+            .ToList();
+        if (selected.Count > 0) return selected;
+
+        // 3. Last resort: every active skill.
+        return allSkills
+            .Where(s => QuizSeedData.ActiveSkillIds.Contains(s.Id))
+            .Select(s => s.Name)
+            .ToList();
     }
 
     public async Task MarkCompleteAsync(int itemId)
