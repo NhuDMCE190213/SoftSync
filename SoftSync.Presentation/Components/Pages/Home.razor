@@ -116,6 +116,27 @@
 </div>
 
 <style>
+    /* The page sits on the dark galaxy background in both themes, so hero copy
+       must read as light. Scope these overrides to .hero-section only — the
+       feature cards below use glass surfaces and keep their own colors. */
+    .hero-section h2 { color: #f8fafc; text-shadow: 0 2px 12px rgba(0,0,0,0.45); }
+    .hero-section .text-muted { color: rgba(255,255,255,0.82) !important; text-shadow: 0 1px 8px rgba(0,0,0,0.4); }
+    .hero-section .tw\:text-2xl { color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.45); }
+    .hero-section .ss-gradient-text {
+        /* Solid bright fill instead of the purple-on-purple clip that vanished on the nebula. */
+        background: none;
+        -webkit-text-fill-color: #ffffff;
+        color: #ffffff;
+        text-shadow: 0 2px 16px rgba(99,102,241,0.6);
+    }
+    .hero-section .text-primary {
+        color: #c7d2fe;
+        text-shadow: 0 2px 12px rgba(0,0,0,0.45);
+    }
+    /* Stat dividers were faint dark borders — lift them on the dark canvas. */
+    .hero-section .border-start { border-left-color: rgba(255,255,255,0.25) !important; }
+    .hero-section .border-end { border-right-color: rgba(255,255,255,0.25) !important; }
+
     .logo-container {
         width: 64px;
         height: 64px;
