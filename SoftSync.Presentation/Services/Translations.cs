@@ -52,6 +52,19 @@ public static class Translations
         ["home.feature.assistant.desc"] = (
             "Get instant feedback and guidance from your always-available AI mentor.",
             "Nhận phản hồi và hướng dẫn tức thì từ người cố vấn AI luôn sẵn sàng."),
+        ["home.dashboard.eyebrow"] = ("Welcome back", "Chào mừng trở lại"),
+        ["home.dashboard.title"] = ("Your learning workspace", "Không gian học tập của bạn"),
+        ["home.dashboard.subtitle"] = ("Continue where you left off and keep building your soft skills.", "Tiếp tục từ nơi bạn đã dừng và phát triển kỹ năng mềm của bạn."),
+        ["home.dashboard.primaryCta"] = ("Open Roadmap", "Mở Roadmap"),
+        ["home.dashboard.secondaryCta"] = ("Edit Profile", "Chỉnh sửa hồ sơ"),
+        ["home.dashboard.continueAssessment"] = ("Continue Assessment", "Tiếp tục assessment"),
+        ["home.dashboard.completeProfile"] = ("Complete Profile", "Hoàn tất hồ sơ"),
+        ["home.dashboard.assessmentPending"] = ("Assessment pending", "Chưa hoàn thành assessment"),
+        ["home.dashboard.assessmentDone"] = ("Assessment completed", "Đã hoàn thành assessment"),
+        ["home.dashboard.profileComplete"] = ("Profile complete", "Hồ sơ đã hoàn tất"),
+        ["home.dashboard.profilePending"] = ("Profile incomplete", "Hồ sơ chưa hoàn tất"),
+        ["home.dashboard.skillsSelected"] = ("Skills selected", "Kỹ năng đã chọn"),
+        ["home.dashboard.skillsNone"] = ("No skills selected", "Chưa chọn kỹ năng"),
 
         // ===== Assistant =====
         ["assistant.title"] = ("AI Assistant", "Trợ lý AI"),
@@ -123,6 +136,18 @@ public static class Translations
         ["roadmap.demoMode"] = ("Demo Mode", "Chế độ dùng thử"),
         ["roadmap.loading"] = ("Loading your personalized roadmap...", "Đang tải lộ trình cá nhân hóa của bạn..."),
         ["roadmap.week"] = ("Week", "Tuần"),
+        ["roadmap.general"] = ("General", "Tổng quan"),
+        ["roadmap.videoUnavailable"] = ("Chưa update video", "Chưa update video"),
+        ["roadmap.gameUnavailable"] = ("Chưa update game", "Chưa update game"),
+        ["roadmap.continueToGame"] = ("Continue to Game", "Tiếp tục sang Game"),
+        ["roadmap.backToRoadmap"] = ("Back to Roadmap", "Quay lại Roadmap"),
+
+        // ===== Assessment Completed =====
+        ["assessmentComplete.title"] = ("You have completed the assessment", "Bạn đã hoàn thành assessment"),
+        ["assessmentComplete.subtitle"] = ("Your learning path is ready. You can go straight to your personalized roadmap.", "Lộ trình học của bạn đã sẵn sàng. Bạn có thể đi thẳng tới roadmap cá nhân hóa."),
+        ["assessmentComplete.noteTitle"] = ("No need to retake it", "Không cần làm lại"),
+        ["assessmentComplete.noteBody"] = ("We already saved your latest assessment results and will use them to tailor your roadmap.", "Chúng tôi đã lưu kết quả assessment gần nhất của bạn và sẽ dùng nó để cá nhân hóa roadmap."),
+        ["assessmentComplete.cta"] = ("Go to Roadmap", "Đi tới Roadmap"),
 
         // ===== Assessment Result =====
         ["result.title.prefix"] = ("Your", "Hồ sơ"),
@@ -199,6 +224,7 @@ public static class Translations
         ["profile.stat.assessments"] = ("Assessments done", "Bài đánh giá đã làm"),
         ["profile.stat.skillsTracked"] = ("Skills tracked", "Kỹ năng theo dõi"),
         ["profile.stat.currentLevel"] = ("Current level", "Cấp hiện tại"),
+        ["profile.journey"] = ("Continue journey", "Tiếp tục hành trình"),
 
         // ===== Settings =====
         ["settings.title"] = ("Settings", "Cài đặt"),

@@ -1,129 +1,377 @@
 @page "/"
 @rendermode InteractiveServer
 @inherits LocalizedComponentBase
+@using SoftSync.BLL.Interfaces
+@using SoftSync.Common.Dtos
+@using SoftSync.Presentation.Services
 @inject NavigationManager Nav
+@inject AuthenticationStateProvider AuthProvider
+@inject IUserService UserService
+@inject IAssessmentService AssessmentService
 
-<div class="hero-section tw:py-12">
-    <div class="tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:gap-12 tw:items-center">
-        <div>
-            <div class="tw:flex tw:items-center tw:gap-4 tw:mb-6">
-                <div class="logo-container tw:overflow-hidden">
-                    <img src="images/logo.png" alt="SoftSync Logo" class="tw:w-full tw:h-full tw:object-cover" />
+@if (isSignedIn)
+{
+    <div class="home-dashboard tw:py-12">
+        <div class="ss-card ss-glass-interactive dashboard-shell tw:p-8">
+            <div class="tw:flex tw:flex-col tw:lg:flex-row tw:items-start tw:justify-between tw:gap-8">
+                <div class="tw:flex tw:items-center tw:gap-4 tw:flex-1">
+                    <div class="dashboard-avatar">
+                        @if (!string.IsNullOrWhiteSpace(profile?.AvatarUrl))
+                        {
+                            <img src="@profile.AvatarUrl" alt="avatar" />
+                        }
+                        else
+                        {
+                            <span>@GetInitials(profile?.FullName)</span>
+                        }
+                    </div>
+
+                    <div class="tw:flex-1">
+                        <div class="tw:flex tw:flex-wrap tw:items-center tw:gap-2 tw:mb-3">
+                            <span class="badge bg-primary tw:px-3 tw:py-2">@L["home.dashboard.eyebrow"]</span>
+                            <span class="badge bg-light text-primary tw:px-3 tw:py-2">@dashboardStatus</span>
+                        </div>
+
+                        <h2 class="tw:font-bold tw:mb-2">@L["home.dashboard.title"]</h2>
+                        <p class="text-muted tw:mb-4">@L["home.dashboard.subtitle"]</p>
+
+                        <div class="dashboard-lines">
+                            <div class="dashboard-line">
+                                <span class="dashboard-line-label">@L["nav.level"]</span>
+                                <span class="dashboard-line-value">@(profile?.Level ?? 1)</span>
+                            </div>
+                            <div class="dashboard-line">
+                                <span class="dashboard-line-label">@L["profile.stat.skillsTracked"]</span>
+                                <span class="dashboard-line-value">@selectedSkillCount</span>
+                            </div>
+                            <div class="dashboard-line">
+                                <span class="dashboard-line-label">@L["profile.stat.assessments"]</span>
+                                <span class="dashboard-line-value">@assessmentCount</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="tw:text-6xl tw:font-bold tw:mb-0 ss-gradient-text">SoftSync</h1>
-                    <p class="text-muted tw:font-medium tw:mb-0">@L["home.tagline"]</p>
+
+                <div class="dashboard-side">
+                    <div class="text-muted tw:text-sm tw:mb-1">@profileStatusText</div>
+                    <div class="ss-xp-bar dashboard-progress tw:mb-2">
+                        <div class="ss-xp-fill" style="width: @((profile?.LevelProgressPercent) ?? 0)%"></div>
+                    </div>
+                    <div class="text-muted tw:text-sm">@((profile?.ExperiencePoints ?? 0)) XP</div>
                 </div>
             </div>
 
-            <h2 class="tw:text-4xl tw:font-bold tw:mb-6">@L["home.heroTitlePrefix"]<span class="text-primary">@L["home.heroTitleHighlight"]</span>.</h2>
-            <p class="tw:text-xl text-muted tw:mb-12">
-                @L["home.heroDesc"]
-            </p>
-
-            <div class="tw:flex tw:gap-4">
-                <button class="ss-btn-primary tw:px-12 tw:py-4 tw:text-xl" @onclick='() => Nav.NavigateTo("/profile-setup")'>
-                    @L["home.startJourney"] <i class="bi bi-arrow-right tw:ms-2"></i>
+            <div class="tw:flex tw:flex-wrap tw:gap-3 tw:mt-6">
+                <button class="ss-btn-primary tw:px-6 tw:py-3" @onclick="GoPrimaryJourney">
+                    @primaryCtaText <i class="bi bi-arrow-right tw:ms-2"></i>
+                </button>
+                <button class="btn btn-outline-primary tw:px-6 tw:py-3" @onclick="GoEditProfile">
+                    @L["home.dashboard.secondaryCta"]
                 </button>
             </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="hero-section tw:py-12">
+        <div class="tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:gap-12 tw:items-center">
+            <div>
+                <div class="tw:flex tw:items-center tw:gap-4 tw:mb-6">
+                    <div class="logo-container tw:overflow-hidden">
+                        <img src="images/logo.png" alt="SoftSync Logo" class="tw:w-full tw:h-full tw:object-cover" />
+                    </div>
+                    <div>
+                        <h1 class="tw:text-6xl tw:font-bold tw:mb-0 ss-gradient-text">SoftSync</h1>
+                        <p class="text-muted tw:font-medium tw:mb-0">@L["home.tagline"]</p>
+                    </div>
+                </div>
 
-            <div class="tw:grid tw:grid-cols-3 tw:gap-6 tw:mt-12">
-                <div>
-                    <div class="tw:text-center">
-                        <div class="tw:text-2xl tw:font-bold tw:mb-0">7+</div>
-                        <div class="tw:text-sm text-muted">@L["home.stat.coreSkills"]</div>
+                <h2 class="tw:text-4xl tw:font-bold tw:mb-6">@L["home.heroTitlePrefix"]<span class="text-primary">@L["home.heroTitleHighlight"]</span>.</h2>
+                <p class="tw:text-xl text-muted tw:mb-12">
+                    @L["home.heroDesc"]
+                </p>
+
+                <div class="tw:flex tw:gap-4">
+                    <button class="ss-btn-primary tw:px-12 tw:py-4 tw:text-xl" @onclick='() => Nav.NavigateTo("/profile-setup")'>
+                        @L["home.startJourney"] <i class="bi bi-arrow-right tw:ms-2"></i>
+                    </button>
+                </div>
+
+                <div class="tw:grid tw:grid-cols-3 tw:gap-6 tw:mt-12">
+                    <div>
+                        <div class="tw:text-center">
+                            <div class="tw:text-2xl tw:font-bold tw:mb-0">7+</div>
+                            <div class="tw:text-sm text-muted">@L["home.stat.coreSkills"]</div>
+                        </div>
+                    </div>
+                    <div class="border-start border-end">
+                        <div class="tw:text-center">
+                            <div class="tw:text-2xl tw:font-bold tw:mb-0">AI</div>
+                            <div class="tw:text-sm text-muted">@L["home.stat.assessment"]</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="tw:text-center">
+                            <div class="tw:text-2xl tw:font-bold tw:mb-0">24/7</div>
+                            <div class="tw:text-sm text-muted">@L["home.stat.support"]</div>
+                        </div>
                     </div>
                 </div>
-                <div class="border-start border-end">
-                    <div class="tw:text-center">
-                        <div class="tw:text-2xl tw:font-bold tw:mb-0">AI</div>
-                        <div class="tw:text-sm text-muted">@L["home.stat.assessment"]</div>
+            </div>
+
+            <div>
+                <div class="mockup-container">
+                    <div class="phone-frame">
+                        <div class="phone-screen tw:flex tw:flex-col">
+                            <div class="phone-header tw:p-4 border-bottom tw:flex tw:items-center tw:justify-between">
+                                <i class="bi bi-list tw:text-2xl"></i>
+                                <span class="tw:font-bold tw:text-base">@L["home.mockup.title"]</span>
+                                <i class="bi bi-person-circle tw:text-2xl"></i>
+                            </div>
+                            <div class="phone-content tw:p-6 tw:grow">
+                                <div class="ss-card tw:mb-4 tw:p-4 tw:text-center tw:border-0" style="background: var(--gradient-soft);">
+                                    <i class="bi bi-graph-up ss-gradient-text tw:text-4xl"></i>
+                                    <div class="tw:font-bold tw:mt-2">@L["home.mockup.roadmap"]</div>
+                                </div>
+                                <div class="chat-mockup tw:mt-6">
+                                    <div class="chat-bubble chat-assistant" style="font-size: 0.8rem;">
+                                        @L["home.mockup.chatAssistant"]
+                                    </div>
+                                    <div class="chat-bubble chat-user tw:ms-auto" style="font-size: 0.8rem;">
+                                        @L["home.mockup.chatUser"]
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <div class="tw:text-center">
-                        <div class="tw:text-2xl tw:font-bold tw:mb-0">24/7</div>
-                        <div class="tw:text-sm text-muted">@L["home.stat.support"]</div>
+                    <div class="floating-badge badge-1 ss-glass" style="animation: ss-float 6s ease-in-out infinite;">
+                        <i class="bi bi-check-circle-fill text-success tw:me-2"></i> @L["home.badge.verified"]
+                    </div>
+                    <div class="floating-badge badge-2 ss-glass" style="animation: ss-float 6s ease-in-out infinite; animation-delay: -3s;">
+                        <i class="bi bi-lightning-fill text-warning tw:me-2"></i> @L["home.badge.aiPowered"]
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
+    <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-3 tw:gap-6 tw:mt-12 tw:py-12">
         <div>
-            <div class="mockup-container">
-                <div class="phone-frame">
-                    <div class="phone-screen tw:flex tw:flex-col">
-                        <div class="phone-header tw:p-4 border-bottom tw:flex tw:items-center tw:justify-between">
-                            <i class="bi bi-list tw:text-2xl"></i>
-                            <span class="tw:font-bold tw:text-base">@L["home.mockup.title"]</span>
-                            <i class="bi bi-person-circle tw:text-2xl"></i>
-                        </div>
-                        <div class="phone-content tw:p-6 tw:grow">
-                            <div class="ss-card tw:mb-4 tw:p-4 tw:text-center tw:border-0" style="background: var(--gradient-soft);">
-                                <i class="bi bi-graph-up ss-gradient-text tw:text-4xl"></i>
-                                <div class="tw:font-bold tw:mt-2">@L["home.mockup.roadmap"]</div>
-                            </div>
-                            <div class="chat-mockup tw:mt-6">
-                                <div class="chat-bubble chat-assistant" style="font-size: 0.8rem;">
-                                    @L["home.mockup.chatAssistant"]
-                                </div>
-                                <div class="chat-bubble chat-user tw:ms-auto" style="font-size: 0.8rem;">
-                                    @L["home.mockup.chatUser"]
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="ss-card ss-glass-interactive tw:h-full tw:text-center">
+                <div class="icon-box tw:mb-4 tw:mx-auto" style="background: rgba(99, 102, 241, 0.1); color: var(--primary);">
+                    <i class="bi bi-shield-check tw:text-3xl"></i>
                 </div>
-                <div class="floating-badge badge-1 ss-glass" style="animation: ss-float 6s ease-in-out infinite;">
-                    <i class="bi bi-check-circle-fill text-success tw:me-2"></i> @L["home.badge.verified"]
+                <h4 class="tw:font-bold">@L["home.feature.assessment.title"]</h4>
+                <p class="text-muted tw:px-2">@L["home.feature.assessment.desc"]</p>
+            </div>
+        </div>
+        <div>
+            <div class="ss-card ss-glass-interactive tw:h-full tw:text-center">
+                <div class="icon-box tw:mb-4 tw:mx-auto" style="background: rgba(168, 85, 247, 0.1); color: var(--secondary);">
+                    <i class="bi bi-map tw:text-3xl"></i>
                 </div>
-                <div class="floating-badge badge-2 ss-glass" style="animation: ss-float 6s ease-in-out infinite; animation-delay: -3s;">
-                    <i class="bi bi-lightning-fill text-warning tw:me-2"></i> @L["home.badge.aiPowered"]
+                <h4 class="tw:font-bold">@L["home.feature.roadmap.title"]</h4>
+                <p class="text-muted tw:px-2">@L["home.feature.roadmap.desc"]</p>
+            </div>
+        </div>
+        <div>
+            <div class="ss-card ss-glass-interactive tw:h-full tw:text-center">
+                <div class="icon-box tw:mb-4 tw:mx-auto" style="background: rgba(236, 72, 153, 0.1); color: var(--accent);">
+                    <i class="bi bi-chat-heart tw:text-3xl"></i>
                 </div>
+                <h4 class="tw:font-bold">@L["home.feature.assistant.title"]</h4>
+                <p class="text-muted tw:px-2">@L["home.feature.assistant.desc"]</p>
             </div>
         </div>
     </div>
-</div>
+}
 
-<div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-3 tw:gap-6 tw:mt-12 tw:py-12">
-    <div>
-        <div class="ss-card ss-glass-interactive tw:h-full tw:text-center">
-            <div class="icon-box tw:mb-4 tw:mx-auto" style="background: rgba(99, 102, 241, 0.1); color: var(--primary);">
-                <i class="bi bi-shield-check tw:text-3xl"></i>
-            </div>
-            <h4 class="tw:font-bold">@L["home.feature.assessment.title"]</h4>
-            <p class="text-muted tw:px-2">@L["home.feature.assessment.desc"]</p>
-        </div>
-    </div>
-    <div>
-        <div class="ss-card ss-glass-interactive tw:h-full tw:text-center">
-            <div class="icon-box tw:mb-4 tw:mx-auto" style="background: rgba(168, 85, 247, 0.1); color: var(--secondary);">
-                <i class="bi bi-map tw:text-3xl"></i>
-            </div>
-            <h4 class="tw:font-bold">@L["home.feature.roadmap.title"]</h4>
-            <p class="text-muted tw:px-2">@L["home.feature.roadmap.desc"]</p>
-        </div>
-    </div>
-    <div>
-        <div class="ss-card ss-glass-interactive tw:h-full tw:text-center">
-            <div class="icon-box tw:mb-4 tw:mx-auto" style="background: rgba(236, 72, 153, 0.1); color: var(--accent);">
-                <i class="bi bi-chat-heart tw:text-3xl"></i>
-            </div>
-            <h4 class="tw:font-bold">@L["home.feature.assistant.title"]</h4>
-            <p class="text-muted tw:px-2">@L["home.feature.assistant.desc"]</p>
-        </div>
-    </div>
-</div>
+@code {
+    private bool isSignedIn;
+    private UserDto? profile;
+    private int userId;
+    private int assessmentCount;
+    private int selectedSkillCount;
+    private bool hasAssessment;
+    private string profileStatusText = "";
+    private string assessmentStatusText = "";
+    private string skillStatusText = "";
+    private string dashboardStatus = "";
+    private string primaryCtaText = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthProvider.GetAuthenticationStateAsync();
+        isSignedIn = state.User.Identity?.IsAuthenticated == true;
+
+        if (!isSignedIn)
+            return;
+
+        userId = state.User.GetUserId();
+        profile = await UserService.GetUserByIdAsync(userId);
+        var results = await AssessmentService.GetLatestResultsAsync(userId);
+        hasAssessment = results.Any();
+        assessmentCount = results.Count();
+        selectedSkillCount = (await UserService.GetSelectedSkillIdsAsync(userId)).Count;
+
+        var profileComplete = IsProfileComplete();
+        dashboardStatus = hasAssessment ? L["home.dashboard.assessmentDone"] : L["home.dashboard.assessmentPending"];
+        profileStatusText = profileComplete ? L["home.dashboard.profileComplete"] : L["home.dashboard.profilePending"];
+        assessmentStatusText = hasAssessment ? L["home.dashboard.assessmentDone"] : L["home.dashboard.assessmentPending"];
+        skillStatusText = selectedSkillCount > 0
+            ? $"{selectedSkillCount} {L["home.dashboard.skillsSelected"]}"
+            : L["home.dashboard.skillsNone"];
+        primaryCtaText = ResolvePrimaryCtaText(profileComplete);
+    }
+
+    private bool IsProfileComplete() =>
+        profile is not null &&
+        !string.IsNullOrWhiteSpace(profile.FullName) &&
+        profile.Age > 0 &&
+        profile.Gender != SoftSync.Common.Enums.Gender.Unspecified &&
+        !string.IsNullOrWhiteSpace(profile.Goal) &&
+        selectedSkillCount > 0;
+
+    private string ResolvePrimaryRoute()
+    {
+        var profileComplete = IsProfileComplete();
+        if (!profileComplete) return "/profile-setup";
+        if (!hasAssessment) return $"/assessment/{userId}";
+        return $"/roadmap/{userId}";
+    }
+
+    private string ResolvePrimaryCtaText(bool profileComplete)
+    {
+        if (!profileComplete) return L["home.dashboard.completeProfile"];
+        if (!hasAssessment) return L["home.dashboard.continueAssessment"];
+        return L["home.dashboard.primaryCta"];
+    }
+
+    private void GoPrimaryJourney() => Nav.NavigateTo(ResolvePrimaryRoute());
+
+    private void GoEditProfile() => Nav.NavigateTo("/settings");
+
+    private static string GetInitials(string? fullName)
+    {
+        if (string.IsNullOrWhiteSpace(fullName))
+            return "SS";
+
+        var parts = fullName.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        if (parts.Length == 1)
+            return parts[0].Substring(0, Math.Min(2, parts[0].Length)).ToUpperInvariant();
+
+        return string.Concat(parts.Select(p => p[0])).Substring(0, Math.Min(2, parts.Length)).ToUpperInvariant();
+    }
+}
 
 <style>
-    /* The page sits on the dark galaxy background in both themes, so hero copy
-       must read as light. Scope these overrides to .hero-section only — the
-       feature cards below use glass surfaces and keep their own colors. */
+    .home-dashboard { max-width: 1200px; margin: 0 auto; }
+    .dashboard-shell {
+        border-radius: 28px;
+        background:
+            radial-gradient(circle at top right, rgba(99, 102, 241, 0.12), transparent 28%),
+            linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,250,252,0.98));
+    }
+    .dashboard-avatar {
+        width: 92px;
+        height: 92px;
+        border-radius: 24px;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: var(--gradient);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: 800;
+        box-shadow: var(--shadow-card);
+    }
+    .dashboard-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .dashboard-score {
+        min-width: 180px;
+        text-align: right;
+        padding: 1rem 1.2rem;
+        border-radius: 22px;
+        background: rgba(99, 102, 241, 0.08);
+    }
+    .dashboard-progress { height: 12px; }
+    .dashboard-side {
+        min-width: 210px;
+        padding: 1rem 1.1rem;
+        border-radius: 22px;
+        background: rgba(99, 102, 241, 0.08);
+    }
+    .dashboard-lines {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.75rem;
+    }
+    .dashboard-line {
+        padding: 0.85rem 1rem;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.75);
+        border: 1px solid rgba(99, 102, 241, 0.10);
+    }
+    .dashboard-line-label {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-bottom: 0.25rem;
+    }
+    .dashboard-line-value {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: var(--color-brand-dark);
+    }
+    .dashboard-stat {
+        border-radius: 22px;
+        min-height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .home-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.45rem 0.8rem;
+        border-radius: 999px;
+        background: rgba(99, 102, 241, 0.10);
+        color: var(--color-brand-dark);
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    html[data-theme="dark"] .dashboard-shell {
+        background:
+            radial-gradient(circle at top right, rgba(99, 102, 241, 0.18), transparent 28%),
+            linear-gradient(180deg, rgba(15, 23, 42, 0.86), rgba(15, 23, 42, 0.94));
+    }
+    html[data-theme="dark"] .dashboard-score {
+        background: rgba(99, 102, 241, 0.16);
+    }
+    html[data-theme="dark"] .dashboard-side {
+        background: rgba(99, 102, 241, 0.16);
+    }
+    html[data-theme="dark"] .dashboard-line {
+        background: rgba(15, 23, 42, 0.7);
+        border-color: rgba(99, 102, 241, 0.16);
+    }
+    html[data-theme="dark"] .home-pill {
+        background: rgba(99, 102, 241, 0.18);
+        color: #e0e7ff;
+    }
+
+    /* Keep the original visitor hero styling. */
     .hero-section h2 { color: #f8fafc; text-shadow: 0 2px 12px rgba(0,0,0,0.45); }
     .hero-section .text-muted { color: rgba(255,255,255,0.82) !important; text-shadow: 0 1px 8px rgba(0,0,0,0.4); }
     .hero-section .tw\:text-2xl { color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.45); }
     .hero-section .ss-gradient-text {
-        /* Solid bright fill instead of the purple-on-purple clip that vanished on the nebula. */
         background: none;
         -webkit-text-fill-color: #ffffff;
         color: #ffffff;
@@ -133,7 +381,6 @@
         color: #c7d2fe;
         text-shadow: 0 2px 12px rgba(0,0,0,0.45);
     }
-    /* Stat dividers were faint dark borders — lift them on the dark canvas. */
     .hero-section .border-start { border-left-color: rgba(255,255,255,0.25) !important; }
     .hero-section .border-end { border-right-color: rgba(255,255,255,0.25) !important; }
 
@@ -147,12 +394,10 @@
         justify-content: center;
         box-shadow: var(--shadow-card);
     }
-    
     .mockup-container {
         position: relative;
         perspective: 1000px;
     }
-    
     .phone-frame {
         width: 300px;
         height: 600px;
@@ -163,7 +408,6 @@
         margin: 0 auto;
         transform: rotateY(-10deg) rotateX(5deg);
     }
-    
     .phone-screen {
         width: 100%;
         height: 100%;
@@ -171,7 +415,6 @@
         border-radius: 30px;
         overflow: hidden;
     }
-    
     .icon-box {
         width: 70px;
         height: 70px;
@@ -180,7 +423,6 @@
         align-items: center;
         justify-content: center;
     }
-    
     .floating-badge {
         position: absolute;
         padding: 1rem;
@@ -190,44 +432,34 @@
         z-index: 10;
         white-space: nowrap;
     }
-    
     .badge-1 { top: 20%; right: -10%; }
     .badge-2 { bottom: 30%; left: -5%; }
 
-    /* ===== Mobile (max-width 768px) =====
-       The hero copy and the 3D phone mockup are sized for desktop; on a narrow
-       screen the huge headings wrap badly and the rotated phone + floating
-       badges (right:-10% / left:-5%) spill past the viewport edge, forcing a
-       horizontal scrollbar. Shrink type, flatten/scale the mockup, and drop the
-       badges so nothing overflows. */
     @@media (max-width: 768px) {
         .hero-section { text-align: center; }
         .hero-section .tw\:flex.tw\:items-center.tw\:gap-4 { justify-content: center; }
-
-        /* Headings: text-6xl (SoftSync) / text-4xl (hero title) are too large. */
         .hero-section h1.tw\:text-6xl { font-size: 2.5rem; }
         .hero-section h2.tw\:text-4xl { font-size: 1.75rem; }
         .hero-section .tw\:text-xl { font-size: 1.05rem; margin-bottom: 2rem; }
-
-        /* CTA: full-width, centered. */
         .hero-section .tw\:flex.tw\:gap-4 { justify-content: center; }
         .hero-section .ss-btn-primary { width: 100%; justify-content: center; }
-
-        /* Phone mockup: kill the 3D rotate (caused clipping) and scale to fit. */
         .phone-frame {
             transform: none;
             width: min(280px, 82vw);
             height: auto;
-            aspect-ratio: 1 / 2;
-            margin-top: 2.5rem;
+            aspect-ratio: 300 / 600;
+            padding: 10px;
         }
-        /* Floating badges sit outside the phone (right:-10% / left:-5%) and
-           overflow on mobile — hide them there. */
         .floating-badge { display: none; }
+        .mockup-container { margin-top: 1rem; }
     }
 
-    /* Belt-and-braces: never let the page scroll sideways on small screens. */
-    @@media (max-width: 768px) {
-        html, body { overflow-x: hidden; }
+    @@media (min-width: 769px) and (max-width: 991px) {
+        .phone-frame {
+            width: 260px;
+            height: 520px;
+            transform: rotateY(-6deg) rotateX(3deg);
+        }
+        .floating-badge { font-size: 0.82rem; }
     }
 </style>

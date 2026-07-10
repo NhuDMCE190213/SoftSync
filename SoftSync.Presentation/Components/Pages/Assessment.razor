@@ -66,6 +66,13 @@
 
     protected override async Task OnInitializedAsync()
     {
+        var existingResults = await AssessmentService.GetLatestResultsAsync(UserId);
+        if (existingResults.Any())
+        {
+            Nav.NavigateTo($"/assessment-complete/{UserId}", true);
+            return;
+        }
+
         questions = (await AssessmentService.GetAssessmentQuestionsAsync(UserId)).ToList();
 
         // Shuffle the options of each question so the "best" answer isn't always

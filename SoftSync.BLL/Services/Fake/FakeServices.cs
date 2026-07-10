@@ -4,20 +4,16 @@ using SoftSync.Common.Enums;
 
 namespace SoftSync.BLL.Services.Fake;
 
-// TODO [AI-TEAM: Kiệt/Chánh] - Thay FakeAiAssessmentService bằng implementation
-// gọi API AI thật tại đây. Giữ nguyên interface IAiAssessmentService (ở SoftSync.BLL),
-// chỉ cần đổi class đăng ký trong DI tại Program.cs.
 public class FakeAiAssessmentService : IAiAssessmentService
 {
     public Task<AssessmentResultDto> EvaluateAsync(List<UserAnswerDto> answers)
     {
-        // Simulate AI logic: more answers = better score
         int score = (answers.Count * 23) % 100;
         var level = score < 50 ? AssessmentLevel.Weak : score < 80 ? AssessmentLevel.Average : AssessmentLevel.Good;
 
         return Task.FromResult(new AssessmentResultDto
         {
-            SkillId = 1, // Defaulting to Communication for demo
+            SkillId = 1,
             Score = score,
             Level = level,
             CreatedAt = DateTime.UtcNow
@@ -25,83 +21,78 @@ public class FakeAiAssessmentService : IAiAssessmentService
     }
 }
 
-// TODO [AI-TEAM: Kiệt/Chánh] - Thay FakeAiAssistantService bằng implementation
-// gọi API chatbot thật tại đây.
 public class FakeAiAssistantService : IAiAssistantService
 {
     public Task<string> GetReplyAsync(string userMessage, int userId)
     {
-        string reply = "Chào bạn! Tôi là trợ lý SoftSync AI. ";
-        if (userMessage.ToLower().Contains("giao tiếp"))
-            reply += "Để cải thiện kỹ năng giao tiếp, hãy bắt đầu bằng việc lắng nghe chủ động hơn nhé.";
-        else if (userMessage.ToLower().Contains("lộ trình"))
-            reply += "Tôi đã tạo lộ trình học tập cá nhân hóa cho bạn trong tab Roadmap rồi đấy!";
+        string reply = "Chao ban! Toi la tro ly SoftSync AI. ";
+        if (userMessage.ToLower().Contains("giao tiep"))
+            reply += "De cai thien ky nang giao tiep, hay bat dau bang viec lang nghe chu dong hon nhe.";
+        else if (userMessage.ToLower().Contains("lo trinh"))
+            reply += "Toi da tao lo trinh hoc tap ca nhan hoa cho ban trong tab Roadmap roi day!";
         else
-            reply += $"Cảm ơn bạn đã nhắn tin: '{userMessage}'. Tôi sẵn sàng đồng hành cùng bạn trên con đường phát triển kỹ năng mềm.";
+            reply += $"Cam on ban da nhan tin: '{userMessage}'. Toi san sang dong hanh cung ban tren con duong phat trien ky nang mem.";
 
         return Task.FromResult(reply);
     }
 }
 
-// TODO [AI-TEAM: Kiệt/Chánh] - Thay FakeAiRoadmapService bằng implementation
-// sinh lộ trình thật từ LLM/AI.
-//
-// Hiện tại roadmap được sinh cơ học từ danh sách kỹ năng yếu (do RoadmapService
-// truyền vào, đã lọc theo QuizSeedData.ActiveSkillIds — chỉ 3 kỹ năng active).
-// Mỗi kỹ năng cấp 2 tuần (nền tảng → thực hành), rồi 1 tuần tổng kết ở cuối.
-// Nội dung mô tả bám theo tên kỹ năng lấy từ DB, không tham chiếu tài liệu ngoài.
 public class FakeAiRoadmapService : IAiRoadmapService
 {
     public Task<RoadmapDto> GenerateRoadmapAsync(int userId, List<string> weakSkills)
     {
         var items = new List<RoadmapItemDto>();
-        var week = 1;
 
-        // Tuần 1: luôn bắt đầu bằng bước tự đánh giá — không phụ thuộc kỹ năng nào.
-        items.Add(new RoadmapItemDto
-        {
-            WeekNumber = week++,
-            Title = "Khám phá bản thân",
-            Description = "Hoàn thành bài đánh giá đầu vào và xác định mục tiêu học tập cho những tuần tiếp theo.",
-            IsCompleted = false
-        });
-
-        // 2 tuần cho mỗi kỹ năng người dùng cần cải thiện (đã được caller giới hạn
-        // trong 3 kỹ năng active, sắp xếp theo điểm yếu → mạnh).
+        // Each skill gets exactly 3 weeks. There is no general overview week.
         foreach (var skill in weakSkills)
         {
-            var vi = ToVietnameseSkillName(skill);
+            var skillVi = ToVietnameseSkillName(skill);
+            var skillLabel = ToRoadmapSkillLabel(skill);
+
             items.Add(new RoadmapItemDto
             {
-                WeekNumber = week++,
-                Title = $"Nền tảng {vi}",
-                Description = $"Nắm lý thuyết cốt lõi của {vi.ToLower()} và làm bài luyện tập cơ bản để hình thành thói quen."
+                WeekNumber = 1,
+                SkillName = skillLabel,
+                Title = $"{skillLabel} - Nền tảng",
+                Description = $"Nắm lý thuyết cốt lõi của {skillVi.ToLower()} và xem những tình huống minh họa đầu tiên.",
+                IsCompleted = false
             });
+
             items.Add(new RoadmapItemDto
             {
-                WeekNumber = week++,
-                Title = $"Thực hành {vi}",
-                Description = $"Áp dụng {vi.ToLower()} vào tình huống thực tế qua case study và tự phản tư sau mỗi buổi."
+                WeekNumber = 2,
+                SkillName = skillLabel,
+                Title = $"{skillLabel} - Thực hành",
+                Description = $"Áp dụng {skillVi.ToLower()} vào các bài luyện tập và tình huống thực tế.",
+                IsCompleted = false
+            });
+
+            items.Add(new RoadmapItemDto
+            {
+                WeekNumber = 3,
+                SkillName = skillLabel,
+                Title = $"{skillLabel} - Ứng dụng",
+                Description = $"Ôn lại, củng cố và chuẩn bị chuyển sang phần game thực hành cho {skillVi.ToLower()}.",
+                IsCompleted = false
             });
         }
-
-        // Tuần cuối: tổng kết + đánh giá lại.
-        items.Add(new RoadmapItemDto
-        {
-            WeekNumber = week,
-            Title = "Tổng kết & đánh giá lại",
-            Description = "Xem lại tiến độ toàn lộ trình, làm bài đánh giá lại để đo tiến bộ và điều chỉnh mục tiêu tiếp theo."
-        });
 
         return Task.FromResult(new RoadmapDto { UserId = userId, Items = items });
     }
 
-    /// <summary>Ánh xạ tên kỹ năng trong DB (tiếng Anh) sang tên hiển thị tiếng Việt cho roadmap.</summary>
     private static string ToVietnameseSkillName(string englishName) => englishName switch
     {
-        "Communication"     => "Kỹ năng Giao tiếp",
-        "Time Management"   => "Kỹ năng Quản lý thời gian",
+        "Communication" => "Kỹ năng Giao tiếp",
+        "Time Management" => "Kỹ năng Quản lý thời gian",
         "Critical Thinking" => "Kỹ năng Tư duy phản biện",
+        _ => englishName
+    };
+
+    private static string ToRoadmapSkillLabel(string englishName) => englishName switch
+    {
+        "Communication" => "Giao tiếp",
+        "Time Management" => "Quản lý thời gian",
+        "Critical Thinking" => "Tư duy phản biện",
         _ => englishName
     };
 }

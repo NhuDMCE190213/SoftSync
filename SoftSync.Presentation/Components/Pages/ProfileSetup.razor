@@ -6,6 +6,7 @@
 @using SoftSync.Common.Dtos
 @using SoftSync.Common.Enums
 @inject IUserService UserService
+@inject IAssessmentService AssessmentService
 @inject ISkillService SkillService
 @inject NavigationManager Nav
 @inject AuthenticationStateProvider AuthProvider
@@ -198,6 +199,16 @@
             user = existing;
             mascotGender = existing.Gender;
         }
+
+        selectedSkillIds.AddRange(await UserService.GetSelectedSkillIdsAsync(userId));
+
+        var hasCompletedAssessment = (await AssessmentService.GetLatestResultsAsync(userId)).Any();
+        if (hasCompletedAssessment)
+        {
+            Nav.NavigateTo($"/assessment-complete/{userId}", true);
+            return;
+        }
+
         firstName = FirstNameOf(user.FullName);
         skills = await SkillService.GetAllSkillsAsync();
     }
@@ -231,7 +242,8 @@
         {
             await UserService.AddSkillSelectionsAsync(userId, selectedSkillIds);
         }
-        Nav.NavigateTo($"/assessment/{userId}");
+        var hasCompletedAssessment = (await AssessmentService.GetLatestResultsAsync(userId)).Any();
+        Nav.NavigateTo(hasCompletedAssessment ? $"/assessment-complete/{userId}" : $"/assessment/{userId}");
     }
 
     private static string FirstNameOf(string full)
